@@ -1,0 +1,38 @@
+.table-layout {
+  overflow: hidden;
+  .table-content {
+    display: flex;
+    flex-direction: column;
+    .table-box {
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      &.border {
+        border: #dddee1 solid 1px;
+      }
+      .table-body {
+        overflow: auto;
+        flex: 1;
+        padding-left: 10px;
+      }
+    }
+    /deep/ .page-wrapper {
+      display: none;
+    }
+  }
+  .table-oper {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    .table-title {
+      color: #fff;
+    }
+  }
+  /deep/ .ivu-layout-sider {
+    background-color: unset;
+  }
+  /deep/ .ivu-layout-sider-children {
+    display: flex;
+    flex-direction: column;
+  }
+}

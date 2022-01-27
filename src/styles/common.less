@@ -1,0 +1,139 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background: #f0f0f0;
+  overflow: hidden;
+}
+
+.main {
+  // 左侧菜单文本
+  .layout-text {
+    display: inline-block;
+    white-space: nowrap;
+    position: absolute;
+  }
+  &-hide-text {
+    .layout-text {
+      display: none;
+    }
+  }
+}
+
+// 表格样式重写
+.ivu-table {
+  .ivu-table-cell {
+    padding: 3px 4px;
+  }
+  .ivu-table-header {
+    th {
+      text-align: center;
+      font-weight: normal;
+      border-bottom: 1px solid #2d8cf0;
+      color: #353535;
+    }
+  }
+}
+
+// 页面根节点
+.page-root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+}
+
+// from条件公共样式
+.form-box {
+  padding: 20px;
+  margin: 0 auto;
+  width: 96%;
+  background-color: #f0f0f0;
+  .cal-from-item {
+    display: inline-block;
+    width: 29%;
+    margin-top: 1%;
+    margin-bottom: 0px;
+  }
+  .button-grounp {
+    display: flex;
+    justify-content: flex-end;
+    // margin-top: 20px;
+    .ivu-btn:first-child {
+      margin-right: 20px;
+    }
+  }
+}
+
+// 表格公共样式
+.table-box {
+  position: relative;
+  flex: 1;
+  margin: 0 auto;
+  margin-top: 20px;
+  width: 96%;
+  overflow: hidden;
+  .oper-wrapper {
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    background-color: #78baff;
+    &-icon {
+      margin-left: 14px;
+      margin-right: 20px;
+      // margin: 10px;
+      color: #2d8cf0;
+      font-size: 16px;
+    }
+    &-button {
+      margin-left: 20px;
+      margin-right: 20px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+}
+
+// 分页样式
+.page-wrapper {
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: flex-end;
+  width: 96%;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  &.wrap{
+    flex-wrap: wrap;
+  }
+  &.center {
+    justify-content: center;
+    align-items: center;
+  }
+  &.row-center {
+    justify-content: center;
+  }
+  &.col-center {
+    align-items: center;
+  }
+  > .flex-auto {
+    flex: 1;
+  }
+}
+
+.popup-model {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .ivu-modal {
+    top: unset;
+    width: 50%;
+    min-width: 700px;
+  }
+}

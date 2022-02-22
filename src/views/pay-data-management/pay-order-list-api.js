@@ -24,6 +24,10 @@ export default {
     return api.post(REST_URL.QUERY_ORDER_DETAILS_DATA, params)
   },
 
+  getPaymentPromotionDetail (params) {
+    return api.post(REST_URL.QUERY_PAYMENT_PROMOTION_DETAIL, params)
+  },
+
   exportData (params, filename = '未命名文件.xlsx') {
     return downloadFile(REST_URL.EXPORT_MCSTOREPAY_DATA, params, filename)
   }

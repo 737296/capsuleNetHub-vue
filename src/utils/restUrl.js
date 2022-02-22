@@ -96,6 +96,7 @@ export const REST_URL = {
   INTERVENE_ALL: '/admin/refundAll',
   INTERVENE_PART: '/admin/refundPart',
   BLOCK: '/admin/highRiskRefundCacheCleaning',
+  QUERY_PAYMENT_PROMOTION_DETAIL: '/admin/paymentPromotionDetail',
 
   // 系统管理
   QUERY_USER_TABLE: '/admin/queryUser',

@@ -12,19 +12,39 @@
     <div class="order-detail">
       <Tabs type="card">
         <TabPane label="支付账单详情">
-          <template v-for="paymentFields in paymentFieldList">
+          <template v-for="(paymentFields, index) in paymentFieldList">
             <div v-for="(v, idx) in paymentFields" :key="'p' + idx">
               <div class="flex">
-                <img :src="v.icon" />
+                <img class="iconImage" :src="v.icon" />
                 <DetailItem v-model="v.fieldList" />
               </div>
+              <!-- 优惠明细 -->
+              <template v-if="hasPaymentPromotion(paymentFields)">
+                <div v-if="idx%2!==0" class="cxxq-detail">
+                  <div v-if="paymentPromotionLoading" class="demo-spin-container">
+                    <Spin></Spin>
+                  </div>
+                  <template v-if="getTableData(paymentFields, index) && getTableData(paymentFields, index).show">
+                    <Table border stripe :row-class-name="rowClassName" :columns="columns1" :data="getTableData(paymentFields, index).data"></Table>
+                    <div class="cxxq-title" @click="getPaymentPromotionDetail(paymentFields, index)">
+                      收起优惠明细
+                    </div>
+                  </template>
+                  <template v-else>
+                    <div class="cxxq-title" @click="getPaymentPromotionDetail(paymentFields, index)">
+                      查询优惠明细
+                    </div>
+                  </template>
+                </div>
+              </template>
+              <!-- 分割线 -->
               <div v-if="idx%2!==0" class="split-line"></div>
             </div>
           </template>
           <template v-for="integralFields in integralFieldList">
             <div v-for="(v, idx) in integralFields" :key="'i' + idx">
               <div class="flex">
-                <img :src="v.icon" />
+                <img class="iconImage" :src="v.icon" />
                 <DetailItem v-model="v.fieldList" />
               </div>
               <div v-if="idx%2!==0" class="split-line"></div>
@@ -41,7 +61,7 @@
           <template v-for="refundFields in refundFieldList">
             <div v-for="(v, idx) in refundFields" :key="'r' + idx">
               <div class="flex">
-                <img :src="v.icon" />
+                <img class="iconImage" :src="v.icon" />
                 <DetailItem v-model="v.fieldList" />
               </div>
               <div v-if="idx%2!==0" class="split-line"></div>
@@ -270,6 +290,16 @@ const getDefPaymentFieldList = () => [
       {
         title: '第三方补贴-合作：',
         key: 'coContribute',
+        value: ''
+      },
+      {
+        title: '优惠标识：',
+        key: 'goodsTag',
+        value: ''
+      },
+      {
+        title: '单品优惠商品id信息：',
+        key: 'discountGoodsId',
         value: ''
       }
     ]
@@ -548,6 +578,40 @@ const getProductList = () => [
     }]
   }
 ]
+const getTableColumn = () => [
+  {
+    title: '优惠Id',
+    key: 'promotionId'
+  },
+  {
+    title: '优惠名称',
+    key: 'promotionName'
+  },
+  {
+    title: '活动Id',
+    key: 'activityId'
+  },
+  {
+    title: '优惠类型',
+    key: 'promotionType'
+  },
+  {
+    title: '优惠金额',
+    key: 'amount'
+  },
+  {
+    title: '百胜折扣',
+    key: 'yumDiscount'
+  },
+  {
+    title: '第三方补贴',
+    key: 'channelContribute'
+  },
+  {
+    title: '第三方补贴——合作',
+    key: 'coContribute'
+  }
+]
 export default {
   name: 'payOrderDetails',
   components: {
@@ -565,7 +629,10 @@ export default {
       refundApplyListLoading: false,
       detailFieldListLoading: false,
       refundFieldListLoading: false,
-      productListLoading: false
+      productListLoading: false,
+      paymentPromotionData: {},
+      columns1: getTableColumn(),
+      paymentPromotionLoading: false
     }
   },
   created () {
@@ -752,6 +819,67 @@ export default {
         })
         console.log('this.productOrderList', this.productOrderList)
       }
+    },
+    // 获取支付订单促销详情
+    getPaymentPromotionDetail (paymentFields, index) {
+      let { transactionNum } = this.$route.query
+      // 获取网支号
+      let paymentNum = paymentFields[0].fieldList[2].value
+      let key = paymentNum + index
+      let value = this.paymentPromotionData[key]
+      if (value) {
+        // 关闭
+        value.show = !value.show
+        this.$forceUpdate()
+        return
+      }
+      this.paymentPromotionLoading = true
+      baseApi
+        .getPaymentPromotionDetail({
+          transactionNum: transactionNum,
+          paymentNum: paymentNum
+        })
+        .then(({ data }) => {
+          if (+data.code === 200) {
+            let item = {
+              show: true,
+              data: data.data
+            }
+            this.paymentPromotionData[key] = item
+            // console.log(this.paymentPromotionData)
+            this.$forceUpdate()
+          } else {
+            return Promise.reject(new Error(data.msg))
+          }
+        })
+        .catch((err) => {
+          this.$Message.error(`查询失败！${err.message}`)
+          console.log(err)
+        })
+        .finally(() => {
+          this.paymentPromotionLoading = false
+        })
+    },
+    getTableData (paymentFields, index) {
+      // 获取网支号
+      let paymentNum = paymentFields[0].fieldList[2].value
+      let key = paymentNum + index
+      let res = this.paymentPromotionData[key]
+      // console.log('getTableData', res)
+      return res
+    },
+    // 判断是否显示优惠明细按钮
+    hasPaymentPromotion (paymentFields) {
+      // let goodsTag = paymentFields[1].fieldList[9].value
+      // let discountGoodsId = paymentFields[1].fieldList[10].value
+      // return goodsTag || discountGoodsId
+      let yumDiscount = paymentFields[1].fieldList[6].value
+      let channelContribute = paymentFields[1].fieldList[7].value
+      let coContribute = paymentFields[1].fieldList[8].value
+      if ((yumDiscount === 0 && channelContribute === 0 && coContribute === 0) || (yumDiscount === '0' && channelContribute === '0' && coContribute === '0')) {
+        return false
+      }
+      return yumDiscount || channelContribute || coContribute
     }
   }
 }
@@ -774,7 +902,22 @@ export default {
   }
   .flex {
     margin: 20px;
-    align-items: end;
+    // align-items: end;
+    align-items: flex-start;
+  }
+  .iconImage {
+    margin-top: 18px;
+  }
+  .cxxq-detail {
+    margin: 0 80px 20px 80px;
+    .cxxq-title {
+      font-weight: 600;
+      color: #1c2438;
+      font-size: 13px;
+      margin-top: 20px;
+      color: blue;
+      cursor: pointer;
+    }
   }
 }
 .no-search{
@@ -788,5 +931,12 @@ export default {
 .search{
   width: 98px;
   height: 64px;
+  margin-top: 100px;
+}
+.demo-spin-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 </style>

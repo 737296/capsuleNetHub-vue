@@ -12,5 +12,5 @@ module.exports = {
   /**
    * 开启SSO登录模式
    */
-  SSO_LOGIN: 'false'
+  SSO_LOGIN: 'true'
 }

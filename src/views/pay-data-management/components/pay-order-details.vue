@@ -293,12 +293,12 @@ const getDefPaymentFieldList = () => [
         value: ''
       },
       {
-        title: '优惠标识：',
+        title: '营销活动-整单标识：',
         key: 'goodsTag',
         value: ''
       },
       {
-        title: '单品优惠商品id信息：',
+        title: '营销活动-单品标识(单品linkId)：',
         key: 'discountGoodsId',
         value: ''
       }

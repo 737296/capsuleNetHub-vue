@@ -81,6 +81,20 @@
             </div>
           </template>
         </TabPane>
+         <TabPane label="企业付详情" v-if="isUseEnterprisePay">
+            <template v-for="(enterprisePayList, idx) in enterprisePayFieldList">
+               <Collapse v-model="value1" :key="'c' + idx">
+                  <Panel :name="idx + ''">
+                    <span v-if="idx==0">支付中台计算企业付明细</span>
+                    <span v-if="idx==1">实际企业付明细</span>
+                    <DetailItem slot="content" v-model="enterprisePayList.fieldList" />
+                    <div slot="content" v-if="idx==0" :key="'c' + idx">
+                        <Table border :columns="columns2" :data="enterprisePayGoodsDetail"></Table>
+                    </div>
+                  </Panel>
+              </Collapse>
+          </template>
+        </TabPane>
       </Tabs>
     </div>
   </div>
@@ -300,6 +314,37 @@ const getDefPaymentFieldList = () => [
       {
         title: '营销活动-单品标识(单品linkId)：',
         key: 'discountGoodsId',
+        value: ''
+      }
+    ]
+  }
+]
+
+const getEnterprisePayFieldList = () => [
+  {
+    fieldList: [
+      {
+        title: '个人付金额（单位：分）：',
+        key: 'personalPrice',
+        value: ''
+      },
+      {
+        title: '企业付金额（单位：分）：',
+        key: 'enterprisePayPrice',
+        value: ''
+      }
+    ]
+  },
+  {
+    fieldList: [
+      {
+        title: '企业分摊金额（单位：分）：',
+        key: 'aliEnterprisePayPrice',
+        value: ''
+      },
+      {
+        title: '企业ID：',
+        key: 'enterpriseId',
         value: ''
       }
     ]
@@ -612,6 +657,74 @@ const getTableColumn = () => [
     key: 'coContribute'
   }
 ]
+const getEnterprisePayTableColumn = () => [
+  {
+    title: '商品Id',
+    key: 'goodsId',
+    width: 100,
+    align: 'center'
+  },
+  {
+    title: '货劳分类',
+    key: 'financeDepartmentCode',
+    width: 100,
+    align: 'center'
+  },
+  {
+    title: '税率',
+    key: 'taxRate',
+    width: 100,
+    align: 'center'
+  },
+  {
+    title: '商品名称',
+    key: 'goodsName',
+    width: 144,
+    align: 'center'
+  },
+  {
+    title: '数量',
+    key: 'quantity',
+    width: 100,
+    align: 'center'
+  },
+  {
+    title: '商品原价（单位：分）',
+    key: 'price',
+    width: 150,
+    align: 'center'
+  },
+  {
+    title: '商品券后优惠价（单位：分）',
+    key: 'realPrice',
+    width: 200,
+    align: 'center'
+  },
+  {
+    title: '是否支持企业付',
+    key: 'supportEnterprisePay',
+    width: 150,
+    align: 'center'
+  },
+  {
+    title: 'V金分摊金额（单位：分）',
+    key: 'vgPayApportionPrice',
+    width: 200,
+    align: 'center'
+  },
+  {
+    title: '礼品卡分摊金额（单位：分）',
+    key: 'yumCardApportionPrice',
+    width: 200,
+    align: 'center'
+  },
+  {
+    title: '最终支付金额（单位：分）',
+    key: 'finalNeedPayPrice',
+    width: 200,
+    align: 'center'
+  }
+]
 export default {
   name: 'payOrderDetails',
   components: {
@@ -632,7 +745,12 @@ export default {
       productListLoading: false,
       paymentPromotionData: {},
       columns1: getTableColumn(),
-      paymentPromotionLoading: false
+      columns2: getEnterprisePayTableColumn(),
+      paymentPromotionLoading: false,
+      isUseEnterprisePay: false,
+      enterprisePayFieldList: getEnterprisePayFieldList(),
+      enterprisePayGoodsDetail: {},
+      value1: ['0', '1']
     }
   },
   created () {
@@ -649,11 +767,12 @@ export default {
           transactionNum
         })
         .then(({ data }) => {
-          if (data.code === 200) {
+          if (+data.code === 200) {
             this.detailDataHandle(data.data)
             this.getRefundApplyListData(data.data)
             this.getRefundDetails(data.data)
             this.getOrderDetailsData(data.data)
+            this.getEnterprisePayListData(data.data)
           } else {
             return Promise.reject(new Error(data.msg))
           }
@@ -698,6 +817,23 @@ export default {
           })
         })
       }
+    },
+    getEnterprisePayListData (data) {
+      if (data.enterprisePayDetailDTO) {
+        this.enterprisePayGoodsDetail = data.enterprisePayDetailDTO.goodsDetailDTOList
+        this.isUseEnterprisePay = data.enterprisePayDetailDTO.useEnterprisePay
+        this.enterprisePayFieldList = getEnterprisePayFieldList().map((v) => {
+          v.fieldList.forEach((field) => {
+            if (field.key === 'enterpriseId') {
+              field.value = data.enterprisePayDetailDTO[field.key] === null ? ' ' : data.enterprisePayDetailDTO[field.key]
+            } else {
+              field.value = data.enterprisePayDetailDTO[field.key] === null ? '0' : data.enterprisePayDetailDTO[field.key]
+            }
+          })
+          return v
+        })
+      }
+      console.log('enterprisePay===========', this.enterprisePayFieldList)
     },
     getRefundApplyListData (data3) {
       this.refundApplyListLoading = true
@@ -747,7 +883,7 @@ export default {
           businessApp: data1.businessApp
         })
         .then(({ data }) => {
-          if (data.code === 200) {
+          if (+data.code === 200) {
             this.refundDetailDataHandle(data.data)
           } else {
             return Promise.reject(new Error(data.msg))

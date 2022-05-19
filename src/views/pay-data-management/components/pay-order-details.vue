@@ -338,8 +338,13 @@ const getEnterprisePayFieldList = () => [
   {
     fieldList: [
       {
-        title: '企业分摊金额（单位：分）：',
+        title: '企业实际分摊金额（单位：分）：',
         key: 'aliEnterprisePayPrice',
+        value: ''
+      },
+      {
+        title: '个人实付金额（单位：分）：',
+        key: 'aliPersonalPayPrice',
         value: ''
       },
       {
@@ -704,7 +709,10 @@ const getEnterprisePayTableColumn = () => [
     title: '是否支持企业付',
     key: 'supportEnterprisePay',
     width: 150,
-    align: 'center'
+    align: 'center',
+    render: (h, { row, column }) => {
+      return h('span', {}, row[column.key] ? '是' : '否')
+    }
   },
   {
     title: 'V金分摊金额（单位：分）',

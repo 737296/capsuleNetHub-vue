@@ -87,6 +87,7 @@
                   <Panel :name="idx + ''">
                     <span v-if="idx==0">支付中台计算企业付明细</span>
                     <span v-if="idx==1">实际企业付明细</span>
+                    <span v-if="idx==2">百胜与支付宝货劳分类对应关系</span>
                     <DetailItem slot="content" v-model="enterprisePayList.fieldList" />
                     <div slot="content" v-if="idx==0" :key="'c' + idx">
                         <Table border :columns="columns2" :data="enterprisePayGoodsDetail"></Table>
@@ -350,6 +351,15 @@ const getEnterprisePayFieldList = () => [
       {
         title: '企业ID：',
         key: 'enterpriseId',
+        value: ''
+      }
+    ]
+  },
+  {
+    fieldList: [
+      {
+        title: '货劳分类映射关系：',
+        key: 'financeCodeMapping',
         value: ''
       }
     ]
@@ -758,7 +768,7 @@ export default {
       isUseEnterprisePay: false,
       enterprisePayFieldList: getEnterprisePayFieldList(),
       enterprisePayGoodsDetail: {},
-      value1: ['0', '1']
+      value1: ['0', '1', '2']
     }
   },
   created () {

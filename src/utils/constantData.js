@@ -103,7 +103,6 @@ export const MENU_LIST = [
           require(['@/views/merchant-application/applicationList.vue'], resolve)
         }
       }
-     
     ]
   },
   {
@@ -165,26 +164,9 @@ export const MENU_LIST = [
         component: resolve => {
           require(['@/views/system-management/role-management.vue'], resolve)
         }
-      },
-      {
-        name: 'demo1',
-        title: 'demo1',
-        path: '/demo1',
-        component: resolve => {
-          require(['@/views/system-management/demo1.vue'], resolve)
-        }
-      },
-      {
-        name: 'demo2',
-        title: 'demo2',
-        path: '/demo2',
-        component: resolve => {
-          require(['@/views/system-management/demo2.vue'], resolve)
-        }
       }
     ]
-  },
-  
+  }
 ]
 export const OTHER_ROUTER = [
   {

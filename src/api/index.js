@@ -2,6 +2,7 @@ import axios from 'axios'
 import store from '../store'
 import iview from 'iview'
 const http = axios.create({
+  // baseURL: 'http://localhost:8081',
   // baseURL: 'http://172.25.218.53:80',
   // baseURL: 'http://yapi.tortoisecloud.com:13003/mock/295',
   baseURL: process.env.API_BASE_URL,

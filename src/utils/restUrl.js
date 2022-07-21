@@ -107,6 +107,17 @@ export const REST_URL = {
   UPDATE_ROLE_DATA: '/admin/updateRole',
   ADD_ROLE_DATA: '/admin/insertRole',
   DEL_ROLE_DATA: '/admin/deleteRole',
-  QUERY_ROLE_DATA: '/admin/echoRole'
+  QUERY_ROLE_DATA: '/admin/echoRole',
+
+  //二级商户进件申请
+  QUERY_APPLICATION_LIST: "/admin/queryLegalList",
+  ADD_Businesslicense: "/admin/uploadImage",
+  addformtest: "/admin/saveMerchantInfo",
+  addAllformtest: "/admin/createMerchant",
+  QUERY_ACCOUNTBOOKS_LIST: "/admin/queryBalanceAccountList",
+  addaccountbooks: "/admin/createBalanceAccount",
+  queryMerchantDetail: "/admin/queryMerchantDetail",
+  Checkallamount: "/admin/validateMerchant"
+
 
 }

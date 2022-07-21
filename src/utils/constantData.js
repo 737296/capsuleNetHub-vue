@@ -91,6 +91,22 @@ export const MENU_LIST = [
     ]
   },
   {
+    name: 'merchantApplication',
+    title: '二级商户进件管理',
+    path: '/merchantApplication',
+    children: [
+      {
+        name: 'merchantApplicationList',
+        title: '商户法人列表',
+        path: '/merchantApplicationList',
+        component: resolve => {
+          require(['@/views/merchant-application/applicationList.vue'], resolve)
+        }
+      }
+     
+    ]
+  },
+  {
     name: 'payDataManagement',
     title: '支付数据查询',
     path: '/payDataManagement',
@@ -149,9 +165,26 @@ export const MENU_LIST = [
         component: resolve => {
           require(['@/views/system-management/role-management.vue'], resolve)
         }
+      },
+      {
+        name: 'demo1',
+        title: 'demo1',
+        path: '/demo1',
+        component: resolve => {
+          require(['@/views/system-management/demo1.vue'], resolve)
+        }
+      },
+      {
+        name: 'demo2',
+        title: 'demo2',
+        path: '/demo2',
+        component: resolve => {
+          require(['@/views/system-management/demo2.vue'], resolve)
+        }
       }
     ]
-  }
+  },
+  
 ]
 export const OTHER_ROUTER = [
   {
@@ -160,6 +193,33 @@ export const OTHER_ROUTER = [
     name: 'payOrderDetails',
     component: resolve => {
       require(['@/views/pay-data-management/components/pay-order-details.vue'], resolve)
+    }
+  },
+
+  {
+    path: '/merchantAdd',
+    title: '二级商户申请新增',
+    name: 'merchantAdd',
+    component: resolve => {
+      require(['@/views/merchant-application/components/merchantAdd.vue'], resolve)
+    }
+  },
+
+  {
+    path: '/merchantEdit',
+    title: '二级商户申请驳回编辑',
+    name: 'merchantEdit',
+    component: resolve => {
+      require(['@/views/merchant-application/components/merchantEdit.vue'], resolve)
+    }
+  },
+
+  {
+    path: '/accountBooksList',
+    title: '二级商户电子账簿',
+    name: 'accountBooksList',
+    component: resolve => {
+      require(['@/views/merchant-application/components/accountBooksList.vue'], resolve)
     }
   }
 ]

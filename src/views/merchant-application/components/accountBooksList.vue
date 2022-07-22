@@ -34,6 +34,7 @@ const getDefFormData = () => ({
   enableFlag: -1
 })
 
+// eslint-disable-next-line no-unused-vars
 const getRealFromData = (formData) => {
   const res = { ...formData }
   res.enableFlag === -1 && delete res.enableFlag
@@ -247,7 +248,7 @@ export default {
           'balanceAccountType': this.balanceAccountType
         })
         .then(({ data }) => {
-          if (data['code'] === 200) {
+          if (data.code === 200) {
             this.$Message.success('添加成功')
             this.queryData()
             console.log('表单返回值' + data)

@@ -60,7 +60,7 @@ export default {
               title: '电子账簿类别',
               key: 'balanceAcctType',
               align: 'center',
-              minWidth: 20,
+              minWidth: 20
 
             },
             {
@@ -82,11 +82,9 @@ export default {
               title: '法人编号',
               key: 'legalCode',
               align: 'center',
-              minWidth: 20,
+              minWidth: 20
 
-
-            },
-
+            }
 
           ],
           data: []
@@ -98,18 +96,18 @@ export default {
       formData: getDefFormData(),
       balanceAccountTypeList: [
         {
-          value: "MEITUANPAY",
-          label: "MEITUANPAY",
+          value: 'MEITUANPAY',
+          label: 'MEITUANPAY'
         },
         {
-          value: "ELEMEPAY",
-          label: "ELEMEPAY",
+          value: 'ELEMEPAY',
+          label: 'ELEMEPAY'
         },
         {
-          value: "UNIONPAY",
-          label: "UNIONPAY",
-        },
-      ],
+          value: 'UNIONPAY',
+          label: 'UNIONPAY'
+        }
+      ]
     }
   },
   computed: {
@@ -121,9 +119,8 @@ export default {
     }
   },
   created () {
-
-    this.legalCode = this.$route.params.data;
-    console.log("传来的数据" + this.legalCode);
+    this.legalCode = this.$route.params.data
+    console.log('传来的数据' + this.legalCode)
     this.currentOptions = this.$copy(this.formData)
     this.mixin_queryFormStateList()
     this.mixin_queryFromRoleList()
@@ -216,7 +213,7 @@ export default {
       this.tableData.loading = true
       baseApi
         .queryAccountBooksList({
-          //...getRealFromData(this.currentOptions),
+          // ...getRealFromData(this.currentOptions),
           pageNum: this.tableData.page.current, // 当前页
           pageSize: this.tableData.page.pageSize, // 每页条数
           legalCode: this.legalCode
@@ -225,9 +222,9 @@ export default {
           console.log('测试中！')
           console.log(this.currentOptions)
 
-          if (data.code === '200') {
-            //this.tableData.page.total = data.data.totalNum
-            //渲染数据
+          if (data.code === 200) {
+            // this.tableData.page.total = data.data.totalNum
+            // 渲染数据
             this.tableData.table.data = data.data
             console.log(data)
           } else {
@@ -243,19 +240,19 @@ export default {
         })
     },
     addaccountbooks () {
-      console.log("表单返回值123" + this.balanceAccountType)
+      console.log('表单返回值123' + this.balanceAccountType)
       baseApi
         .addaccountbooks({
           'legalCode': this.legalCode,
           'balanceAccountType': this.balanceAccountType
         })
         .then(({ data }) => {
-          if (data["code"] == "200") {
-            this.$Message.success("添加成功");
+          if (data['code'] === 200) {
+            this.$Message.success('添加成功')
             this.queryData()
-            console.log("表单返回值" + data)
+            console.log('表单返回值' + data)
           }
-          console.log("表单返回值" + data)
+          console.log('表单返回值' + data)
           this.$Message.error(`添加失败！`)
         })
         .catch((err) => {

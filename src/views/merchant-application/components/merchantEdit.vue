@@ -423,12 +423,12 @@
                     </RadioGroup>
 
                   </FormItem>
-                  <!-- <FormItem label="当前填写有效期">
+                  <FormItem label="当前填写有效期">
                     <Input v-model="formAllData.legalPersonIdCardValidTime"
                            value="当前日期"
                            disabled />
 
-                  </FormItem> -->
+                  </FormItem>
                 </div>
                 <FormItem>
                   <Button type="primary"
@@ -1238,7 +1238,7 @@ export default {
       this.$http.post(this.url, fileFormData, requestConfig).then((res) => {
         this.file = null
         this.loadingStatus = false
-        if (res.data['code'] === 200) {
+        if (res.data['code'] === '200') {
           // 分开标记多个上传的图片id赋值
           if (sign === 'businessLicenseCopy') {
             // 营业执照信息图片上传
@@ -1375,6 +1375,7 @@ export default {
         })
         .catch()
     },
+
     // 保存表单
     handleSubmit () {
       console.log('组件传过来的值', this.formAllData['businessLicenseValidTime'])
@@ -1382,10 +1383,13 @@ export default {
       // + ',' + (this.businessLicenseEndTime == null ? "长期" : (this.newdate(this.businessLicenseEndTime)));
       this.formAllData['organizationCertValidTime'] = this.newdate(this.formAllData['organizationCertValidTime'])
       // + ',' + (this.organizationCertEndTime == null ? "长期" : (this.newdate(this.organizationCertEndTime)));
-      if (this.formAllData['legalPersonIdCardValidTime'] == null || this.formAllData['legalPersonIdCardValidTime'] === 'NaN-0NaN-0NaN,NaN-0NaN-0NaN') {
-        this.formAllData['legalPersonIdCardValidTime'] = this.newdate(this.legalPersonIdCardStartTime) + ',' + (this.legalPersonIdCardEndTime == null ? '长期' : (this.newdate(this.legalPersonIdCardEndTime)))
-      }
-      this.formAllData['legalPersonIdCardValidTime'] = this.newdate(this.legalPersonIdCardStartTime) + ',' + (this.legalPersonIdCardEndTime == null ? '长期' : (this.newdate(this.legalPersonIdCardEndTime)))
+
+      // if (this.formAllData['legalPersonIdCardValidTime'] === '' || this.formAllData['legalPersonIdCardValidTime'] === 'NaN-0NaN-0NaN,NaN-0NaN-0NaN') {
+      //   this.formAllData['legalPersonIdCardValidTime'] = this.newdate(this.legalPersonIdCardStartTime) + ',' + (this.legalPersonIdCardEndTime == null ? '长期' : (this.newdate(this.legalPersonIdCardEndTime)))
+      // }
+
+      this.formAllData['legalPersonIdCardValidTime'] = this.newdate(this.legalPersonIdCardStartTime) + ',' + (this.legalPersonIdCardEndTime === '' ? '长期' : (this.newdate(this.legalPersonIdCardEndTime)))
+
       if (this.formAllData['contactIdCardValidTime'] == null || this.formAllData['contactIdCardValidTime'] === 'NaN-0NaN-0NaN,NaN-0NaN-0NaN') {
         this.formAllData['contactIdCardValidTime'] = this.newdate(this.contactIdCardStartTime) + ',' + (this.contactIdCardEndTime == null ? '长期' : (this.newdate(this.contactIdCardEndTime)))
       }
@@ -1403,7 +1407,7 @@ export default {
         .addformtest(
           this.formAllData)
         .then(({ data }) => {
-          if (data['code'] === 200) {
+          if (data['code'] === '200') {
             this.$Message.success('保存信息成功')
             console.log('表单返回值', data)
           } else {
@@ -1424,7 +1428,7 @@ export default {
         }
         )
         .then(({ data }) => {
-          if (data['code'] === 200) {
+          if (data['code'] === '200') {
             this.$Message.success('提交信息成功')
             console.log('表单返回值' + data)
           } else {
@@ -1519,7 +1523,7 @@ export default {
         }
         )
         .then(({ data }) => {
-          if (data['code'] === 200) {
+          if (data['code'] === '200') {
             this.formAllData = data.data
             // 给双日期输入框赋值
             this.dateDeal('legalPersonIdCardValidTime', this.formAllData['legalPersonIdCardValidTime'])

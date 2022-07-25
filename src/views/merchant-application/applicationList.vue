@@ -88,7 +88,7 @@ export default {
   mixins: [commMixin],
   data () {
     return {
-      Checkamount: 123,
+      Checkamount: 5,
       tableData: {
         loading: false,
         table: {
@@ -138,8 +138,13 @@ export default {
                       }]
                     },
                     [h('input', {
-                      domProps: {
-                        value: this.Checkamount
+                      // props: {
+                      //   value: this.Checkamount
+                      // },
+                      on: {
+                        change: function (event) {
+                          this.Checkamount = event.currentTarget.value
+                        }
                       }
                     }),
                     h('button', {
@@ -385,21 +390,21 @@ export default {
     //     })
     // },
     /**
-     * 初始化Form的默认值
-     */
+   * 初始化Form的默认值
+   */
     resetForm () {
       this.formData = getDefFormData()
       this.mixin_resetPage()
     },
     /**
-     * 改变表格高度
-     */
+   * 改变表格高度
+   */
     setTableHeight (height) {
       this.tableData.table.height = height
     },
     /**
-     * 查询列表
-     */
+   * 查询列表
+   */
     queryData () {
       this.tableData.loading = true
       baseApi

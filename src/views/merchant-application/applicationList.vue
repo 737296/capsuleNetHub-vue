@@ -88,7 +88,7 @@ export default {
   mixins: [commMixin],
   data () {
     return {
-      Checkamount: 5,
+      Checkamount: null,
       tableData: {
         loading: false,
         table: {
@@ -137,17 +137,17 @@ export default {
                         value: row['applicationStatus'] === '待账户验证'
                       }]
                     },
-                    [h('input', {
-                      // props: {
-                      //   value: this.Checkamount
-                      // },
+                    [h('Input', {
+                      props: {
+                        value: this.Checkamount
+                      },
                       on: {
-                        change: function (event) {
-                          this.Checkamount = event.currentTarget.value
+                        'on-change': (e) => {
+                          this.Checkamount = e.target.value
                         }
                       }
                     }),
-                    h('button', {
+                    h('Button', {
 
                       on: {
                         click: () => {

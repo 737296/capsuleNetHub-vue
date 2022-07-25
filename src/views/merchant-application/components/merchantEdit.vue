@@ -1238,7 +1238,7 @@ export default {
       this.$http.post(this.url, fileFormData, requestConfig).then((res) => {
         this.file = null
         this.loadingStatus = false
-        if (res.data['code'] === '200') {
+        if (res.data['code'] === 200) {
           // 分开标记多个上传的图片id赋值
           if (sign === 'businessLicenseCopy') {
             // 营业执照信息图片上传
@@ -1407,7 +1407,7 @@ export default {
         .addformtest(
           this.formAllData)
         .then(({ data }) => {
-          if (data['code'] === '200') {
+          if (data['code'] === 200) {
             this.$Message.success('保存信息成功')
             console.log('表单返回值', data)
           } else {
@@ -1428,7 +1428,7 @@ export default {
         }
         )
         .then(({ data }) => {
-          if (data['code'] === '200') {
+          if (data['code'] === 200) {
             this.$Message.success('提交信息成功')
             console.log('表单返回值' + data)
           } else {
@@ -1523,7 +1523,7 @@ export default {
         }
         )
         .then(({ data }) => {
-          if (data['code'] === '200') {
+          if (data['code'] === 200) {
             this.formAllData = data.data
             // 给双日期输入框赋值
             this.dateDeal('legalPersonIdCardValidTime', this.formAllData['legalPersonIdCardValidTime'])

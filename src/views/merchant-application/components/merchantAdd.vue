@@ -25,8 +25,7 @@
                     <Input v-model="formAllData.shortName" />
                   </FormItem>
                   <FormItem label="企业英文">
-                    <Input v-model="formAllData.englishName"
-                           number />
+                    <Input v-model="formAllData.englishName" />
                   </FormItem>
                 </div>
                 <FormItem>
@@ -287,24 +286,20 @@
                   </FormItem>
                   <FormItem label="开户名称">
                     <Input type="text"
-                           v-model="formAllData.settleAcctName"
-                           number />
+                           v-model="formAllData.settleAcctName" />
                   </FormItem>
                   <FormItem label="开户银行省市编码">
                     <Input type="text"
                            v-model="formAllData.settleAcctBankAddressCode"
-                           number
                            placeholder="精确到市" />
                   </FormItem>
                   <FormItem label="开户银行联行号">
                     <Input type="text"
-                           v-model="formAllData.settleAcctBankBranchCode"
-                           number />
+                           v-model="formAllData.settleAcctBankBranchCode" />
                   </FormItem>
                   <FormItem label="银行账户">
                     <Input type="text"
-                           v-model="formAllData.settleAcctBankAcctNo"
-                           number />
+                           v-model="formAllData.settleAcctBankAcctNo" />
                   </FormItem>
                 </div>
                 <FormItem>
@@ -329,8 +324,7 @@
                 <div class="main">
                   <FormItem label="法人姓名">
                     <Input type="text"
-                           v-model="formAllData.legalPersonIdCardName"
-                           number />
+                           v-model="formAllData.legalPersonIdCardName" />
                   </FormItem>
                   <FormItem label="法人证件类型">
                     <Select v-model="formAllData.legalPersonIdCardType"
@@ -404,8 +398,7 @@
                   </FormItem>
                   <FormItem label="法人证件号码">
                     <Input type="text"
-                           v-model="formAllData.legalPersonIdCardNumber"
-                           number />
+                           v-model="formAllData.legalPersonIdCardNumber" />
                   </FormItem>
                   <FormItem label="法人证件有效期">
                     <DatePicker type="date"
@@ -424,6 +417,7 @@
                       <Radio label="短期"
                              @click.native="legalPersonIdCardRadioGroupChange(1)"></Radio>
                       <Radio label="长期"
+                             v-model="legalPersonIdCardTimeSwitch"
                              @click.native="legalPersonIdCardRadioGroupChange(2)"></Radio>
 
                     </RadioGroup>
@@ -458,8 +452,7 @@
                 <div class="main">
                   <FormItem label="联系人姓名">
                     <Input type="text"
-                           v-model="formAllData.contactIdCardName"
-                           number />
+                           v-model="formAllData.contactIdCardName" />
                   </FormItem>
                   <FormItem label="联系人证件类型">
                     <Select v-model="formAllData.contactIdCardType"
@@ -533,8 +526,7 @@
                   </FormItem>
                   <FormItem label="联系人证件号码">
                     <Input type="text"
-                           v-model="formAllData.contactIdCardNumber"
-                           number />
+                           v-model="formAllData.contactIdCardNumber" />
                   </FormItem>
                   <FormItem label="联系人证件有效期">
                     <DatePicker type="date"
@@ -565,13 +557,11 @@
                   </FormItem>
                   <FormItem label="联系人手机号">
                     <Input type="text"
-                           v-model="formAllData.contactMobileNumber"
-                           number />
+                           v-model="formAllData.contactMobileNumber" />
                   </FormItem>
                   <FormItem label="联系人邮箱">
                     <Input type="text"
-                           v-model="formAllData.contactEmail"
-                           number />
+                           v-model="formAllData.contactEmail" />
                   </FormItem>
                 </div>
                 <FormItem>
@@ -597,45 +587,60 @@
                 <div class="main">
                   <FormItem label="企业分类大类">
                     <Input type="text"
-                           v-model="formAllData.businessInfoType"
-                           number />
+                           v-model="formAllData.businessInfoType" />
                   </FormItem>
                   <FormItem label="企业分类细分">
                     <Input type="text"
-                           v-model="formAllData.businessInfoSubType"
-                           number />
+                           v-model="formAllData.businessInfoSubType" />
                   </FormItem>
                   <FormItem label="企业经济成分">
                     <Input type="text"
-                           v-model="formAllData.businessInfoEconomy"
-                           number />
+                           v-model="formAllData.businessInfoEconomy" />
                   </FormItem>
                   <FormItem label="企业规模">
-                    <Input type="text"
-                           v-model="formAllData.businessInfoScale"
-                           number />
+                    <div style=" display: flex;justify-content: space-between;">
+
+                      <div>
+                        <Input type="text"
+                               v-model="formAllData.businessInfoScale"
+                               style="width: 400px" />
+                      </div>
+
+                      <div>
+
+                        <Poptip trigger="hover"
+                                placement="top-start">
+                          <div slot="content"
+                               class="poptipExplain">
+                            这是我的自定义内容，我想要换行啊换行鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋
+                            这是我的自定义内容，我想要换行啊换行鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋
+
+                          </div>
+
+                          <Icon type="ios-help"
+                                size="20" />
+                        </Poptip>
+                      </div>
+
+                    </div>
                   </FormItem>
                   <FormItem label="企业经营范围">
                     <Input type="text"
-                           v-model="formAllData.businessInfoRange"
-                           number />
+                           v-model="formAllData.businessInfoRange" />
                   </FormItem>
 
                   <FormItem label="企业经营地址">
                     <Input type="text"
-                           v-model="formAllData.businessInfoAddress"
-                           number />
+                           v-model="formAllData.businessInfoAddress" />
                   </FormItem>
 
                   <FormItem label="企业注册资本">
                     <Input type="text"
-                           v-model="formAllData.businessInfoRegisteredCapital"
-                           number />
+                           v-model="formAllData.businessInfoRegisteredCapital" />
                   </FormItem>
                   <FormItem label="企业注册地电话号码">
                     <Input type="text"
-                           v-model="formAllData.businessInfoRegisteredTel"
-                           number />
+                           v-model="formAllData.businessInfoRegisteredTel" />
                   </FormItem>
                 </div>
                 <FormItem>
@@ -670,14 +675,12 @@
                   </FormItem>
                   <FormItem label="实际控制企业名称">
                     <Input type="text"
-                           v-model="formAllData.holdingCompanyName"
-                           number />
+                           v-model="formAllData.holdingCompanyName" />
                   </FormItem>
 
                   <FormItem label="实际控制企业营业执照号">
                     <Input type="text"
-                           v-model="formAllData.holdingCompanyLicenseNumber"
-                           number />
+                           v-model="formAllData.holdingCompanyLicenseNumber" />
                   </FormItem>
 
                   <FormItem label="实际控制企业营业期限">
@@ -736,8 +739,7 @@
 
                   <FormItem label="受益所有人姓名">
                     <Input type="text"
-                           v-model="formAllData.beneficiaryIdCardName"
-                           number />
+                           v-model="formAllData.beneficiaryIdCardName" />
                   </FormItem>
 
                   <FormItem label="受益所有人证件类型">
@@ -750,8 +752,7 @@
                   </FormItem>
                   <FormItem label="受益所有人证件号码">
                     <Input type="text"
-                           v-model="formAllData.beneficiaryIdCardNumber"
-                           number />
+                           v-model="formAllData.beneficiaryIdCardNumber" />
                   </FormItem>
                   <FormItem label="受益所有人证件有效期">
                     <DatePicker type="date"
@@ -844,8 +845,7 @@
                   </FormItem>
                   <FormItem label="受益所有人地址">
                     <Input type="text"
-                           v-model="formAllData.beneficiaryAddress"
-                           number />
+                           v-model="formAllData.beneficiaryAddress" />
                   </FormItem>
 
                 </div>
@@ -937,73 +937,75 @@ export default {
       // 上传按钮状态
       loadingStatus: false,
 
+      // 双日期输入框数组
+      legalPersonDate: [],
       // 表单所有信息
       formAllData: {
         // 法人id
-        legalCode: null,
+        legalCode: '',
         // 基本信息
         organizationType: null,
-        shortName: null,
-        englishName: null,
+        shortName: '',
+        englishName: '',
         // 营业执照信息
-        businessLicenseCopy: null,
-        businessLicenseNumber: null,
-        businessLicenseCompanyName: null,
-        businessLicenseCompanyAddress: null,
-        businessLicenseValidTime: null,
+        businessLicenseCopy: '',
+        businessLicenseNumber: '',
+        businessLicenseCompanyName: '',
+        businessLicenseCompanyAddress: '',
+        businessLicenseValidTime: '',
         // 组织结构信息
-        organizationCertCopy: null,
-        organizationCertNumber: null,
-        organizationCertValidTime: null,
+        organizationCertCopy: '',
+        organizationCertNumber: '',
+        organizationCertValidTime: '',
         // 税务登记信息
-        taxRegistrationCertCopy: null,
-        taxRegistrationCertNumber: null,
+        taxRegistrationCertCopy: '',
+        taxRegistrationCertNumber: '',
         // 绑定账户信息
         settleAcctType: null,
-        settleAcctBankCode: null,
-        settleAcctName: null,
-        settleAcctBankAddressCode: null,
-        settleAcctBankBranchCode: null,
-        settleAcctBankAcctNo: null,
+        settleAcctBankCode: '',
+        settleAcctName: '',
+        settleAcctBankAddressCode: '',
+        settleAcctBankBranchCode: '',
+        settleAcctBankAcctNo: '',
         // 法人证件信息
-        legalPersonIdCardName: null,
+        legalPersonIdCardName: '',
         legalPersonIdCardType: null,
-        legalPersonIdCardCopy: null,
-        legalPersonIdCardNational: null,
-        legalPersonIdCardNumber: null,
-        legalPersonIdCardValidTime: null,
+        legalPersonIdCardCopy: '',
+        legalPersonIdCardNational: '',
+        legalPersonIdCardNumber: '',
+        legalPersonIdCardValidTime: '',
         // 联系人证件信息
-        contactIdCardName: null,
+        contactIdCardName: '',
         contactIdCardType: null,
-        contactIdCardCopy: null,
-        contactIdCardNational: null,
-        contactIdCardNumber: null,
-        contactIdCardValidTime: null,
-        contactMobileNumber: null,
-        contactEmail: null,
+        contactIdCardCopy: '',
+        contactIdCardNational: '',
+        contactIdCardNumber: '',
+        contactIdCardValidTime: '',
+        contactMobileNumber: '',
+        contactEmail: '',
         // 企业信息
         businessInfoType: null,
         businessInfoSubType: null,
-        businessInfoEconomy: null,
-        businessInfoScale: null,
-        businessInfoRange: null,
-        businessInfoAddress: null,
-        businessInfoRegisteredCapital: null,
-        businessInfoRegisteredTel: null,
+        businessInfoEconomy: '',
+        businessInfoScale: '',
+        businessInfoRange: '',
+        businessInfoAddress: '',
+        businessInfoRegisteredCapital: '',
+        businessInfoRegisteredTel: '',
         // 实际控股企业信息
         holdingCompanyType: null,
-        holdingCompanyName: null,
-        holdingCompanyLicenseNumber: null,
-        holdingCompanyLicenseValidTime: null,
+        holdingCompanyName: '',
+        holdingCompanyLicenseNumber: '',
+        holdingCompanyLicenseValidTime: '',
         holdingCompanyLicenseType: null,
         // 受益人所有信息
-        beneficiaryIdCardName: null,
+        beneficiaryIdCardName: '',
         beneficiaryIdCardType: null,
-        beneficiaryIdCardNumber: null,
-        beneficiaryIdCardValidTime: null,
-        beneficiaryIdCardCopy: null,
-        beneficiaryIdCardNational: null,
-        beneficiaryAddress: null
+        beneficiaryIdCardNumber: '',
+        beneficiaryIdCardValidTime: '',
+        beneficiaryIdCardCopy: '',
+        beneficiaryIdCardNational: '',
+        beneficiaryAddress: ''
       },
 
       // 选择器列表holdingCompanyLicenseType
@@ -1227,6 +1229,7 @@ export default {
       this.loadingStatus = true
       fileFormData.append('file', this.file)
       fileFormData.append('legalCode', this.legalCode)
+      console.log(fileFormData)
       let requestConfig = {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -1235,7 +1238,7 @@ export default {
       this.$http.post(this.url, fileFormData, requestConfig).then((res) => {
         this.file = null
         this.loadingStatus = false
-        if (res.data['code'] === '200') {
+        if (res.data['code'] === 200) {
           // 分开标记多个上传的图片id赋值
           if (sign === 'businessLicenseCopy') {
             // 营业执照信息图片上传
@@ -1286,13 +1289,13 @@ export default {
             this.formAllData['beneficiaryIdCardNational'] = res.data.data['mediaId']
             console.log(this.formAllData.beneficiaryIdCardNational)
           }
-          // 上传完立马刷新图片——图片回显
-          this.download()
 
           this.$Message.success(res.data['msg'])
         } else {
           this.$Message.error(res.data['msg'])
         }
+        // 上传完立马刷新图片——图片回显
+        this.download()
       })
     },
     // 显示图片
@@ -1372,6 +1375,7 @@ export default {
         })
         .catch()
     },
+
     // 保存表单
     handleSubmit () {
       console.log('组件传过来的值', this.formAllData['businessLicenseValidTime'])
@@ -1379,9 +1383,13 @@ export default {
       // + ',' + (this.businessLicenseEndTime == null ? "长期" : (this.newdate(this.businessLicenseEndTime)));
       this.formAllData['organizationCertValidTime'] = this.newdate(this.formAllData['organizationCertValidTime'])
       // + ',' + (this.organizationCertEndTime == null ? "长期" : (this.newdate(this.organizationCertEndTime)));
-      if (this.formAllData['legalPersonIdCardValidTime'] == null || this.formAllData['legalPersonIdCardValidTime'] === 'NaN-0NaN-0NaN,NaN-0NaN-0NaN') {
-        this.formAllData['legalPersonIdCardValidTime'] = this.newdate(this.legalPersonIdCardStartTime) + ',' + (this.legalPersonIdCardEndTime == null ? '长期' : (this.newdate(this.legalPersonIdCardEndTime)))
-      }
+
+      // if (this.formAllData['legalPersonIdCardValidTime'] === '' || this.formAllData['legalPersonIdCardValidTime'] === 'NaN-0NaN-0NaN,NaN-0NaN-0NaN') {
+      //   this.formAllData['legalPersonIdCardValidTime'] = this.newdate(this.legalPersonIdCardStartTime) + ',' + (this.legalPersonIdCardEndTime == null ? '长期' : (this.newdate(this.legalPersonIdCardEndTime)))
+      // }
+
+      this.formAllData['legalPersonIdCardValidTime'] = this.newdate(this.legalPersonIdCardStartTime) + ',' + (this.legalPersonIdCardEndTime === '' ? '长期' : (this.newdate(this.legalPersonIdCardEndTime)))
+
       if (this.formAllData['contactIdCardValidTime'] == null || this.formAllData['contactIdCardValidTime'] === 'NaN-0NaN-0NaN,NaN-0NaN-0NaN') {
         this.formAllData['contactIdCardValidTime'] = this.newdate(this.contactIdCardStartTime) + ',' + (this.contactIdCardEndTime == null ? '长期' : (this.newdate(this.contactIdCardEndTime)))
       }
@@ -1392,7 +1400,7 @@ export default {
       }
       this.formAllData['beneficiaryIdCardValidTime'] = this.newdate(this.beneficiaryIdCardStartTime) + ',' + (this.beneficiaryIdCardEndTime == null ? '长期' : (this.newdate(this.beneficiaryIdCardEndTime)))
       console.log('提交测试表单中')
-      console.log('双向绑定的值：' + this.formAllData['businessLicenseNumber'])
+      // console.log('双向绑定的值：' + this.formAllData['businessLicenseNumber'])
       this.formAllData['legalCode'] = this.legalCode
       console.log('保存数据', this.formAllData)
       baseApi
@@ -1400,15 +1408,15 @@ export default {
           this.formAllData)
         .then(({ data }) => {
           if (data['code'] === 200) {
-            this.$Message.success('上传成功')
-            console.log('表单返回值' + data)
+            this.$Message.success('保存信息成功')
+            console.log('表单返回值', data)
           } else {
-            this.$Message.error('上传失败')
+            this.$Message.error('保存信息失败')
             console.log('表单返回值' + typeof (this.formAllData['settleAcctType']))
           }
         })
         .catch((err) => {
-          this.$Message.error('上传异常' + err)
+          this.$Message.error('保存信息异常' + err)
         })
     },
     // 提交所有表单
@@ -1421,14 +1429,15 @@ export default {
         )
         .then(({ data }) => {
           if (data['code'] === 200) {
-            this.$Message.success('上传成功')
+            this.$Message.success('提交信息成功')
             console.log('表单返回值' + data)
           } else {
-            this.$Message.error('上传失败')
+            this.$Message.error('提交信息失败', data.msg)
+            console.log('失败返回值', data.msg)
           }
         })
         .catch((err) => {
-          this.$Message.error('上传异常' + err)
+          this.$Message.error('提交信息异常' + err.msg)
         })
     },
     // 清楚表单数据
@@ -1505,8 +1514,8 @@ export default {
         this.beneficiaryIdCardCopyImg = null
         this.beneficiaryIdCardNationalImg = null
       }
-    }
-    // 获取页面详细信息
+    },
+    // // 获取页面详细信息
     // queryMerchantDetail () {
     //   baseApi
     //     .queryMerchantDetail({
@@ -1516,6 +1525,9 @@ export default {
     //     .then(({ data }) => {
     //       if (data['code'] === '200') {
     //         this.formAllData = data.data
+    //         // 给双日期输入框赋值
+    //         this.dateDeal('legalPersonIdCardValidTime', this.formAllData['legalPersonIdCardValidTime'])
+
     //         console.log('表单返回值', data.data)
     //         this.download()
     //       } else {
@@ -1525,8 +1537,26 @@ export default {
     //     .catch((err) => {
     //       this.$Message.error('获取异常' + err)
     //     })
-    // }
+    // },
+    // 双日期框字符处理
+    dateDeal (sign, date) {
+      if (sign === 'legalPersonIdCardValidTime') {
+        this.legalPersonDate = date.split(',')
+        console.log(this.legalPersonDate)
+        if (this.legalPersonDate[1] === '长期') {
+          // 长期按钮被点击
+          this.legalPersonIdCardRadioGroupChange(2)
+          // 短期按钮取消被点击
+          this.legalPersonIdCardRadioGroup = ''
 
+          this.legalPersonIdCardStartTime = this.legalPersonDate[0]
+          this.legalPersonIdCardEndTime = this.legalPersonDate[1]
+        } else {
+          this.legalPersonIdCardStartTime = this.legalPersonDate[0]
+          this.legalPersonIdCardEndTime = this.legalPersonDate[1]
+        }
+      }
+    }
   }
 }
 </script>
@@ -1637,5 +1667,13 @@ export default {
   font-size: 20px;
   cursor: pointer;
   margin: 0 2px;
+}
+
+.poptipExplain {
+  width: 200px;
+  white-space: normal;
+  word-break: break-all;
+  line-height: 25px;
+  font-size: 14px;
 }
 </style>

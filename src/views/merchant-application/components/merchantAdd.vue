@@ -544,6 +544,7 @@
                       <Radio label="短期"
                              @click.native="contactIdCardRadioGroupChange(1)"></Radio>
                       <Radio label="长期"
+                             v-model="contactIdCardTimeSwitch"
                              @click.native="contactIdCardRadioGroupChange(2)"></Radio>
 
                     </RadioGroup>
@@ -771,6 +772,7 @@
                       <Radio label="短期"
                              @click.native="beneficiaryIdCardRadioGroupChange(1)"></Radio>
                       <Radio label="长期"
+                             v-model="beneficiaryIdCardTimeSwitch"
                              @click.native="beneficiaryIdCardRadioGroupChange(2)"></Radio>
 
                     </RadioGroup>
@@ -939,6 +941,8 @@ export default {
 
       // 双日期输入框数组
       legalPersonDate: [],
+      contactDate: [],
+      beneficiary: [],
       // 表单所有信息
       formAllData: {
         // 法人id
@@ -948,17 +952,17 @@ export default {
         shortName: '',
         englishName: '',
         // 营业执照信息
-        businessLicenseCopy: '',
+        businessLicenseCopy: null,
         businessLicenseNumber: '',
         businessLicenseCompanyName: '',
         businessLicenseCompanyAddress: '',
         businessLicenseValidTime: '',
         // 组织结构信息
-        organizationCertCopy: '',
+        organizationCertCopy: null,
         organizationCertNumber: '',
         organizationCertValidTime: '',
         // 税务登记信息
-        taxRegistrationCertCopy: '',
+        taxRegistrationCertCopy: null,
         taxRegistrationCertNumber: '',
         // 绑定账户信息
         settleAcctType: null,
@@ -970,15 +974,15 @@ export default {
         // 法人证件信息
         legalPersonIdCardName: '',
         legalPersonIdCardType: null,
-        legalPersonIdCardCopy: '',
-        legalPersonIdCardNational: '',
+        legalPersonIdCardCopy: null,
+        legalPersonIdCardNational: null,
         legalPersonIdCardNumber: '',
         legalPersonIdCardValidTime: '',
         // 联系人证件信息
         contactIdCardName: '',
         contactIdCardType: null,
-        contactIdCardCopy: '',
-        contactIdCardNational: '',
+        contactIdCardCopy: null,
+        contactIdCardNational: null,
         contactIdCardNumber: '',
         contactIdCardValidTime: '',
         contactMobileNumber: '',
@@ -1003,8 +1007,8 @@ export default {
         beneficiaryIdCardType: null,
         beneficiaryIdCardNumber: '',
         beneficiaryIdCardValidTime: '',
-        beneficiaryIdCardCopy: '',
-        beneficiaryIdCardNational: '',
+        beneficiaryIdCardCopy: null,
+        beneficiaryIdCardNational: null,
         beneficiaryAddress: ''
       },
 
@@ -1390,15 +1394,16 @@ export default {
 
       this.formAllData['legalPersonIdCardValidTime'] = this.newdate(this.legalPersonIdCardStartTime) + ',' + (this.legalPersonIdCardEndTime === '' ? '长期' : (this.newdate(this.legalPersonIdCardEndTime)))
 
-      if (this.formAllData['contactIdCardValidTime'] == null || this.formAllData['contactIdCardValidTime'] === 'NaN-0NaN-0NaN,NaN-0NaN-0NaN') {
-        this.formAllData['contactIdCardValidTime'] = this.newdate(this.contactIdCardStartTime) + ',' + (this.contactIdCardEndTime == null ? '长期' : (this.newdate(this.contactIdCardEndTime)))
-      }
+      // if (this.formAllData['contactIdCardValidTime'] == null || this.formAllData['contactIdCardValidTime'] === 'NaN-0NaN-0NaN,NaN-0NaN-0NaN') {
+      //   this.formAllData['contactIdCardValidTime'] = this.newdate(this.contactIdCardStartTime) + ',' + (this.contactIdCardEndTime == null ? '长期' : (this.newdate(this.contactIdCardEndTime)))
+      // }
+      this.formAllData['contactIdCardValidTime'] = this.newdate(this.contactIdCardStartTime) + ',' + (this.contactIdCardEndTime === '' ? '长期' : (this.newdate(this.contactIdCardEndTime)))
       this.formAllData['holdingCompanyLicenseValidTime'] = this.newdate(this.formAllData['holdingCompanyLicenseValidTime'])
       // + ',' + (this.holdingCompanyLicenseEndTime == null ? "长期" : (this.newdate(this.holdingCompanyLicenseEndTime)));
-      if (this.formAllData['beneficiaryIdCardValidTime'] == null || this.formAllData['beneficiaryIdCardValidTime'] === 'NaN-0NaN-0NaN,NaN-0NaN-0NaN') {
-        this.formAllData['beneficiaryIdCardValidTime'] = this.newdate(this.beneficiaryIdCardStartTime) + ',' + (this.beneficiaryIdCardEndTime == null ? '长期' : (this.newdate(this.beneficiaryIdCardEndTime)))
-      }
-      this.formAllData['beneficiaryIdCardValidTime'] = this.newdate(this.beneficiaryIdCardStartTime) + ',' + (this.beneficiaryIdCardEndTime == null ? '长期' : (this.newdate(this.beneficiaryIdCardEndTime)))
+      // if (this.formAllData['beneficiaryIdCardValidTime'] == null || this.formAllData['beneficiaryIdCardValidTime'] === 'NaN-0NaN-0NaN,NaN-0NaN-0NaN') {
+      //   this.formAllData['beneficiaryIdCardValidTime'] = this.newdate(this.beneficiaryIdCardStartTime) + ',' + (this.beneficiaryIdCardEndTime == null ? '长期' : (this.newdate(this.beneficiaryIdCardEndTime)))
+      // }
+      this.formAllData['beneficiaryIdCardValidTime'] = this.newdate(this.beneficiaryIdCardStartTime) + ',' + (this.beneficiaryIdCardEndTime === '' ? '长期' : (this.newdate(this.beneficiaryIdCardEndTime)))
       console.log('提交测试表单中')
       // console.log('双向绑定的值：' + this.formAllData['businessLicenseNumber'])
       this.formAllData['legalCode'] = this.legalCode
@@ -1515,29 +1520,7 @@ export default {
         this.beneficiaryIdCardNationalImg = null
       }
     },
-    // // 获取页面详细信息
-    // queryMerchantDetail () {
-    //   baseApi
-    //     .queryMerchantDetail({
-    //       'legalCode': this.legalCode
-    //     }
-    //     )
-    //     .then(({ data }) => {
-    //       if (data['code'] === '200') {
-    //         this.formAllData = data.data
-    //         // 给双日期输入框赋值
-    //         this.dateDeal('legalPersonIdCardValidTime', this.formAllData['legalPersonIdCardValidTime'])
 
-    //         console.log('表单返回值', data.data)
-    //         this.download()
-    //       } else {
-
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       this.$Message.error('获取异常' + err)
-    //     })
-    // },
     // 双日期框字符处理
     dateDeal (sign, date) {
       if (sign === 'legalPersonIdCardValidTime') {
@@ -1554,6 +1537,38 @@ export default {
         } else {
           this.legalPersonIdCardStartTime = this.legalPersonDate[0]
           this.legalPersonIdCardEndTime = this.legalPersonDate[1]
+        }
+      }
+      if (sign === 'contactIdCardValidTime') {
+        this.contactDate = date.split(',')
+        console.log(this.contactDate)
+        if (this.contactDate[1] === '长期') {
+          // 长期按钮被点击
+          this.contactIdCardRadioGroupChange(2)
+          // 短期按钮取消被点击
+          this.contactIdCardRadioGroup = ''
+
+          this.contactIdCardStartTime = this.contactDate[0]
+          this.contactIdCardEndTime = this.contactDate[1]
+        } else {
+          this.contactIdCardStartTime = this.contactDate[0]
+          this.contactIdCardEndTime = this.contactDate[1]
+        }
+      }
+      if (sign === 'beneficiaryIdCardValidTime') {
+        this.beneficiaryDate = date.split(',')
+        console.log(this.beneficiaryDate)
+        if (this.beneficiaryDate[1] === '长期') {
+          // 长期按钮被点击
+          this.beneficiaryIdCardRadioGroupChange(2)
+          // 短期按钮取消被点击
+          this.beneficiaryIdCardRadioGroup = ''
+
+          this.beneficiaryIdCardStartTime = this.beneficiaryDate[0]
+          this.beneficiaryIdCardEndTime = this.beneficiaryDate[1]
+        } else {
+          this.beneficiaryIdCardStartTime = this.beneficiaryDate[0]
+          this.beneficiaryIdCardEndTime = this.beneficiaryDate[1]
         }
       }
     }

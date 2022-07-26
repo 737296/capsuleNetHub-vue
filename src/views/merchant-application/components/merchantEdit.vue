@@ -417,9 +417,8 @@
                       <Radio label="短期"
                              @click.native="legalPersonIdCardRadioGroupChange(1)"></Radio>
                       <Radio label="长期"
-                             v-model="legalPersonIdCardTimeSwitch"
                              @click.native="legalPersonIdCardRadioGroupChange(2)"></Radio>
-
+                      <!-- v-model="legalPersonIdCardTimeSwitch" -->
                     </RadioGroup>
 
                   </FormItem>
@@ -544,6 +543,7 @@
                       <Radio label="短期"
                              @click.native="contactIdCardRadioGroupChange(1)"></Radio>
                       <Radio label="长期"
+                             v-model="contactIdCardTimeSwitch"
                              @click.native="contactIdCardRadioGroupChange(2)"></Radio>
 
                     </RadioGroup>
@@ -771,6 +771,7 @@
                       <Radio label="短期"
                              @click.native="beneficiaryIdCardRadioGroupChange(1)"></Radio>
                       <Radio label="长期"
+                             v-model="beneficiaryIdCardTimeSwitch"
                              @click.native="beneficiaryIdCardRadioGroupChange(2)"></Radio>
 
                     </RadioGroup>
@@ -926,8 +927,10 @@ export default {
 
       // 图片获取url
       getImgUrl: process.env.API_BASE_URL + '/admin/union/image',
+      // getImgUrl: 'http://192.168.119.209:8081/admin/union/image',
       // 图片上传地址变量
       url: process.env.API_BASE_URL + '/admin/uploadImage',
+      // url: 'http://192.168.119.209:8081/admin/uploadImage',
       // 法人id
       legalCode: null,
       // 图片流
@@ -939,6 +942,9 @@ export default {
 
       // 双日期输入框数组
       legalPersonDate: [],
+      contactDate: [],
+      beneficiaryDate: [],
+
       // 表单所有信息
       formAllData: {
         // 法人id
@@ -948,17 +954,17 @@ export default {
         shortName: '',
         englishName: '',
         // 营业执照信息
-        businessLicenseCopy: '',
+        businessLicenseCopy: null,
         businessLicenseNumber: '',
         businessLicenseCompanyName: '',
         businessLicenseCompanyAddress: '',
         businessLicenseValidTime: '',
         // 组织结构信息
-        organizationCertCopy: '',
+        organizationCertCopy: null,
         organizationCertNumber: '',
         organizationCertValidTime: '',
         // 税务登记信息
-        taxRegistrationCertCopy: '',
+        taxRegistrationCertCopy: null,
         taxRegistrationCertNumber: '',
         // 绑定账户信息
         settleAcctType: null,
@@ -970,15 +976,15 @@ export default {
         // 法人证件信息
         legalPersonIdCardName: '',
         legalPersonIdCardType: null,
-        legalPersonIdCardCopy: '',
-        legalPersonIdCardNational: '',
+        legalPersonIdCardCopy: null,
+        legalPersonIdCardNational: null,
         legalPersonIdCardNumber: '',
         legalPersonIdCardValidTime: '',
         // 联系人证件信息
         contactIdCardName: '',
         contactIdCardType: null,
-        contactIdCardCopy: '',
-        contactIdCardNational: '',
+        contactIdCardCopy: null,
+        contactIdCardNational: null,
         contactIdCardNumber: '',
         contactIdCardValidTime: '',
         contactMobileNumber: '',
@@ -1003,8 +1009,8 @@ export default {
         beneficiaryIdCardType: null,
         beneficiaryIdCardNumber: '',
         beneficiaryIdCardValidTime: '',
-        beneficiaryIdCardCopy: '',
-        beneficiaryIdCardNational: '',
+        beneficiaryIdCardCopy: null,
+        beneficiaryIdCardNational: null,
         beneficiaryAddress: ''
       },
 
@@ -1171,10 +1177,12 @@ export default {
     legalPersonIdCardRadioGroupChange (sign) {
       if (sign === 1) {
         this.legalPersonIdCardTimeSwitch = false
+        this.legalPersonIdCardRadioGroup = '短期'
         console.log('短期')
       } if (sign === 2) {
         this.legalPersonIdCardTimeSwitch = true
         this.legalPersonIdCardEndTime = null
+        this.legalPersonIdCardRadioGroup = '长期'
         console.log('长期')
       }
     },
@@ -1378,29 +1386,18 @@ export default {
 
     // 保存表单
     handleSubmit () {
-      console.log('组件传过来的值', this.formAllData['businessLicenseValidTime'])
+      // console.log('组件传过来的值', this.formAllData['businessLicenseValidTime'])
+      // 单日期
       this.formAllData['businessLicenseValidTime'] = this.newdate(this.formAllData['businessLicenseValidTime'])
-      // + ',' + (this.businessLicenseEndTime == null ? "长期" : (this.newdate(this.businessLicenseEndTime)));
       this.formAllData['organizationCertValidTime'] = this.newdate(this.formAllData['organizationCertValidTime'])
-      // + ',' + (this.organizationCertEndTime == null ? "长期" : (this.newdate(this.organizationCertEndTime)));
-
-      // if (this.formAllData['legalPersonIdCardValidTime'] === '' || this.formAllData['legalPersonIdCardValidTime'] === 'NaN-0NaN-0NaN,NaN-0NaN-0NaN') {
-      //   this.formAllData['legalPersonIdCardValidTime'] = this.newdate(this.legalPersonIdCardStartTime) + ',' + (this.legalPersonIdCardEndTime == null ? '长期' : (this.newdate(this.legalPersonIdCardEndTime)))
-      // }
-
-      this.formAllData['legalPersonIdCardValidTime'] = this.newdate(this.legalPersonIdCardStartTime) + ',' + (this.legalPersonIdCardEndTime === '' ? '长期' : (this.newdate(this.legalPersonIdCardEndTime)))
-
-      if (this.formAllData['contactIdCardValidTime'] == null || this.formAllData['contactIdCardValidTime'] === 'NaN-0NaN-0NaN,NaN-0NaN-0NaN') {
-        this.formAllData['contactIdCardValidTime'] = this.newdate(this.contactIdCardStartTime) + ',' + (this.contactIdCardEndTime == null ? '长期' : (this.newdate(this.contactIdCardEndTime)))
-      }
       this.formAllData['holdingCompanyLicenseValidTime'] = this.newdate(this.formAllData['holdingCompanyLicenseValidTime'])
-      // + ',' + (this.holdingCompanyLicenseEndTime == null ? "长期" : (this.newdate(this.holdingCompanyLicenseEndTime)));
-      if (this.formAllData['beneficiaryIdCardValidTime'] == null || this.formAllData['beneficiaryIdCardValidTime'] === 'NaN-0NaN-0NaN,NaN-0NaN-0NaN') {
-        this.formAllData['beneficiaryIdCardValidTime'] = this.newdate(this.beneficiaryIdCardStartTime) + ',' + (this.beneficiaryIdCardEndTime == null ? '长期' : (this.newdate(this.beneficiaryIdCardEndTime)))
-      }
-      this.formAllData['beneficiaryIdCardValidTime'] = this.newdate(this.beneficiaryIdCardStartTime) + ',' + (this.beneficiaryIdCardEndTime == null ? '长期' : (this.newdate(this.beneficiaryIdCardEndTime)))
+      // 双日期
+      console.log('组件传过来的值', this.formAllData['legalPersonIdCardEndTime'])
+
+      this.formAllData['legalPersonIdCardValidTime'] = this.newdate(this.legalPersonIdCardStartTime) + ',' + (this.legalPersonIdCardRadioGroup === '长期' ? '长期' : this.newdate(this.legalPersonIdCardEndTime))
+      this.formAllData['contactIdCardValidTime'] = this.newdate(this.contactIdCardStartTime) + ',' + (this.contactIdCardRadioGroup === '长期' ? '长期' : this.newdate(this.contactIdCardEndTime))
+      this.formAllData['beneficiaryIdCardValidTime'] = this.newdate(this.beneficiaryIdCardStartTime) + ',' + (this.beneficiaryIdCardRadioGroup === '长期' ? '长期' : this.newdate(this.beneficiaryIdCardEndTime))
       console.log('提交测试表单中')
-      // console.log('双向绑定的值：' + this.formAllData['businessLicenseNumber'])
       this.formAllData['legalCode'] = this.legalCode
       console.log('保存数据', this.formAllData)
       baseApi
@@ -1440,7 +1437,7 @@ export default {
           this.$Message.error('提交信息异常' + err.msg)
         })
     },
-    // 清楚表单数据
+    // 清空表单数据
     handleReset (a) {
       if (a === 1) {
         this.formAllData.shortName = null
@@ -1525,8 +1522,11 @@ export default {
         .then(({ data }) => {
           if (data['code'] === 200) {
             this.formAllData = data.data
+
             // 给双日期输入框赋值
             this.dateDeal('legalPersonIdCardValidTime', this.formAllData['legalPersonIdCardValidTime'])
+            this.dateDeal('contactIdCardValidTime', this.formAllData['contactIdCardValidTime'])
+            this.dateDeal('beneficiaryIdCardValidTime', this.formAllData['beneficiaryIdCardValidTime'])
 
             console.log('表单返回值', data.data)
             this.download()
@@ -1538,22 +1538,55 @@ export default {
           this.$Message.error('获取异常' + err)
         })
     },
+
     // 双日期框字符处理
     dateDeal (sign, date) {
       if (sign === 'legalPersonIdCardValidTime') {
         this.legalPersonDate = date.split(',')
         console.log(this.legalPersonDate)
         if (this.legalPersonDate[1] === '长期') {
-          // 长期按钮被点击
-          this.legalPersonIdCardRadioGroupChange(2)
-          // 短期按钮取消被点击
-          this.legalPersonIdCardRadioGroup = ''
-
+          // 长期按钮显示
+          this.legalPersonIdCardRadioGroup = '长期'
+          // 长期日期不可选中
+          this.legalPersonIdCardTimeSwitch = true
+          // 赋值
           this.legalPersonIdCardStartTime = this.legalPersonDate[0]
           this.legalPersonIdCardEndTime = this.legalPersonDate[1]
         } else {
+          this.legalPersonIdCardRadioGroup = '短期'
+          this.legalPersonIdCardTimeSwitch = false
           this.legalPersonIdCardStartTime = this.legalPersonDate[0]
           this.legalPersonIdCardEndTime = this.legalPersonDate[1]
+        }
+      }
+      if (sign === 'contactIdCardValidTime') {
+        this.contactDate = date.split(',')
+        console.log(this.contactDate)
+        if (this.contactDate[1] === '长期') {
+          this.contactIdCardRadioGroup = '长期'
+          this.contactIdCardTimeSwitch = true
+          this.contactIdCardStartTime = this.contactDate[0]
+          this.contactIdCardEndTime = this.contactDate[1]
+        } else {
+          this.contactIdCardRadioGroup = '短期'
+          this.contactIdCardTimeSwitch = false
+          this.contactIdCardStartTime = this.contactDate[0]
+          this.contactIdCardEndTime = this.contactDate[1]
+        }
+      }
+      if (sign === 'beneficiaryIdCardValidTime') {
+        this.beneficiaryDate = date.split(',')
+        console.log(this.beneficiaryDate)
+        if (this.beneficiaryDate[1] === '长期') {
+          this.beneficiaryIdCardRadioGroup = '长期'
+          this.beneficiaryIdCardTimeSwitch = true
+          this.beneficiaryIdCardStartTime = this.beneficiaryDate[0]
+          this.beneficiaryIdCardEndTime = this.beneficiaryDate[1]
+        } else {
+          this.beneficiaryIdCardRadioGroup = '短期'
+          this.beneficiaryIdCardTimeSwitch = false
+          this.beneficiaryIdCardStartTime = this.beneficiaryDate[0]
+          this.beneficiaryIdCardEndTime = this.beneficiaryDate[1]
         }
       }
     }

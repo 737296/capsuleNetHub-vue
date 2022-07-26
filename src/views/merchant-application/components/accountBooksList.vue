@@ -97,8 +97,8 @@ export default {
       formData: getDefFormData(),
       balanceAccountTypeList: [
         {
-          value: 'MEITUANPAY',
-          label: 'MEITUANPAY'
+          value: 'MTPAY',
+          label: 'MTPAY'
         },
         {
           value: 'ELEMEPAY',
@@ -215,31 +215,29 @@ export default {
       baseApi
         .queryAccountBooksList({
           // ...getRealFromData(this.currentOptions),
-          pageNum: this.tableData.page.current, // 当前页
-          pageSize: this.tableData.page.pageSize, // 每页条数
-          legalCode: this.legalCode
+          'pageNum': this.tableData.page.current, // 当前页
+          'pageSize': this.tableData.page.pageSize, // 每页条数
+          'legalCode': this.legalCode
         })
         .then(({ data }) => {
           console.log('测试中！')
           console.log(this.currentOptions)
-
           if (data.code === 200) {
             // this.tableData.page.total = data.data.totalNum
             // 渲染数据
             this.tableData.table.data = data.data
             console.log(data)
-          } else {
-            return Promise.reject(new Error(data.msg))
           }
         })
         .catch((err) => {
-          this.$Message.error(`查询失败！${err.message}`)
-          console.log(err)
+          this.$Message.error('查询失败！')
+          console.log('异常', err)
         })
         .finally(() => {
           this.tableData.loading = false
         })
     },
+
     addaccountbooks () {
       console.log('表单返回值123' + this.balanceAccountType)
       baseApi
@@ -249,15 +247,27 @@ export default {
         })
         .then(({ data }) => {
           if (data.code === 200) {
-            this.$Message.success('添加成功')
+            // this.$Message.success('添加成功')
+            this.$Notice.success({
+              title: data.msg,
+              duration: 3
+            })
             this.queryData()
             console.log('表单返回值' + data)
+          } else {
+            // this.$Message.error('添加失败')
+            this.$Notice.error({
+              title: data.msg,
+              duration: 3
+            })
           }
-          console.log('表单返回值' + data)
-          this.$Message.error(`添加失败！`)
         })
         .catch((err) => {
-          this.$Message.error(`添加失败！${err.message}`)
+          // this.$Message.error('添加异常！')
+          this.$Notice.error({
+            title: '异常',
+            duration: 3
+          })
           console.log(err)
         })
     }

@@ -1405,20 +1405,25 @@ export default {
           this.formAllData)
         .then(({ data }) => {
           if (data['code'] === 200) {
-            this.$Message.success('保存信息成功')
+            // this.$Message.success('保存信息成功')
             console.log('表单返回值', data)
+            this.$Notice.success({
+              title: data.msg,
+              duration: 3
+            })
           } else {
-            this.$Message.error('保存信息失败')
+            // this.$Message.error('保存信息失败')
+            this.$Notice.error({
+              title: data.msg,
+              duration: 3
+            })
             console.log('表单返回值' + typeof (this.formAllData['settleAcctType']))
           }
-        })
-        .catch((err) => {
-          this.$Message.error('保存信息异常' + err)
         })
     },
     // 提交所有表单
     handleAllSubmit () {
-      console.log('aaaaaa' + this.legalCode)
+      console.log('法人code' + this.legalCode)
       baseApi
         .addAllformtest({
           'legalCode': this.legalCode
@@ -1426,15 +1431,27 @@ export default {
         )
         .then(({ data }) => {
           if (data['code'] === 200) {
-            this.$Message.success('提交信息成功')
-            console.log('表单返回值' + data)
+            // this.$Message.success('提交信息成功')
+            this.$Notice.success({
+              title: data.msg,
+              duration: 3
+            })
+            console.log('表单返回值', data)
           } else {
-            this.$Message.error('提交信息失败', data.msg)
-            console.log('失败返回值', data.msg)
+            // this.$Message.error(JSON.stringify(data).msg)
+            this.$Notice.error({
+              title: data.msg,
+              duration: 3
+            })
+            console.log('失败返回值', data)
           }
         })
         .catch((err) => {
-          this.$Message.error('提交信息异常' + err.msg)
+          this.$Message.error(err)
+          this.$Notice.error({
+            title: '异常',
+            duration: 3
+          })
         })
     },
     // 清空表单数据
@@ -1535,7 +1552,7 @@ export default {
           }
         })
         .catch((err) => {
-          this.$Message.error('获取异常' + err)
+          this.$Message.error('获取信息异常' + err)
         })
     },
 
@@ -1595,13 +1612,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-// .rate-demo {
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-
-// }
-
 .page-root {
   overflow: hidden;
   overflow-y: auto;

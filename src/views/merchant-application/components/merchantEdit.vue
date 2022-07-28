@@ -8,7 +8,7 @@
       <Tabs value="name1">
         <TabPane label="基本信息"
                  name="name1">
-          <div :style="{ padding: '50px 300px' }">
+          <div :style="{  padding: '2% 20%'}">
             <Card style="width: 90%">
               <template #title>
                 <h3 style="text-align: center">基本信息</h3>
@@ -134,7 +134,7 @@
           </div>
         </TabPane>
         <TabPane label="组织机构信息">
-          <div :style="{ padding: '50px 300px' }">
+          <div :style="{ padding: '2% 20%' }">
             <!-- 组织结构信息 -->
             <Card style="width: 90%">
               <template #title>
@@ -178,7 +178,7 @@
                   <FormItem label="组织机构代码">
                     <Input type="text"
                            v-model="formAllData.organizationCertNumber"
-                           placeholder="10位数字" />
+                           placeholder="仅支持 9-10 位数字、字母、连字符" />
                   </FormItem>
 
                   <FormItem label="组织机构代码有效期">
@@ -213,7 +213,7 @@
           </div>
         </TabPane>
         <TabPane label="税务登记信息">
-          <div :style="{ padding: '50px 300px' }">
+          <div :style="{ padding: '2% 20%' }">
             <!-- 税务登记信息 -->
             <Card style="width: 90%">
               <template #title>
@@ -269,7 +269,7 @@
           </div>
         </TabPane>
         <TabPane label="绑定账户信息">
-          <div :style="{ padding: '50px 300px' }">
+          <div :style="{padding: '2% 20%'}">
             <!-- 绑定账户信息 -->
             <Card style="width: 90%">
               <template #title>
@@ -279,13 +279,13 @@
               <Form :label-width="150">
                 <div class="main">
                   <FormItem label="账户类型">
-
-                    <Select v-model="formAllData.settleAcctType"
+                    对公账户
+                    <!-- <Select v-model="formAllData.settleAcctType"
                             style="width:200px">
                       <Option v-for="item in settleAcctTypeList"
                               :value="item.value"
                               :key="item.value">{{ item.label }}</Option>
-                    </Select>
+                    </Select> -->
                   </FormItem>
                   <FormItem label="开户银行编码">
                     <div style=" display: flex;justify-content: space-between;">
@@ -293,7 +293,7 @@
                         <Input type="text"
                                v-model="formAllData.settleAcctBankCode"
                                style="width:400px"
-                               placeholder="请下载文档，对照填写" />
+                               placeholder="开户银行编码长度必须为 12(请下载文档，对照填写)" />
                       </div>
                       <div>
                         <a href="./static/demo.xlsx"
@@ -306,12 +306,12 @@
                   <FormItem label="开户银行联行号">
                     <Input type="text"
                            v-model="formAllData.settleAcctBankBranchCode"
-                           placeholder="同“开户银行编码”一致" />
+                           placeholder="开户银行编码长度必须为 12(请下载文档，对照填写)" />
                   </FormItem>
                   <FormItem label="开户名称">
                     <Input type="text"
                            v-model="formAllData.settleAcctName"
-                           placeholder="对公账户须与公司名一致" />
+                           placeholder="开户名称必须与营业执照公司名称一致" />
                   </FormItem>
                   <FormItem label="开户银行省市编码">
                     <Input type="text"
@@ -336,7 +336,7 @@
           </div>
         </TabPane>
         <TabPane label="法人证件信息">
-          <div :style="{ padding: '50px 300px' }">
+          <div :style="{padding: '2% 20%'}">
             <!-- 法人证件信息 -->
             <Card style="width: 90%">
               <template #title>
@@ -463,7 +463,7 @@
           </div>
         </TabPane>
         <TabPane label="联系人证件信息">
-          <div :style="{ padding: '50px 300px' }">
+          <div :style="{ padding: '2% 20%' }">
             <!-- 联系人证件信息 -->
             <Card style="width: 90%">
               <template #title>
@@ -598,7 +598,7 @@
           </div>
         </TabPane>
         <TabPane label="企业信息">
-          <div :style="{ padding: '50px 300px' }">
+          <div :style="{ padding: '2% 20%' }">
             <!-- 企业信息 -->
             <Card style="width: 90%">
               <template #title>
@@ -622,33 +622,8 @@
                         <Input type="text"
                                v-model="formAllData.businessInfoEconomy"
                                style="width: 400px"
-                               placeholder="例：CS01" />
-                      </div>
-                      <div>
-                        <Poptip trigger="hover"
-                                placement="top-start">
-                          <div slot="content"
-                               class="poptipExplain">
-                            CS01 大型企业<br />
-                            CS02 中型企业<br />
-                            CS03 小型企业<br />
-                            CS04 微型企业<br />
-                          </div>
-                          <Icon type="ios-help"
-                                size="20" />
-                        </Poptip>
-                      </div>
-                    </div>
-                  </FormItem>
-                  <FormItem label="企业规模">
-                    <div style=" display: flex;justify-content: space-between;">
-                      <div>
-                        <Input type="text"
-                               v-model="formAllData.businessInfoScale"
-                               style="width: 400px"
                                placeholder="例：201" />
                       </div>
-
                       <div>
                         <Poptip trigger="hover"
                                 placement="top-start">
@@ -671,6 +646,32 @@
                             217 外资企业<br />
                             218 外商投资股份有限公司<br />
                             299 其他企业<br />
+                          </div>
+                          <Icon type="ios-help"
+                                size="20" />
+                        </Poptip>
+                      </div>
+                    </div>
+                  </FormItem>
+                  <FormItem label="企业规模">
+                    <div style=" display: flex;justify-content: space-between;">
+                      <div>
+                        <Input type="text"
+                               v-model="formAllData.businessInfoScale"
+                               style="width: 400px"
+                               placeholder="例：CS01" />
+                      </div>
+
+                      <div>
+                        <Poptip trigger="hover"
+                                placement="top-start">
+                          <div slot="content"
+                               class="poptipExplain">
+
+                            CS01 大型企业<br />
+                            CS02 中型企业<br />
+                            CS03 小型企业<br />
+                            CS04 微型企业<br />
 
                           </div>
                           <Icon type="ios-help"
@@ -715,7 +716,7 @@
           </div>
         </TabPane>
         <TabPane label="实际控制企业信息">
-          <div :style="{ padding: '50px 300px' }">
+          <div :style="{ padding: '2% 20%' }">
             <Card style="width: 90%">
               <template #title>
                 <h3 style="text-align: center">实际控制企业信息</h3>
@@ -742,7 +743,7 @@
                   <FormItem label="实际控制企业营业执照号">
                     <Input type="text"
                            v-model="formAllData.holdingCompanyLicenseNumber"
-                           placeholder="例：123456789987654" />
+                           placeholder="仅支持 15 或 18 位数字、字母" />
                   </FormItem>
 
                   <FormItem label="实际控制企业营业期限">
@@ -789,7 +790,7 @@
           </div>
         </TabPane>
         <TabPane label="受益人所有信息">
-          <div :style="{ padding: '50px 300px' }">
+          <div :style="{ padding: '2% 20%' }">
             <Card style="width: 90%">
               <template #title>
                 <h3 style="text-align: center">受益人所有信息</h3>
@@ -844,7 +845,7 @@
                            disabled />
 
                   </FormItem> -->
-                  <FormItem label="受益所有人证件像面照片">
+                  <FormItem label="受益所有人证件人像面照片">
                     <Upload action="//jsonplaceholder.typicode.com/posts/"
                             :form="['jpg', 'jpeg', 'png', 'gif']"
                             :before-upload="handleUpload">
@@ -926,7 +927,6 @@
       </Tabs>
     </div>
 
-    <div :style="{ padding: '50px 300px' }"></div>
   </div>
 </template>
 <script>
@@ -1309,7 +1309,7 @@ export default {
       this.$http.post(this.url, fileFormData, requestConfig).then((res) => {
         this.file = null
         this.loadingStatus = false
-        if (res.data['code'] === 200) {
+        if (res.data['code'] === 200 || res.data['code'] === '200') {
           // 分开标记多个上传的图片id赋值
           if (sign === 'businessLicenseCopy') {
             // 营业执照信息图片上传
@@ -1473,7 +1473,7 @@ export default {
         .addformtest(
           this.formAllData)
         .then(({ data }) => {
-          if (data['code'] === 200) {
+          if (data['code'] === 200 || data['code'] === '200') {
             // this.$Message.success('保存信息成功')
             console.log('表单返回值', data)
             this.$Notice.success({
@@ -1499,17 +1499,19 @@ export default {
         }
         )
         .then(({ data }) => {
-          if (data['code'] === 200) {
+          if (data['code'] === 200 || data['code'] === '200') {
             // this.$Message.success('提交信息成功')
             this.$Notice.success({
-              title: data.msg,
+              title: '提交成功',
+              // desc: data.msg.issue,
               duration: 3
             })
             console.log('表单返回值', data)
           } else {
             // this.$Message.error(JSON.stringify(data).msg)
             this.$Notice.error({
-              title: data.msg,
+              title: '提交失败',
+              desc: data.msg.issue,
               duration: 3
             })
             console.log('失败返回值', data)
@@ -1519,6 +1521,7 @@ export default {
           this.$Message.error(err)
           this.$Notice.error({
             title: '异常',
+            desc: err,
             duration: 3
           })
         })
@@ -1606,7 +1609,7 @@ export default {
         }
         )
         .then(({ data }) => {
-          if (data['code'] === 200) {
+          if (data['code'] === 200 || data['code'] === '200') {
             this.formAllData = data.data
 
             // 给双日期输入框赋值

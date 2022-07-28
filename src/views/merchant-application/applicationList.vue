@@ -374,7 +374,7 @@ export default {
           id: row.id
         })
         .then(({ data }) => {
-          if (data.code === 200) {
+          if (data.code === 200 || data.code === '200') {
             this.$Message.success(`操作成功`)
             this.queryData()
           } else {
@@ -437,7 +437,7 @@ export default {
           console.log(this.currentOptions)
           console.log(this.tableData.page.current)
           console.log(this.tableData.page.pageSize)
-          if (data.code === 200) {
+          if (data.code === 200 || data.code === '200') {
             this.tableData.page.total = data.data.totalNum
             console.log('test')
 
@@ -494,7 +494,7 @@ export default {
 
         })
         .then(({ res }) => {
-          if (res.data['code'] === 200) {
+          if (res.data['code'] === 200 || res.data['code'] === '200') {
             this.$Message.success(res.data['msg'])
           }
           this.$Message.success('请求返回成功')

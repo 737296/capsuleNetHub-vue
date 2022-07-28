@@ -165,7 +165,7 @@ export default {
           id: row.id
         })
         .then(({ data }) => {
-          if (data.code === 200) {
+          if (data.code === 200 || data.code === '200') {
             this.$Message.success(`操作成功`)
             this.queryData()
           } else {
@@ -222,7 +222,7 @@ export default {
         .then(({ data }) => {
           console.log('测试中！')
           console.log(this.currentOptions)
-          if (data.code === 200) {
+          if (data.code === 200 || data.code === '200') {
             // this.tableData.page.total = data.data.totalNum
             // 渲染数据
             this.tableData.table.data = data.data
@@ -246,7 +246,7 @@ export default {
           'balanceAccountType': this.balanceAccountType
         })
         .then(({ data }) => {
-          if (data.code === 200) {
+          if (data.code === 200 || data.code === '200') {
             // this.$Message.success('添加成功')
             this.$Notice.success({
               title: data.msg,

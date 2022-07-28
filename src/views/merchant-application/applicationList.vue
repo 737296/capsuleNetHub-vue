@@ -177,13 +177,16 @@ export default {
                           // 显示新页面
                           this.$router.push({
                             name: 'merchantAdd',
-                            params: { data: row['legalCode'] }
+                            params: {
+                              data: row['legalCode'],
+                              data1: row['companyName']
+                            }
                           })
                         }
                       },
                       directives: [{
                         name: 'show',
-                        value: row['applicationStatus'] == null
+                        value: row['applicationStatus'] === '待创建'
                       }]
                     },
                     '创建 '
@@ -198,7 +201,10 @@ export default {
                           // 显示新页面
                           this.$router.push({
                             name: 'merchantEdit',
-                            params: { data: row['legalCode'] }
+                            params: {
+                              data: row['legalCode'],
+                              data1: row['companyName']
+                            }
                           })
                         }
                       },
@@ -221,7 +227,11 @@ export default {
                             params: { data: row['legalCode'] }
                           })
                         }
-                      }
+                      },
+                      directives: [{
+                        name: 'show',
+                        value: (row['applicationStatus'] === '审核通过')
+                      }]
                     },
                     '电子账簿  '
 
@@ -262,6 +272,10 @@ export default {
         {
           value: null,
           label: '全部'
+        },
+        {
+          value: '10000',
+          label: '待创建'
         },
         {
           value: '10',
@@ -360,7 +374,7 @@ export default {
           id: row.id
         })
         .then(({ data }) => {
-          if (data.code === 200) {
+          if (data.code === '200') {
             this.$Message.success(`操作成功`)
             this.queryData()
           } else {
@@ -419,16 +433,19 @@ export default {
 
         })
         .then(({ data }) => {
-          // console.log("测试中！");
-          // console.log(this.currentOptions);
-          // console.log(this.tableData.page.current);
-          // console.log(this.tableData.page.pageSize);
-          if (data.code === 200) {
+          console.log('测试中！')
+          console.log(this.currentOptions)
+          console.log(this.tableData.page.current)
+          console.log(this.tableData.page.pageSize)
+          if (data.code === '200') {
             this.tableData.page.total = data.data.totalNum
             console.log('test')
 
             for (var i = 0, l = data.data.records.length; i < l; i++) {
               console.log(data.data.records[i])
+              if (data.data.records[i].applicationStatus === null) {
+                data.data.records[i].applicationStatus = '待创建'
+              }
               if (data.data.records[i].applicationStatus === 10) {
                 data.data.records[i].applicationStatus = '草稿保存'
               } if (data.data.records[i].applicationStatus === 11) {
@@ -477,7 +494,7 @@ export default {
 
         })
         .then(({ res }) => {
-          if (res.data['code'] === 200) {
+          if (res.data['code'] === '200') {
             this.$Message.success(res.data['msg'])
           }
           this.$Message.success('请求返回成功')

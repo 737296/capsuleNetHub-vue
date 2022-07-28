@@ -21,6 +21,10 @@
                 <div class="main">
                   <FormItem label="主体类型"> 企业 </FormItem>
                   <Notification :count="5" />
+                  <FormItem label="法人编号">
+                    {{legalCode}}
+                  </FormItem>
+
                   <FormItem label="商户简称">
                     <Input v-model="formAllData.shortName" />
                   </FormItem>
@@ -86,7 +90,8 @@
                   </FormItem>
                   <FormItem label="营业执照注册号">
                     <Input type="text"
-                           v-model="formAllData.businessLicenseNumber" />
+                           v-model="formAllData.businessLicenseNumber"
+                           placeholder="15位数字" />
                   </FormItem>
                   <FormItem label="营业执照公司名称">
                     <Input type="text"
@@ -128,17 +133,17 @@
             </Card>
           </div>
         </TabPane>
-        <TabPane label="组织结构信息">
+        <TabPane label="组织机构信息">
           <div :style="{ padding: '50px 300px' }">
             <!-- 组织结构信息 -->
             <Card style="width: 90%">
               <template #title>
-                <h3 style="text-align: center">组织结构信息</h3>
+                <h3 style="text-align: center">组织机构信息</h3>
                 <br />
               </template>
               <Form :label-width="150">
                 <div class="main">
-                  <FormItem label="组织结构代码证件照">
+                  <FormItem label="组织机构代码证件照">
                     <Upload action="//jsonplaceholder.typicode.com/posts/"
                             :form="['jpg', 'jpeg', 'png', 'gif']"
                             :before-upload="handleUpload">
@@ -170,12 +175,13 @@
                     </div>
 
                   </FormItem>
-                  <FormItem label="组织结构代码">
+                  <FormItem label="组织机构代码">
                     <Input type="text"
-                           v-model="formAllData.organizationCertNumber" />
+                           v-model="formAllData.organizationCertNumber"
+                           placeholder="10位数字" />
                   </FormItem>
 
-                  <FormItem label="组织结构代码有效期">
+                  <FormItem label="组织机构代码有效期">
                     <!-- <DatePicker type="date"
                                 placeholder="开始时间"
                                 v-model="organizationCertStartTime">
@@ -248,7 +254,8 @@
                     </div>
                   </FormItem>
                   <FormItem label="税务登记号">
-                    <Input v-model="formAllData.taxRegistrationCertNumber" />
+                    <Input v-model="formAllData.taxRegistrationCertNumber"
+                           placeholder="例：123456789009876" />
                   </FormItem>
                 </div>
                 <FormItem>
@@ -281,25 +288,41 @@
                     </Select>
                   </FormItem>
                   <FormItem label="开户银行编码">
+                    <div style=" display: flex;justify-content: space-between;">
+                      <div>
+                        <Input type="text"
+                               v-model="formAllData.settleAcctBankCode"
+                               style="width:400px"
+                               placeholder="请下载文档，对照填写" />
+                      </div>
+                      <div>
+                        <a href="./static/demo.xlsx"
+                           download="demo.xlsx"
+                           target="view_window">下载</a>
+                      </div>
+
+                    </div>
+                  </FormItem>
+                  <FormItem label="开户银行联行号">
                     <Input type="text"
-                           v-model="formAllData.settleAcctBankCode" />
+                           v-model="formAllData.settleAcctBankBranchCode"
+                           placeholder="同“开户银行编码”一致" />
                   </FormItem>
                   <FormItem label="开户名称">
                     <Input type="text"
-                           v-model="formAllData.settleAcctName" />
+                           v-model="formAllData.settleAcctName"
+                           placeholder="对公账户须与公司名一致" />
                   </FormItem>
                   <FormItem label="开户银行省市编码">
                     <Input type="text"
                            v-model="formAllData.settleAcctBankAddressCode"
                            placeholder="精确到市" />
                   </FormItem>
-                  <FormItem label="开户银行联行号">
-                    <Input type="text"
-                           v-model="formAllData.settleAcctBankBranchCode" />
-                  </FormItem>
+
                   <FormItem label="银行账户">
                     <Input type="text"
-                           v-model="formAllData.settleAcctBankAcctNo" />
+                           v-model="formAllData.settleAcctBankAcctNo"
+                           placeholder="银行卡号" />
                   </FormItem>
                 </div>
                 <FormItem>
@@ -422,12 +445,12 @@
                     </RadioGroup>
 
                   </FormItem>
-                  <FormItem label="当前填写有效期">
+                  <!-- <FormItem label="当前填写有效期">
                     <Input v-model="formAllData.legalPersonIdCardValidTime"
                            value="当前日期"
                            disabled />
 
-                  </FormItem>
+                  </FormItem> -->
                 </div>
                 <FormItem>
                   <Button type="primary"
@@ -549,12 +572,12 @@
                     </RadioGroup>
 
                   </FormItem>
-                  <FormItem label="当前填写有效期">
+                  <!-- <FormItem label="当前填写有效期">
                     <Input v-model="formAllData.contactIdCardValidTime"
                            value="当前日期"
                            disabled />
 
-                  </FormItem>
+                  </FormItem> -->
                   <FormItem label="联系人手机号">
                     <Input type="text"
                            v-model="formAllData.contactMobileNumber" />
@@ -585,38 +608,71 @@
               <Form ref="formCustom"
                     :label-width="150">
                 <div class="main">
-                  <FormItem label="企业分类大类">
+                  <!-- <FormItem label="企业分类大类">
                     <Input type="text"
                            v-model="formAllData.businessInfoType" />
                   </FormItem>
                   <FormItem label="企业分类细分">
                     <Input type="text"
                            v-model="formAllData.businessInfoSubType" />
-                  </FormItem>
+                  </FormItem> -->
                   <FormItem label="企业经济成分">
-                    <Input type="text"
-                           v-model="formAllData.businessInfoEconomy" />
-                  </FormItem>
-                  <FormItem label="企业规模">
                     <div style=" display: flex;justify-content: space-between;">
-
                       <div>
                         <Input type="text"
-                               v-model="formAllData.businessInfoScale"
-                               style="width: 400px" />
+                               v-model="formAllData.businessInfoEconomy"
+                               style="width: 400px"
+                               placeholder="例：CS01" />
                       </div>
-
                       <div>
-
                         <Poptip trigger="hover"
                                 placement="top-start">
                           <div slot="content"
                                class="poptipExplain">
-                            这是我的自定义内容，我想要换行啊换行鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋
-                            这是我的自定义内容，我想要换行啊换行鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋
+                            CS01 大型企业<br />
+                            CS02 中型企业<br />
+                            CS03 小型企业<br />
+                            CS04 微型企业<br />
+                          </div>
+                          <Icon type="ios-help"
+                                size="20" />
+                        </Poptip>
+                      </div>
+                    </div>
+                  </FormItem>
+                  <FormItem label="企业规模">
+                    <div style=" display: flex;justify-content: space-between;">
+                      <div>
+                        <Input type="text"
+                               v-model="formAllData.businessInfoScale"
+                               style="width: 400px"
+                               placeholder="例：201" />
+                      </div>
+
+                      <div>
+                        <Poptip trigger="hover"
+                                placement="top-start">
+                          <div slot="content"
+                               class="poptipExplain">
+                            201 国有企业<br />
+                            202 集体企业<br />
+                            203 股份合作企业<br />
+                            204 联营企业<br />
+                            205 有限责任公司<br />
+                            206 股份有限公司<br />
+                            207 私营企业<br />
+                            210 个体经营<br />
+                            211 港、澳、台商投资合资经营企业<br />
+                            212 港、澳、台商投资合作经营企业<br />
+                            213 港、澳、台商投资股份有限公司<br />
+                            214 港、澳、台商独资经营企业<br />
+                            215 中外合资经营企业<br />
+                            216 中外合作经营企业<br />
+                            217 外资企业<br />
+                            218 外商投资股份有限公司<br />
+                            299 其他企业<br />
 
                           </div>
-
                           <Icon type="ios-help"
                                 size="20" />
                         </Poptip>
@@ -635,8 +691,13 @@
                   </FormItem>
 
                   <FormItem label="企业注册资本">
-                    <Input type="text"
-                           v-model="formAllData.businessInfoRegisteredCapital" />
+                    <div style=" display: flex;justify-content: space-between;">
+
+                      <Input type="text"
+                             v-model="formAllData.businessInfoRegisteredCapital"
+                             style="width: 400px" />
+                      万元
+                    </div>
                   </FormItem>
                   <FormItem label="企业注册地电话号码">
                     <Input type="text"
@@ -680,7 +741,8 @@
 
                   <FormItem label="实际控制企业营业执照号">
                     <Input type="text"
-                           v-model="formAllData.holdingCompanyLicenseNumber" />
+                           v-model="formAllData.holdingCompanyLicenseNumber"
+                           placeholder="例：123456789987654" />
                   </FormItem>
 
                   <FormItem label="实际控制企业营业期限">
@@ -776,12 +838,12 @@
 
                     </RadioGroup>
                   </FormItem>
-                  <FormItem label="当前填写有效期">
+                  <!-- <FormItem label="当前填写有效期">
                     <Input v-model="formAllData.beneficiaryIdCardValidTime"
                            value="当前日期"
                            disabled />
 
-                  </FormItem>
+                  </FormItem> -->
                   <FormItem label="受益所有人证件像面照片">
                     <Upload action="//jsonplaceholder.typicode.com/posts/"
                             :form="['jpg', 'jpeg', 'png', 'gif']"
@@ -1121,7 +1183,8 @@ export default {
   created () {
     console.log('跳转页面传值测试 ')
     this.legalCode = this.$route.params.data
-    console.log('传来的数据' + this.legalCode)
+    this.formAllData.shortName = this.$route.params.data1
+    console.log('传来的数据' + this.legalCode + this.formAllData.shortName)
     // this.queryMerchantDetail()
   },
 
@@ -1297,10 +1360,16 @@ export default {
             this.formAllData['beneficiaryIdCardNational'] = res.data.data['mediaId']
             console.log(this.formAllData.beneficiaryIdCardNational)
           }
-
-          this.$Message.success(res.data['msg'])
+          this.$Notice.success({
+            title: res.data.msg,
+            duration: 3
+          })
         } else {
-          this.$Message.error(res.data['msg'])
+          // this.$Message.error(res.data['msg'])
+          this.$Notice.error({
+            title: res.data.msg,
+            duration: 3
+          })
         }
         // 上传完立马刷新图片——图片回显
         this.download()
@@ -1530,31 +1599,31 @@ export default {
       }
     },
     // 获取页面详细信息
-    queryMerchantDetail () {
-      baseApi
-        .queryMerchantDetail({
-          'legalCode': this.legalCode
-        }
-        )
-        .then(({ data }) => {
-          if (data['code'] === 200) {
-            this.formAllData = data.data
+    // queryMerchantDetail () {
+    //   baseApi
+    //     .queryMerchantDetail({
+    //       'legalCode': this.legalCode
+    //     }
+    //     )
+    //     .then(({ data }) => {
+    //       if (data['code'] === '200') {
+    //         this.formAllData = data.data
 
-            // 给双日期输入框赋值
-            this.dateDeal('legalPersonIdCardValidTime', this.formAllData['legalPersonIdCardValidTime'])
-            this.dateDeal('contactIdCardValidTime', this.formAllData['contactIdCardValidTime'])
-            this.dateDeal('beneficiaryIdCardValidTime', this.formAllData['beneficiaryIdCardValidTime'])
+    //         // 给双日期输入框赋值
+    //         this.dateDeal('legalPersonIdCardValidTime', this.formAllData['legalPersonIdCardValidTime'])
+    //         this.dateDeal('contactIdCardValidTime', this.formAllData['contactIdCardValidTime'])
+    //         this.dateDeal('beneficiaryIdCardValidTime', this.formAllData['beneficiaryIdCardValidTime'])
 
-            console.log('表单返回值', data.data)
-            this.download()
-          } else {
+    //         console.log('表单返回值', data.data)
+    //         this.download()
+    //       } else {
 
-          }
-        })
-        .catch((err) => {
-          this.$Message.error('获取信息异常' + err)
-        })
-    },
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       this.$Message.error('获取信息异常' + err)
+    //     })
+    // },
 
     // 双日期框字符处理
     dateDeal (sign, date) {
@@ -1606,6 +1675,10 @@ export default {
           this.beneficiaryIdCardEndTime = this.beneficiaryDate[1]
         }
       }
+    },
+    // 下载excel
+    downloadExcel () {
+      window.open('/demo.xlsx')
     }
   }
 }

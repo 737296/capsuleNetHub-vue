@@ -493,13 +493,18 @@ export default {
           payAmount: Checkamount
 
         })
-        .then(({ res }) => {
-          if (res.data['code'] === 200 || res.data['code'] === '200') {
-            this.$Message.success(res.data['msg'])
+        .then(({ data }) => {
+          console.log(JSON.stringify(data))
+
+          if (data['code'] === 200 || data['code'] === '200') {
+            // this.$Message.success(res.data['msg'])
+            this.$Message.success('请求返回成功!')
           }
-          this.$Message.success('请求返回成功')
+
+          this.$Message.success('请求返回成功!')
         })
         .catch((err) => {
+          console.log(JSON.stringify(err))
           this.$Message.error('请求返回异常' + err)
         })
     }

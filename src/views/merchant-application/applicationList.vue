@@ -498,10 +498,10 @@ export default {
 
           if (data['code'] === 200 || data['code'] === '200') {
             // this.$Message.success(res.data['msg'])
-            this.$Message.success('请求返回成功!')
+            this.$Message.success('请求返回成功')
           }
 
-          this.$Message.success('请求返回成功!')
+          this.$Message.info('金额校验中')
         })
         .catch((err) => {
           console.log(JSON.stringify(err))

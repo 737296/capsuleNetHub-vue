@@ -204,7 +204,7 @@ export default {
     // 各种下拉列表
     mixin_queryFormBrandList (params) {
       return baseApi.queryFormBrandList(params).then(({ data }) => {
-        if (data.code === 200) {
+        if (data.code === 200 || data.code === '200') {
           this.srcBrandList = data.data.map(({code, ...prds}) => ({...prds, code, name: code}))
           this.brandList = [getSelAll(), ...this.srcBrandList]
         }

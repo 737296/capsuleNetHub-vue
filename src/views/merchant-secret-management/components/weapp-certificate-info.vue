@@ -8,6 +8,7 @@
         :before-upload="uploadFile"
         style="display: inline-block"
       >
+      <Poptip trigger="hover" title="证书示例" content="apiclient_cert.p12">
         <Button
           :disabled="!!uploading"
           size="small"
@@ -16,6 +17,7 @@
         >
           选择证书
         </Button>
+        </Poptip>
       </Upload>
       <span v-html="uploading || fileValue"></span>
     </Col>
@@ -48,6 +50,7 @@ export default {
         this.$emit('input', val)
       }
     }
+
   },
   methods: {
     uploadFile (file) {
@@ -91,6 +94,7 @@ export default {
       return false
     }
   }
+
 }
 </script>
 <style lang="less" scoped>

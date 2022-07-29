@@ -266,7 +266,7 @@ export default {
           pageSize: this.tableData.page.pageSize // 每页条数
         })
         .then(({ data }) => {
-          if (data.code === 200) {
+          if (data.code === 200 || data.code === '200') {
             this.tableData.page.total = data.data.totalNum
             this.tableData.table.data = data.data.records
           } else {

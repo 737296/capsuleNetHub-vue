@@ -247,6 +247,14 @@ const getDefPaymentFieldList = () => [
         value: ''
       },
       {
+        title: '是否下单到餐厅：',
+        key: 'closeFlag',
+        value: ''
+        // render: (h, { row, column }) => {
+        //   return h('span', {}, row[column.key] ? '是' : '否')
+        // }
+      },
+      {
         title: '合作者ID：',
         key: 'partnerId',
         value: ''
@@ -834,6 +842,7 @@ export default {
             return v
           })
         })
+        console.log(this.paymentFieldList)
       }
       if (data.vcp) {
         this.integralFieldList = data.vcp.map((item) => {

@@ -514,10 +514,14 @@ export default {
             console.log(this.merchantKeyFile)
           } catch (error) {
             this.certFile = getDefCertData()
+            this.merchantKeyFile = getDefCertData2()
+            this.wxCertFile = getDefCertData3()
             console.log(error)
           }
         } else {
           this.certFile = getDefCertData()
+          this.merchantKeyFile = getDefCertData2()
+          this.wxCertFile = getDefCertData3()
         }
         if (!isClean) {
           this.popup.data = row

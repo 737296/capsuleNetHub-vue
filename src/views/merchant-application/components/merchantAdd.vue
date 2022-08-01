@@ -1511,7 +1511,7 @@ export default {
             // this.$Message.error(JSON.stringify(data).msg)
             this.$Notice.error({
               title: '提交失败',
-              desc: data.msg.issue,
+              desc: data.msg.issue ? data.msg.issue : data.msg,
               duration: 3
             })
             console.log('失败返回值', data)

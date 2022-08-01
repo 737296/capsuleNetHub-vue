@@ -257,7 +257,7 @@ export default {
           } else {
             // this.$Message.error('添加失败')
             this.$Notice.error({
-              title: data.msg,
+              title: data.msg.issue ? data.msg.issue : data.msg,
               duration: 3
             })
           }

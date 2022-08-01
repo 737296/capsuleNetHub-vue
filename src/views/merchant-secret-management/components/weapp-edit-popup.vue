@@ -505,9 +505,15 @@ export default {
           try {
             const certFiles = JSON.parse(row.certFiles)
             console.log(certFiles)
-            this.certFile = certFiles['refund']
-            this.merchantKeyFile = certFiles['v3PrivateKey']
-            this.wxCertFile = certFiles['v3WxCert']
+            if (certFiles['refund']) {
+              this.certFile = certFiles['refund']
+            }
+            if (certFiles['v3PrivateKey']) {
+              this.merchantKeyFile = certFiles['v3PrivateKey']
+            }
+            if (certFiles['v3WxCert']) {
+              this.wxCertFile = certFiles['v3WxCert']
+            }
             // this.certFile = Object.keys(certFiles).reduce((sum, key) => Object.assign(sum, {
             //   ...certFiles[key]
             // }), {})

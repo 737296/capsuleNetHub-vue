@@ -28,7 +28,7 @@
                   <FormItem label="商户简称">
                     <Input v-model="formAllData.shortName" />
                   </FormItem>
-                  <FormItem label="企业英文名称">
+                  <FormItem label="企业英文">
                     <Input v-model="formAllData.englishName" />
                   </FormItem>
                 </div>
@@ -54,12 +54,12 @@
               <Form :model="formAllData"
                     :label-width="150">
                 <div class="main">
-                  <FormItem label="营业执照图片">
+                  <FormItem label="营业执照扫描件">
                     <Upload action="//jsonplaceholder.typicode.com/posts/"
                             :form="['jpg', 'jpeg', 'png', 'gif']"
                             :before-upload="handleUpload">
                       <Button icon="ios-cloud-upload-outline"
-                              @click="filesign(1)">上传图片</Button>（彩色扫描件或者复印件盖章上传）
+                              @click="filesign(1)">上传图片</Button>
                     </Upload>
                     <div v-if="file !== null && this.fileSign==1">
                       待上传文件名: {{ file.name }}
@@ -88,7 +88,7 @@
                     </div>
 
                   </FormItem>
-                  <FormItem label="营业执照号">
+                  <FormItem label="营业执照注册号">
                     <Input type="text"
                            v-model="formAllData.businessLicenseNumber"
                            placeholder="15位数字" />
@@ -101,7 +101,7 @@
                     <Input type="text"
                            v-model="formAllData.businessLicenseCompanyAddress" />
                   </FormItem>
-                  <FormItem label="营业执照失效日期">
+                  <FormItem label="营业期限">
                     <!-- <DatePicker type="date"
                                 format="yyyy-MM-dd"
                                 placeholder="开始时间"
@@ -989,12 +989,10 @@ export default {
 
       // 图片获取url
       getImgUrl: process.env.API_BASE_URL + '/admin/union/image',
-      // getImgUrl: 'http://192.168.119.209:8081/admin/union/image1',
-      // getImgUrl: 'http://localhost:80/admin/union/image',
+      // getImgUrl: 'http://192.168.119.209:8081/admin/union/image',
       // 图片上传地址变量
       url: process.env.API_BASE_URL + '/admin/uploadImage',
       // url: 'http://192.168.119.209:8081/admin/uploadImage',
-      // url: 'http://localhost:80/admin/union/image',
       // 法人id
       legalCode: null,
       // 图片流
@@ -1031,7 +1029,7 @@ export default {
         taxRegistrationCertCopy: null,
         taxRegistrationCertNumber: '',
         // 绑定账户信息
-        settleAcctType: 2,
+        settleAcctType: null,
         settleAcctBankCode: '',
         settleAcctName: '',
         settleAcctBankAddressCode: '',
@@ -1380,9 +1378,8 @@ export default {
     // 显示图片
     download () {
       // 营业执照图片
-      this.$http.post(this.getImgUrl, { 'mediaId': this.formAllData['businessLicenseCopy'] }, { responseType: 'blob' }, { headers: { 'Content-Type': 'application/json' } }) // RESPONSE-TYPE 要定义成arraybuffer或blob , { responseType: "arraybuffer" }'multipart/from-data'
+      this.$http.post(this.getImgUrl, { 'mediaId': this.formAllData['businessLicenseCopy'] }, { responseType: 'blob' }, { headers: { 'Content-Type': 'multipart/from-data' } }) // RESPONSE-TYPE 要定义成arraybuffer或blob , { responseType: "arraybuffer" }
         .then(res => {
-          // console.log(res.data)
           this.businessLicenseCopyImg = window.URL.createObjectURL(res.data)
           console.log('营业执照图片id', this.formAllData['businessLicenseCopy'])
           console.log('图片回传信息', res.data)
@@ -1391,7 +1388,7 @@ export default {
           console.log(error)
         })
       // 组织结构图片
-      this.$http.post(this.getImgUrl, { 'mediaId': this.formAllData['organizationCertCopy'] }, { responseType: 'blob' }, { headers: { 'Content-Type': 'application/json' } })
+      this.$http.post(this.getImgUrl, { 'mediaId': this.formAllData['organizationCertCopy'] }, { responseType: 'blob' }, { headers: { 'Content-Type': 'multipart/from-data' } })
         .then(res => {
           this.organizationCertCopyImg = window.URL.createObjectURL(res.data)
           console.log('图片id', this.formAllData['organizationCertCopy'])
@@ -1399,7 +1396,7 @@ export default {
         })
         .catch()
       // 税务登记信息
-      this.$http.post(this.getImgUrl, { 'mediaId': this.formAllData['taxRegistrationCertCopy'] }, { responseType: 'blob' }, { headers: { 'Content-Type': 'application/json' } })
+      this.$http.post(this.getImgUrl, { 'mediaId': this.formAllData['taxRegistrationCertCopy'] }, { responseType: 'blob' }, { headers: { 'Content-Type': 'multipart/from-data' } })
         .then(res => {
           this.taxRegistrationCertCopyImg = window.URL.createObjectURL(res.data)
           console.log('图片id', this.formAllData['taxRegistrationCertCopy'])
@@ -1407,7 +1404,7 @@ export default {
         })
         .catch()
       // 法人证件人像面照片
-      this.$http.post(this.getImgUrl, { 'mediaId': this.formAllData['legalPersonIdCardCopy'] }, { responseType: 'blob' }, { headers: { 'Content-Type': 'application/json' } })
+      this.$http.post(this.getImgUrl, { 'mediaId': this.formAllData['legalPersonIdCardCopy'] }, { responseType: 'blob' }, { headers: { 'Content-Type': 'multipart/from-data' } })
         .then(res => {
           this.legalPersonIdCardCopyImg = window.URL.createObjectURL(res.data)
           console.log('法人正面图片id', this.formAllData['legalPersonIdCardCopy'])
@@ -1415,28 +1412,23 @@ export default {
         })
         .catch()
       // 法人证件国徽面照片
-      this.$http.post(this.getImgUrl, { 'mediaId': this.formAllData['legalPersonIdCardNational'] }, { responseType: 'blob' }, { headers: { 'Content-Type': 'application/json; charset=UTF-8' } })
+      this.$http.post(this.getImgUrl, { 'mediaId': this.formAllData['legalPersonIdCardNational'] }, { responseType: 'blob' }, { headers: { 'Content-Type': 'multipart/from-data' } })
         .then(res => {
           this.legalPersonIdCardNationalImg = window.URL.createObjectURL(res.data)
-
-          // let binaryData = []
-          // binaryData.push(res.data)
-          // this.legalPersonIdCardNationalImg = window.URL.createObjectURL(new Blob(binaryData, { type: 'image/png' }))
           console.log('法人反面图片id', this.formAllData['legalPersonIdCardNational'])
           console.log('图片回传信息', res.data)
         })
         .catch()
       // 联系人证件人像面照片
-      this.$http.post(this.getImgUrl, { 'mediaId': this.formAllData['contactIdCardCopy'] }, { responseType: 'blob' }, { headers: { 'Content-Type': 'application/json' } })
+      this.$http.post(this.getImgUrl, { 'mediaId': this.formAllData['contactIdCardCopy'] }, { responseType: 'blob' }, { headers: { 'Content-Type': 'multipart/from-data' } })
         .then(res => {
           this.contactIdCardCopyImg = window.URL.createObjectURL(res.data)
-
           console.log('联系人反面图片id', this.formAllData['contactIdCardCopy'])
           console.log('图片回传信息', res.data)
         })
         .catch()
       // 联系人证件国徽面照片
-      this.$http.post(this.getImgUrl, { 'mediaId': this.formAllData['contactIdCardNational'] }, { responseType: 'blob' }, { headers: { 'Content-Type': 'application/json' } })
+      this.$http.post(this.getImgUrl, { 'mediaId': this.formAllData['contactIdCardNational'] }, { responseType: 'blob' }, { headers: { 'Content-Type': 'multipart/from-data' } })
         .then(res => {
           this.contactIdCardNationalImg = window.URL.createObjectURL(res.data)
           console.log('联系人反面图片id', this.formAllData['contactIdCardNational'])
@@ -1444,7 +1436,7 @@ export default {
         })
         .catch()
       // 受益人人证件人像面照片
-      this.$http.post(this.getImgUrl, { 'mediaId': this.formAllData['beneficiaryIdCardCopy'] }, { responseType: 'blob' }, { headers: { 'Content-Type': 'application/json' } })
+      this.$http.post(this.getImgUrl, { 'mediaId': this.formAllData['beneficiaryIdCardCopy'] }, { responseType: 'blob' }, { headers: { 'Content-Type': 'multipart/from-data' } })
         .then(res => {
           this.beneficiaryIdCardCopyImg = window.URL.createObjectURL(res.data)
           console.log('受益人反面图片id', this.formAllData['beneficiaryIdCardCopy'])
@@ -1452,7 +1444,7 @@ export default {
         })
         .catch()
       // 受益人证件国徽面照片
-      this.$http.post(this.getImgUrl, { 'mediaId': this.formAllData['beneficiaryIdCardNational'] }, { responseType: 'blob' }, { headers: { 'Content-Type': 'application/json' } })
+      this.$http.post(this.getImgUrl, { 'mediaId': this.formAllData['beneficiaryIdCardNational'] }, { responseType: 'blob' }, { headers: { 'Content-Type': 'multipart/from-data' } })
         .then(res => {
           this.beneficiaryIdCardNationalImg = window.URL.createObjectURL(res.data)
           console.log('收益人反面图片id', this.formAllData['beneficiaryIdCardNational'])
@@ -1556,7 +1548,7 @@ export default {
         this.formAllData.taxRegistrationCertNumber = null
         this.taxRegistrationCertCopyImg = null
       } if (a === 5) {
-        // this.formAllData.settleAcctType = null
+        this.formAllData.settleAcctType = null
         this.formAllData.settleAcctBankCode = null
         this.formAllData.settleAcctName = null
         this.formAllData.settleAcctBankAddressCode = null

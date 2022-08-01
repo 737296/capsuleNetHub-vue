@@ -8,14 +8,14 @@
         :before-upload="uploadFile"
         style="display: inline-block"
       >
-      <Poptip trigger="hover" title="证书示例" content="apiclient_cert.p12">
+      <Poptip trigger="hover" title="证书示例" content="apiclient_cert.pem">
         <Button
           :disabled="!!uploading"
           size="small"
           type="primary"
           icon="ios-cloud-upload-outline"
         >
-          选择证书
+          选择微信平台证书
         </Button>
         </Poptip>
       </Upload>

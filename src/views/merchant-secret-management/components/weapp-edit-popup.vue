@@ -9,6 +9,8 @@
           @on-ref="({ validate }) => (this.formEditValidate = validate)"
         ></popup-condition>
         <certificate-info v-model="certFile.path" :fileName.sync="certFile.name"/>
+        <MerchantKeyInfo v-model="merchantKeyFile.path" :fileName.sync="merchantKeyFile.name"/>
+        <WxCertInfo v-model="wxCertFile.path" :fileName.sync="wxCertFile.name"/>
         <Row type="flex" justify="center" align="middle" class="mt-10">
           <Col span="23" class="font-title"> 财务拓展信息 </Col>
         </Row>
@@ -128,6 +130,18 @@ const getDefEditData = () => [
       placeholder: '请输入商户私钥',
       value: '',
       rule: [{ required: true, message: '请输入商户私钥', trigger: 'blur' }],
+      options: []
+    },
+    {
+      span: 11,
+      prop: 'merchantSerialNumber',
+      label: '商户证书序列号：',
+      component: 'Input',
+      type: 'textarea',
+      rows: 1,
+      placeholder: '请输入商户证书序列号',
+      value: '',
+      rule: [{ required: true, message: '请输入商户证书序列号', trigger: 'blur' }],
       options: []
     }
   ]
@@ -362,17 +376,31 @@ const getDefCertData = () => ({
   name: '',
   path: null
 })
+const getDefCertData2 = () => ({
+  name: '',
+  path: null
+})
+const getDefCertData3 = () => ({
+  name: '',
+  path: null
+})
 export default {
   components: {
     CertificateInfo: (resolve) =>
-      require(['./weapp-certificate-info.vue'], resolve)
+      require(['./weapp-certificate-info.vue'], resolve),
+    MerchantKeyInfo: (resolve) =>
+      require(['./weapp-merchant-key-info.vue'], resolve),
+    WxCertInfo: (resolve) =>
+      require(['./weapp-wx-cert-info.vue'], resolve)
   },
   data () {
     return {
       popup: getDefPopup(),
       editData: [],
       editOtherData: [],
-      certFile: getDefCertData()
+      certFile: getDefCertData(),
+      merchantKeyFile: getDefCertData2(),
+      wxCertFile: getDefCertData3()
     }
   },
   methods: {
@@ -398,7 +426,7 @@ export default {
               merchantNo: row.merchantNo
             })
             .then(({ data }) => {
-              if (data.code === 200) {
+              if (data.code === 200 || data.code === '200') {
                 return Promise.resolve(data.data)
               } else {
                 return Promise.reject(new Error(data.msg))
@@ -471,19 +499,35 @@ export default {
         this.editOtherData = editOtherData
         this.popup.show = true
         this.popup.extData = isEdit
+        console.log(row)
         // 证书文件
         if (isEdit && row.certFiles) {
           try {
             const certFiles = JSON.parse(row.certFiles)
-            this.certFile = Object.keys(certFiles).reduce((sum, key) => Object.assign(sum, {
-              ...certFiles[key]
-            }), {})
+            console.log(certFiles)
+            if (certFiles['refund']) {
+              this.certFile = certFiles['refund']
+            }
+            if (certFiles['v3PrivateKey']) {
+              this.merchantKeyFile = certFiles['v3PrivateKey']
+            }
+            if (certFiles['v3WxCert']) {
+              this.wxCertFile = certFiles['v3WxCert']
+            }
+            // this.certFile = Object.keys(certFiles).reduce((sum, key) => Object.assign(sum, {
+            //   ...certFiles[key]
+            // }), {})
+            console.log(this.merchantKeyFile)
           } catch (error) {
             this.certFile = getDefCertData()
+            this.merchantKeyFile = getDefCertData2()
+            this.wxCertFile = getDefCertData3()
             console.log(error)
           }
         } else {
           this.certFile = getDefCertData()
+          this.merchantKeyFile = getDefCertData2()
+          this.wxCertFile = getDefCertData3()
         }
         if (!isClean) {
           this.popup.data = row
@@ -493,6 +537,14 @@ export default {
     saveExtData () {
       if (!this.certFile) {
         this.$Message.warning(`请上传证书文件`)
+        return
+      }
+      if (!this.merchantKeyFile) {
+        this.$Message.warning(`请上传商户私钥证书`)
+        return
+      }
+      if (!this.wxCertFile) {
+        this.$Message.warning(`请上微信平台证书`)
         return
       }
       this.formEditValidate((valid, params) => {
@@ -512,6 +564,14 @@ export default {
                   'refund': {
                     ...this.certFile,
                     pwd: params.merchantNo
+                  },
+                  'v3PrivateKey': {
+                    ...this.merchantKeyFile,
+                    pwd: params.merchantNo
+                  },
+                  'v3WxCert': {
+                    ...this.wxCertFile,
+                    pwd: params.merchantNo
                   }
                 }),
                 isFranchisees: params.isFranchisees === 'true',
@@ -526,7 +586,7 @@ export default {
               baseApi
                 .updateData(reqPrm, { isEdit: this.popup.extData })
                 .then(({ data }) => {
-                  if (data.code === 200) {
+                  if (data.code === 200 || data.code === '200') {
                     const callback = this.popup.srcData[1].callback
                     callback && callback()
                     this.$Message.success(`保存成功`)

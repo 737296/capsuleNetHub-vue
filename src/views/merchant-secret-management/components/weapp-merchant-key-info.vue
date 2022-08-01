@@ -1,5 +1,5 @@
 <template>
-  <!-- eslint-disable vue/no-parsing-error -->
+<!-- eslint-disable vue/no-parsing-error -->
   <Row class="certificate-body" type="flex" justify="center" align="middle">
     <Col span="1" />
     <Col span="23">
@@ -8,14 +8,14 @@
         :before-upload="uploadFile"
         style="display: inline-block"
       >
-      <Poptip trigger="hover" title="证书示例" content="apiclient_cert.p12">
+      <Poptip trigger="hover" title="证书示例" content="apiclient_key.pem">
         <Button
           :disabled="!!uploading"
           size="small"
           type="primary"
           icon="ios-cloud-upload-outline"
         >
-          选择证书
+          选择商户私钥证书
         </Button>
         </Poptip>
       </Upload>
@@ -50,7 +50,6 @@ export default {
         this.$emit('input', val)
       }
     }
-
   },
   methods: {
     uploadFile (file) {
@@ -90,11 +89,9 @@ export default {
           this.uploading = ''
           this.fileName = '上传失败'
         })
-
       return false
     }
   }
-
 }
 </script>
 <style lang="less" scoped>

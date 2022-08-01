@@ -92,6 +92,11 @@
                     <div slot="content" v-if="idx==0" :key="'c' + idx">
                         <Table border :columns="columns2" :data="enterprisePayGoodsDetail"></Table>
                     </div>
+                    <span v-if="idx==2" :key="'c' + idx">
+                      <p>
+                         1.百胜货劳分类【1】对应支付宝货劳分类【3070401000000000000】
+                      </p>
+                    </span>
                   </Panel>
               </Collapse>
           </template>
@@ -242,6 +247,14 @@ const getDefPaymentFieldList = () => [
         value: ''
       },
       {
+        title: '是否下单到餐厅：',
+        key: 'closeFlag',
+        value: ''
+        // render: (h, { row, column }) => {
+        //   return h('span', {}, row[column.key] ? '是' : '否')
+        // }
+      },
+      {
         title: '合作者ID：',
         key: 'partnerId',
         value: ''
@@ -352,6 +365,11 @@ const getEnterprisePayFieldList = () => [
         title: '企业ID：',
         key: 'enterpriseId',
         value: ''
+      },
+      {
+        title: '货劳分类分摊金额：',
+        key: 'financeCodePrice',
+        value: ''
       }
     ]
   },
@@ -359,7 +377,7 @@ const getEnterprisePayFieldList = () => [
     fieldList: [
       {
         title: '货劳分类映射关系：',
-        key: 'financeCodeMapping',
+        key: '',
         value: ''
       }
     ]
@@ -824,6 +842,7 @@ export default {
             return v
           })
         })
+        console.log(this.paymentFieldList)
       }
       if (data.vcp) {
         this.integralFieldList = data.vcp.map((item) => {

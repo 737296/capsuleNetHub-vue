@@ -1186,7 +1186,7 @@ export default {
     this.legalCode = this.$route.params.data
     this.formAllData.shortName = this.$route.params.data1
     console.log('传来的数据' + this.legalCode)
-    this.queryMerchantDetail()
+    // this.queryMerchantDetail()
   },
 
   methods: {
@@ -1607,31 +1607,31 @@ export default {
       }
     },
     // 获取页面详细信息
-    queryMerchantDetail () {
-      baseApi
-        .queryMerchantDetail({
-          'legalCode': this.legalCode
-        }
-        )
-        .then(({ data }) => {
-          if (data['code'] === 200 || data['code'] === '200') {
-            this.formAllData = data.data
+    // queryMerchantDetail () {
+    //   baseApi
+    //     .queryMerchantDetail({
+    //       'legalCode': this.legalCode
+    //     }
+    //     )
+    //     .then(({ data }) => {
+    //       if (data['code'] === 200 || data['code'] === '200') {
+    //         this.formAllData = data.data
 
-            // 给双日期输入框赋值
-            this.dateDeal('legalPersonIdCardValidTime', this.formAllData['legalPersonIdCardValidTime'])
-            this.dateDeal('contactIdCardValidTime', this.formAllData['contactIdCardValidTime'])
-            this.dateDeal('beneficiaryIdCardValidTime', this.formAllData['beneficiaryIdCardValidTime'])
+    //         // 给双日期输入框赋值
+    //         this.dateDeal('legalPersonIdCardValidTime', this.formAllData['legalPersonIdCardValidTime'])
+    //         this.dateDeal('contactIdCardValidTime', this.formAllData['contactIdCardValidTime'])
+    //         this.dateDeal('beneficiaryIdCardValidTime', this.formAllData['beneficiaryIdCardValidTime'])
 
-            console.log('表单返回值', data.data)
-            this.download()
-          } else {
+    //         console.log('表单返回值', data.data)
+    //         this.download()
+    //       } else {
 
-          }
-        })
-        .catch((err) => {
-          this.$Message.error('获取信息异常' + err)
-        })
-    },
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       this.$Message.error('获取信息异常' + err)
+    //     })
+    // },
 
     // 双日期框字符处理
     dateDeal (sign, date) {

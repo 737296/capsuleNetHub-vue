@@ -28,7 +28,7 @@
                   <FormItem label="商户简称">
                     <Input v-model="formAllData.shortName" />
                   </FormItem>
-                  <FormItem label="企业英文">
+                  <FormItem label="企业英文名称">
                     <Input v-model="formAllData.englishName" />
                   </FormItem>
                 </div>
@@ -54,12 +54,13 @@
               <Form :model="formAllData"
                     :label-width="150">
                 <div class="main">
-                  <FormItem label="营业执照扫描件">
+                  <FormItem label="营业执照图片">
                     <Upload action="//jsonplaceholder.typicode.com/posts/"
                             :form="['jpg', 'jpeg', 'png', 'gif']"
                             :before-upload="handleUpload">
                       <Button icon="ios-cloud-upload-outline"
                               @click="filesign(1)">上传图片</Button>
+                      （彩色扫描件或者复印件盖章上传）
                     </Upload>
                     <div v-if="file !== null && this.fileSign==1">
                       待上传文件名: {{ file.name }}
@@ -88,7 +89,7 @@
                     </div>
 
                   </FormItem>
-                  <FormItem label="营业执照注册号">
+                  <FormItem label="营业执照号">
                     <Input type="text"
                            v-model="formAllData.businessLicenseNumber"
                            placeholder="15位数字" />
@@ -101,7 +102,7 @@
                     <Input type="text"
                            v-model="formAllData.businessLicenseCompanyAddress" />
                   </FormItem>
-                  <FormItem label="营业期限">
+                  <FormItem label="营业执照失效日期">
                     <!-- <DatePicker type="date"
                                 format="yyyy-MM-dd"
                                 placeholder="开始时间"
@@ -1029,7 +1030,7 @@ export default {
         taxRegistrationCertCopy: null,
         taxRegistrationCertNumber: '',
         // 绑定账户信息
-        settleAcctType: null,
+        settleAcctType: 2,
         settleAcctBankCode: '',
         settleAcctName: '',
         settleAcctBankAddressCode: '',
@@ -1185,7 +1186,7 @@ export default {
     this.legalCode = this.$route.params.data
     this.formAllData.shortName = this.$route.params.data1
     console.log('传来的数据' + this.legalCode)
-    // this.queryMerchantDetail()
+    this.queryMerchantDetail()
   },
 
   methods: {
@@ -1360,16 +1361,20 @@ export default {
             this.formAllData['beneficiaryIdCardNational'] = res.data.data['mediaId']
             console.log(this.formAllData.beneficiaryIdCardNational)
           }
+
           this.$Notice.success({
             title: res.data.msg,
             duration: 3
+
           })
+          console.log('test' + res.data.msg)
         } else {
           // this.$Message.error(res.data['msg'])
           this.$Notice.error({
             title: res.data.msg,
             duration: 3
           })
+          console.log('test' + res.data.msg)
         }
         // 上传完立马刷新图片——图片回显
         this.download()
@@ -1548,7 +1553,7 @@ export default {
         this.formAllData.taxRegistrationCertNumber = null
         this.taxRegistrationCertCopyImg = null
       } if (a === 5) {
-        this.formAllData.settleAcctType = null
+        // this.formAllData.settleAcctType = null
         this.formAllData.settleAcctBankCode = null
         this.formAllData.settleAcctName = null
         this.formAllData.settleAcctBankAddressCode = null
@@ -1602,31 +1607,31 @@ export default {
       }
     },
     // 获取页面详细信息
-    // queryMerchantDetail () {
-    //   baseApi
-    //     .queryMerchantDetail({
-    //       'legalCode': this.legalCode
-    //     }
-    //     )
-    //     .then(({ data }) => {
-    //       if (data['code'] === 200 || data['code'] === '200') {
-    //         this.formAllData = data.data
+    queryMerchantDetail () {
+      baseApi
+        .queryMerchantDetail({
+          'legalCode': this.legalCode
+        }
+        )
+        .then(({ data }) => {
+          if (data['code'] === 200 || data['code'] === '200') {
+            this.formAllData = data.data
 
-    //         // 给双日期输入框赋值
-    //         this.dateDeal('legalPersonIdCardValidTime', this.formAllData['legalPersonIdCardValidTime'])
-    //         this.dateDeal('contactIdCardValidTime', this.formAllData['contactIdCardValidTime'])
-    //         this.dateDeal('beneficiaryIdCardValidTime', this.formAllData['beneficiaryIdCardValidTime'])
+            // 给双日期输入框赋值
+            this.dateDeal('legalPersonIdCardValidTime', this.formAllData['legalPersonIdCardValidTime'])
+            this.dateDeal('contactIdCardValidTime', this.formAllData['contactIdCardValidTime'])
+            this.dateDeal('beneficiaryIdCardValidTime', this.formAllData['beneficiaryIdCardValidTime'])
 
-    //         console.log('表单返回值', data.data)
-    //         this.download()
-    //       } else {
+            console.log('表单返回值', data.data)
+            this.download()
+          } else {
 
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       this.$Message.error('获取信息异常' + err)
-    //     })
-    // },
+          }
+        })
+        .catch((err) => {
+          this.$Message.error('获取信息异常' + err)
+        })
+    },
 
     // 双日期框字符处理
     dateDeal (sign, date) {

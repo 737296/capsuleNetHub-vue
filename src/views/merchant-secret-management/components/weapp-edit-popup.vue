@@ -507,12 +507,18 @@ export default {
             console.log(certFiles)
             if (certFiles['refund']) {
               this.certFile = certFiles['refund']
+            } else {
+              this.certFile = getDefCertData()
             }
             if (certFiles['v3PrivateKey']) {
               this.merchantKeyFile = certFiles['v3PrivateKey']
+            } else {
+              this.merchantKeyFile = getDefCertData2()
             }
             if (certFiles['v3WxCert']) {
               this.wxCertFile = certFiles['v3WxCert']
+            } else {
+              this.wxCertFile = getDefCertData3()
             }
             // this.certFile = Object.keys(certFiles).reduce((sum, key) => Object.assign(sum, {
             //   ...certFiles[key]

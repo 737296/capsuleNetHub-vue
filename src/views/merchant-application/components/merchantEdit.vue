@@ -1254,7 +1254,7 @@ export default {
         } else {
           // this.$Message.error(res.data['msg'])
           this.$Notice.error({
-            title: res.data.msg,
+            title: res.data.msg ? res.data.msg : '上传失败，请联系管理员',
             duration: 3
           })
           console.log('test' + res.data.msg)

@@ -28,9 +28,9 @@
                   <FormItem label="商户简称">
                     <Input v-model="formAllData.shortName" />
                   </FormItem>
-                  <FormItem label="企业英文名称">
+                  <!-- <FormItem label="企业英文名称">
                     <Input v-model="formAllData.englishName" />
-                  </FormItem>
+                  </FormItem> -->
                 </div>
                 <FormItem>
                   <Button type="primary"
@@ -314,11 +314,11 @@
                            v-model="formAllData.settleAcctName"
                            placeholder="开户名称必须与营业执照公司名称一致" />
                   </FormItem>
-                  <FormItem label="开户银行省市编码">
+                  <!-- <FormItem label="开户银行省市编码">
                     <Input type="text"
                            v-model="formAllData.settleAcctBankAddressCode"
                            placeholder="精确到市" />
-                  </FormItem>
+                  </FormItem> -->
 
                   <FormItem label="银行账户">
                     <Input type="text"
@@ -898,7 +898,7 @@ export default {
         // 基本信息
         organizationType: null,
         shortName: '',
-        englishName: '',
+        englishName: null,
         // 营业执照信息
         businessLicenseCopy: null,
         businessLicenseNumber: '',
@@ -916,7 +916,7 @@ export default {
         settleAcctType: 2,
         settleAcctBankCode: '',
         settleAcctName: '',
-        settleAcctBankAddressCode: '',
+        settleAcctBankAddressCode: null,
         settleAcctBankBranchCode: '',
         settleAcctBankAcctNo: '',
         // 法人证件信息

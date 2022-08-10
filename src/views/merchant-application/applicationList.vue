@@ -437,42 +437,47 @@ export default {
           console.log(this.currentOptions)
           console.log(this.tableData.page.current)
           console.log(this.tableData.page.pageSize)
-          if (data.code === 200 || data.code === '200') {
-            this.tableData.page.total = data.data.totalNum
-            console.log('test')
+          if (data.data.records.length !== 0) {
+            if (data.code === 200 || data.code === '200') {
+              this.tableData.page.total = data.data.totalNum
+              console.log('test')
 
-            for (var i = 0, l = data.data.records.length; i < l; i++) {
-              console.log(data.data.records[i])
-              if (data.data.records[i].applicationStatus === null) {
-                data.data.records[i].applicationStatus = '待创建'
+              for (var i = 0, l = data.data.records.length; i < l; i++) {
+                console.log(data.data.records[i])
+                if (data.data.records[i].applicationStatus === null) {
+                  data.data.records[i].applicationStatus = '待创建'
+                }
+                if (data.data.records[i].applicationStatus === 10) {
+                  data.data.records[i].applicationStatus = '草稿保存'
+                } if (data.data.records[i].applicationStatus === 11) {
+                  data.data.records[i].applicationStatus = '银联受理中'
+                } if (data.data.records[i].applicationStatus === 20) {
+                  data.data.records[i].applicationStatus = '资料校验中'
+                } if (data.data.records[i].applicationStatus === 21) {
+                  data.data.records[i].applicationStatus = '待账户验证'
+                } if (data.data.records[i].applicationStatus === 22) {
+                  data.data.records[i].applicationStatus = '金额审核中'
+                } if (data.data.records[i].applicationStatus === 23) {
+                  data.data.records[i].applicationStatus = '进件处理中'
+                } if (data.data.records[i].applicationStatus === 24) {
+                  data.data.records[i].applicationStatus = '电子签约中'
+                } if (data.data.records[i].applicationStatus === 25) {
+                  data.data.records[i].applicationStatus = '审核通过'
+                } if (data.data.records[i].applicationStatus === 26) {
+                  data.data.records[i].applicationStatus = '审核驳回'
+                } if (data.data.records[i].applicationStatus === 27) {
+                  data.data.records[i].applicationStatus = '账户冻结'
+                }
               }
-              if (data.data.records[i].applicationStatus === 10) {
-                data.data.records[i].applicationStatus = '草稿保存'
-              } if (data.data.records[i].applicationStatus === 11) {
-                data.data.records[i].applicationStatus = '银联受理中'
-              } if (data.data.records[i].applicationStatus === 20) {
-                data.data.records[i].applicationStatus = '资料校验中'
-              } if (data.data.records[i].applicationStatus === 21) {
-                data.data.records[i].applicationStatus = '待账户验证'
-              } if (data.data.records[i].applicationStatus === 22) {
-                data.data.records[i].applicationStatus = '金额审核中'
-              } if (data.data.records[i].applicationStatus === 23) {
-                data.data.records[i].applicationStatus = '进件处理中'
-              } if (data.data.records[i].applicationStatus === 24) {
-                data.data.records[i].applicationStatus = '电子签约中'
-              } if (data.data.records[i].applicationStatus === 25) {
-                data.data.records[i].applicationStatus = '审核通过'
-              } if (data.data.records[i].applicationStatus === 26) {
-                data.data.records[i].applicationStatus = '审核驳回'
-              } if (data.data.records[i].applicationStatus === 27) {
-                data.data.records[i].applicationStatus = '账户冻结'
-              }
+              // 渲染数据
+              this.tableData.table.data = data.data.records
+              console.log(data.data.records)
+            } else {
+              this.$Message.error('请求响应状态错误')
             }
-            // 渲染数据
-            this.tableData.table.data = data.data.records
-            console.log(data.data.records)
           } else {
-            this.$Message.error('请求响应状态错误')
+            this.tableData.table.data = data.data.records
+            this.$Message.error('没有找到法人，请确认在MC已经完成配置')
           }
         })
         .catch((err) => {

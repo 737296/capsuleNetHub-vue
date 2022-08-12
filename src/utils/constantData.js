@@ -189,7 +189,7 @@ export const OTHER_ROUTER = [
 
   {
     path: '/merchantEdit',
-    title: '二级商户申请驳回编辑',
+    title: '二级商户申请编辑',
     name: 'merchantEdit',
     component: resolve => {
       require(['@/views/merchant-application/components/merchantEdit.vue'], resolve)

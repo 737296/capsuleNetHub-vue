@@ -139,7 +139,8 @@ export default {
                     },
                     [h('Input', {
                       props: {
-                        value: this.Checkamount
+                        value: this.Checkamount,
+                        placeholder: '单位：分'
                       },
                       on: {
                         'on-change': (e) => {
@@ -147,6 +148,7 @@ export default {
                         }
                       }
                     }),
+
                     h('Button', {
 
                       on: {
@@ -224,7 +226,12 @@ export default {
                           // 显示新页面
                           this.$router.push({
                             name: 'accountBooksList',
-                            params: { data: row['legalCode'] }
+                            params: {
+                              data: row['legalCode'],
+                              data1: row['companyName'],
+                              data2: row['isFranchisees']
+
+                            }
                           })
                         }
                       },

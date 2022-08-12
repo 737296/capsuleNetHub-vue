@@ -51,6 +51,8 @@ export default {
     return {
       balanceAccountType: null,
       legalCode: null,
+      companyName: null,
+      isFranchisees: null,
       tableData: {
         loading: false,
         table: {
@@ -98,15 +100,24 @@ export default {
       balanceAccountTypeList: [
         {
           value: 'MTPAY',
-          label: 'MTPAY'
+          // label: 'MTPAY'
+          label: '美团'
         },
         {
           value: 'ELEMEPAY',
-          label: 'ELEMEPAY'
+          // label: 'ELEMEPAY'
+          label: '饿了吗'
         },
         {
           value: 'UNIONPAY',
-          label: 'UNIONPAY'
+          // label: 'UNIONPAY'
+          label: '银联'
+        },
+        {
+
+          value: 'INTEREST',
+          // label: 'INTEREST'
+          label: '利息'
         }
       ]
     }
@@ -121,7 +132,9 @@ export default {
   },
   created () {
     this.legalCode = this.$route.params.data
-    console.log('传来的数据' + this.legalCode)
+    this.companyName = this.$route.params.data1
+    this.isFranchisees = this.$route.params.data2
+    console.log('传来的数据' + this.legalCode + this.companyName + this.isFranchisees)
     this.currentOptions = this.$copy(this.formData)
     this.mixin_queryFormStateList()
     this.mixin_queryFromRoleList()
@@ -131,6 +144,7 @@ export default {
     // this.mixin_queryFormSignTypeList();
     // this.mixin_queryFormAscriptionList();
     this.queryData()
+    this.delLx()
   },
   mounted () { },
   beforeDestroy () { },
@@ -237,9 +251,58 @@ export default {
           this.tableData.loading = false
         })
     },
-
+    // 前端字符匹配
+    fuzzyMatch (str, key) {
+      let index = -1
+      let flag = false
+      for (var i = 0, arr = key.split(''); i < arr.length; i++) {
+        // 有一个关键字都没匹配到，则没有匹配到数据
+        if (str.indexOf(arr[i]) < 0) {
+          break
+        } else {
+          let match = str.matchAll(arr[i])
+          let next = match.next()
+          while (!next.done) {
+            if (next.value.index > index) {
+              index = next.value.index
+              if (i === arr.length - 1) {
+                flag = true
+              }
+              break
+            }
+            next = match.next()
+          }
+        }
+      }
+      return flag
+    },
+    // 删除利息电子账簿下拉标签
+    delLx () {
+      console.log('删除利息电子账簿下拉标签')
+      if (this.isFranchisees || this.fuzzyMatch(this.companyName, '食派士')) {
+        console.log('删除利息电子账簿下拉标签')
+        this.balanceAccountTypeList.splice(3, 1)
+        // delete this.balanceAccountTypeList.indexOf['3']
+      }
+    },
     addaccountbooks () {
-      console.log('表单返回值123' + this.balanceAccountType)
+      // console.log('表单返回值123' + this.balanceAccountType)
+      // 校验
+      // if (this.balanceAccountType === 'INTEREST' && (this.isFranchisees || this.fuzzyMatch(this.companyName, '惠州'))) {
+      //   console.log('是否加盟店' + this.isFranchisees)
+      //   console.log('是否惠州' + this.fuzzyMatch(this.companyName, '惠州'))
+      //   if (this.isFranchisees) {
+      //     this.$Notice.error({
+      //       title: '加盟店不能创建利息电子账簿',
+      //       duration: 3
+      //     })
+      //   } if (this.fuzzyMatch(this.companyName, '惠州')) {
+      //     this.$Notice.error({
+      //       title: '惠州店不能创建利息电子账簿',
+      //       duration: 3
+      //     })
+      //   }
+      // } else {
       baseApi
         .addaccountbooks({
           'legalCode': this.legalCode,
@@ -270,6 +333,7 @@ export default {
           })
           console.log(err)
         })
+      // }
     }
 
   }

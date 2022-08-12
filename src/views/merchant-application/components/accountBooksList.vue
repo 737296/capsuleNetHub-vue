@@ -237,10 +237,26 @@ export default {
           console.log('测试中！')
           console.log(this.currentOptions)
           if (data.code === 200 || data.code === '200') {
+            console.log('test')
             // this.tableData.page.total = data.data.totalNum
             // 渲染数据
+            for (var i = 0; i < data.data.length; i++) {
+              console.log(data.data[i]['balanceAcctType'])
+              if (data.data[i]['balanceAcctType'] === 'MTPAY') {
+                data.data[i]['balanceAcctType'] = '美团'
+              }
+              if (data.data[i]['balanceAcctType'] === 'ELEMEPAY') {
+                data.data[i]['balanceAcctType'] = '饿了吗'
+              }
+              if (data.data[i]['balanceAcctType'] === 'UNIONPAY') {
+                data.data[i]['balanceAcctType'] = '银联'
+              }
+              if (data.data[i]['balanceAcctType'] === 'INTEREST') {
+                data.data[i]['balanceAcctType'] = '利息'
+              }
+            }
             this.tableData.table.data = data.data
-            console.log(data)
+            console.log(data.data.length)
           }
         })
         .catch((err) => {

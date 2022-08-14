@@ -44,6 +44,11 @@
           <Button size="large"
                   @click="resetForm">清空</Button>
         </div>
+        <div class="alert_legal">
+           <Tooltip content="温馨提示">
+        如果未找到法人，请确认在MC已完成配置
+    </Tooltip>
+        </div>
       </Form>
     </div>
     <page-table v-model="tableData"

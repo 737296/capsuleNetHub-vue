@@ -92,7 +92,7 @@
                   <FormItem label="营业执照号">
                     <Input type="text"
                            v-model="formAllData.businessLicenseNumber"
-                           placeholder="15位数字" />
+                           placeholder="15或18位数字" />
                   </FormItem>
                   <FormItem label="营业执照公司名称">
                     <Input type="text"
@@ -881,10 +881,10 @@ export default {
 
       // 图片获取url
       getImgUrl: process.env.API_BASE_URL + '/admin/union/image',
-      // getImgUrl: 'http://192.168.119.209:80/admin/union/image',
+      // getImgUrl: 'http://192.168.116.108:80/admin/union/image',
       // 图片上传地址变量
       url: process.env.API_BASE_URL + '/admin/uploadImage',
-      // url: 'http://192.168.119.209:8081/admin/uploadImage',
+      // url: 'http://192.168.116.108:8081/admin/uploadImage',
       // 法人id
       legalCode: null,
       // 图片流

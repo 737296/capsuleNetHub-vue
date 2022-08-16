@@ -106,7 +106,7 @@ export default {
         {
           value: 'ELEMEPAY',
           // label: 'ELEMEPAY'
-          label: '饿了吗'
+          label: '饿了么'
         },
         {
           value: 'UNIONPAY',
@@ -246,7 +246,7 @@ export default {
                 data.data[i]['balanceAcctType'] = '美团'
               }
               if (data.data[i]['balanceAcctType'] === 'ELEMEPAY') {
-                data.data[i]['balanceAcctType'] = '饿了吗'
+                data.data[i]['balanceAcctType'] = '饿了么'
               }
               if (data.data[i]['balanceAcctType'] === 'UNIONPAY') {
                 data.data[i]['balanceAcctType'] = '银联'

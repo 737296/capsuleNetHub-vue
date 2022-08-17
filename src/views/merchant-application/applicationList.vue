@@ -230,6 +230,29 @@ export default {
                         click: () => {
                           // 显示新页面
                           this.$router.push({
+                            name: 'merchantDetails',
+                            params: {
+                              data: row['legalCode'],
+                              data1: row['companyName']
+                            }
+                          })
+                        }
+                      },
+                      directives: [{
+                        name: 'show',
+                        value: (row['applicationStatus'] === '审核通过')
+                      }]
+                    },
+                    '详情  '
+                  ),
+                  h(
+                    'a',
+                    {
+
+                      on: {
+                        click: () => {
+                          // 显示新页面
+                          this.$router.push({
                             name: 'accountBooksList',
                             params: {
                               data: row['legalCode'],

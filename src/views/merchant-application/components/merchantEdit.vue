@@ -298,11 +298,11 @@
                                style="width:400px"
                                placeholder="开户银行编码长度必须为 12(请下载文档，对照填写)" />
                       </div>
-                      <div>
+                      <!-- <div>
                         <a href="./static/demo.xlsx"
                            download="demo.xlsx"
                            target="view_window">下载</a>
-                      </div>
+                      </div> -->
 
                     </div>
                   </FormItem>

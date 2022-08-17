@@ -106,6 +106,21 @@ export const MENU_LIST = [
     ]
   },
   {
+    name: 'billRefund',
+    title: '退款异常管理',
+    path: '/billRefund',
+    children: [
+      {
+        name: 'billRefundList',
+        title: '退款异常列表',
+        path: '/billRefundList',
+        component: resolve => {
+          require(['@/views/bill-refund/billRefundList.vue'], resolve)
+        }
+      }
+    ]
+  },
+  {
     name: 'payDataManagement',
     title: '支付数据查询',
     path: '/payDataManagement',
@@ -210,6 +225,14 @@ export const OTHER_ROUTER = [
       require(['@/views/merchant-application/components/merchantEdit.vue'], resolve)
     }
   },
+  {
+    path: '/merchantDetails',
+    title: '二级商户申请详情',
+    name: 'merchantDetails',
+    component: resolve => {
+      require(['@/views/merchant-application/components/merchantDetails.vue'], resolve)
+    }
+  },
 
   {
     path: '/accountBooksList',
@@ -219,4 +242,5 @@ export const OTHER_ROUTER = [
       require(['@/views/merchant-application/components/accountBooksList.vue'], resolve)
     }
   }
+
 ]

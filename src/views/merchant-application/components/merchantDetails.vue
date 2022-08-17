@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="order-detail">
-      <Button type="primary"
+      <!-- <Button type="primary"
               @click="handleAllSubmit()">提交银联审核</Button>
       <br />
-      <br />
+      <br /> -->
       <Tabs value="name1">
         <TabPane label="基本信息"
                  name="name1">
@@ -33,10 +33,10 @@
                   </FormItem> -->
                 </div>
                 <FormItem>
-                  <Button type="primary"
+                  <!-- <Button type="primary"
                           @click="handleSubmit()">保存</Button>
                   <Button @click="handleReset(1)"
-                          style="margin-left: 8px">清空</Button>
+                          style="margin-left: 8px">清空</Button> -->
                 </FormItem>
               </Form>
             </Card>
@@ -125,10 +125,10 @@
                   </FormItem>
                 </div>
                 <FormItem>
-                  <Button type="primary"
+                  <!-- <Button type="primary"
                           @click="handleSubmit()">保存</Button>
                   <Button @click="handleReset(2)"
-                          style="margin-left: 8px">清空</Button>
+                          style="margin-left: 8px">清空</Button> -->
                 </FormItem>
               </Form>
             </Card>
@@ -205,10 +205,10 @@
                   </FormItem>
                 </div>
                 <FormItem>
-                  <Button type="primary"
+                  <!-- <Button type="primary"
                           @click="handleSubmit()">保存</Button>
                   <Button @click="handleReset(3)"
-                          style="margin-left: 8px">清空</Button>
+                          style="margin-left: 8px">清空</Button> -->
                 </FormItem>
               </Form>
             </Card>
@@ -262,10 +262,10 @@
                   </FormItem>
                 </div>
                 <FormItem>
-                  <Button type="primary"
+                  <!-- <Button type="primary"
                           @click="handleSubmit()">保存</Button>
                   <Button @click="handleReset(4)"
-                          style="margin-left: 8px">清空</Button>
+                          style="margin-left: 8px">清空</Button> -->
                 </FormItem>
               </Form>
             </Card>
@@ -329,10 +329,10 @@
                   </FormItem>
                 </div>
                 <FormItem>
-                  <Button type="primary"
+                  <!-- <Button type="primary"
                           @click="handleSubmit()">保存</Button>
                   <Button @click="handleReset(5)"
-                          style="margin-left: 8px">清空</Button>
+                          style="margin-left: 8px">清空</Button> -->
                 </FormItem>
               </Form>
             </Card>
@@ -458,10 +458,10 @@
                   </FormItem> -->
                 </div>
                 <FormItem>
-                  <Button type="primary"
+                  <!-- <Button type="primary"
                           @click="handleSubmit()">保存</Button>
                   <Button @click="handleReset(6)"
-                          style="margin-left: 8px">清空</Button>
+                          style="margin-left: 8px">清空</Button> -->
                 </FormItem>
               </Form>
             </Card>
@@ -595,10 +595,10 @@
                   </FormItem>
                 </div>
                 <FormItem>
-                  <Button type="primary"
+                  <!-- <Button type="primary"
                           @click="handleSubmit()">保存</Button>
                   <Button @click="handleReset(7)"
-                          style="margin-left: 8px">清空</Button>
+                          style="margin-left: 8px">清空</Button> -->
                 </FormItem>
               </Form>
             </Card>
@@ -670,10 +670,10 @@
 
                 </div>
                 <FormItem>
-                  <Button type="primary"
+                  <!-- <Button type="primary"
                           @click="handleSubmit()">保存</Button>
                   <Button @click="handleReset(9)"
-                          style="margin-left: 8px">清空</Button>
+                          style="margin-left: 8px">清空</Button> -->
                 </FormItem>
               </Form>
             </Card>
@@ -806,11 +806,11 @@
 
                 </div>
                 <FormItem>
-                  <Button type="primary"
+                  <!-- <Button type="primary"
                           @click="handleSubmit()">保存</Button>
 
                   <Button @click="handleReset(10)"
-                          style="margin-left: 8px">清空</Button>
+                          style="margin-left: 8px">清空</Button> -->
                 </FormItem>
               </Form>
             </Card>
@@ -881,7 +881,7 @@ export default {
 
       // 图片获取url
       getImgUrl: process.env.API_BASE_URL + '/admin/union/image',
-      // getImgUrl: 'http://192.168.116.108:8081/admin/union/image',
+      // getImgUrl: 'http://192.168.116.108:80/admin/union/image',
       // 图片上传地址变量
       url: process.env.API_BASE_URL + '/admin/uploadImage',
       // url: 'http://192.168.116.108:8081/admin/uploadImage',
@@ -1077,7 +1077,7 @@ export default {
     this.legalCode = this.$route.params.data
     this.formAllData.shortName = this.$route.params.data1
     console.log('传来的数据' + this.legalCode)
-    // this.queryMerchantDetail()
+    this.queryMerchantDetail()
   },
 
   methods: {
@@ -1498,31 +1498,31 @@ export default {
       }
     },
     // 获取页面详细信息
-    // queryMerchantDetail () {
-    //   baseApi
-    //     .queryMerchantDetail({
-    //       'legalCode': this.legalCode
-    //     }
-    //     )
-    //     .then(({ data }) => {
-    //       if (data['code'] === 200 || data['code'] === '200') {
-    //         this.formAllData = data.data
+    queryMerchantDetail () {
+      baseApi
+        .queryMerchantDetail({
+          'legalCode': this.legalCode
+        }
+        )
+        .then(({ data }) => {
+          if (data['code'] === 200 || data['code'] === '200') {
+            this.formAllData = data.data
 
-    //         // 给双日期输入框赋值
-    //         this.dateDeal('legalPersonIdCardValidTime', this.formAllData['legalPersonIdCardValidTime'])
-    //         this.dateDeal('contactIdCardValidTime', this.formAllData['contactIdCardValidTime'])
-    //         this.dateDeal('beneficiaryIdCardValidTime', this.formAllData['beneficiaryIdCardValidTime'])
+            // 给双日期输入框赋值
+            this.dateDeal('legalPersonIdCardValidTime', this.formAllData['legalPersonIdCardValidTime'])
+            this.dateDeal('contactIdCardValidTime', this.formAllData['contactIdCardValidTime'])
+            this.dateDeal('beneficiaryIdCardValidTime', this.formAllData['beneficiaryIdCardValidTime'])
 
-    //         console.log('表单返回值', data.data)
-    //         this.download()
-    //       } else {
+            console.log('表单返回值', data.data)
+            this.download()
+          } else {
 
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       this.$Message.error('获取信息异常' + err)
-    //     })
-    // },
+          }
+        })
+        .catch((err) => {
+          this.$Message.error('获取信息异常' + err)
+        })
+    },
 
     // 双日期框字符处理
     dateDeal (sign, date) {

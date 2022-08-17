@@ -105,21 +105,21 @@ export const MENU_LIST = [
       }
     ]
   },
-  {
-    name: 'billRefund',
-    title: '退款异常管理',
-    path: '/billRefund',
-    children: [
-      {
-        name: 'billRefundList',
-        title: '退款异常列表',
-        path: '/billRefundList',
-        component: resolve => {
-          require(['@/views/bill-refund/billRefundList.vue'], resolve)
-        }
-      }
-    ]
-  },
+  // {
+  //   name: 'billRefund',
+  //   title: '退款异常管理',
+  //   path: '/billRefund',
+  //   children: [
+  //     {
+  //       name: 'billRefundList',
+  //       title: '退款异常列表',
+  //       path: '/billRefundList',
+  //       component: resolve => {
+  //         require(['@/views/bill-refund/billRefundList.vue'], resolve)
+  //       }
+  //     }
+  //   ]
+  // },
   {
     name: 'payDataManagement',
     title: '支付数据查询',

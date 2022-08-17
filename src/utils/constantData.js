@@ -166,6 +166,21 @@ export const MENU_LIST = [
         }
       }
     ]
+  },
+  {
+    name: 'exceptionData',
+    title: '异常数据统计',
+    path: '/exceptionData',
+    children: [
+      {
+        name: 'exceptionShareDataList',
+        title: '分账异常商户',
+        path: '/exceptionShareDataList',
+        component: resolve => {
+          require(['@/views/exception-data/share/shareDataList.vue'], resolve)
+        }
+      }
+    ]
   }
 ]
 export const OTHER_ROUTER = [

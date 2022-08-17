@@ -117,5 +117,8 @@ export const REST_URL = {
   QUERY_ACCOUNTBOOKS_LIST: '/admin/queryBalanceAccountList',
   addaccountbooks: '/admin/createBalanceAccount',
   queryMerchantDetail: '/admin/queryMerchantDetail',
-  Checkallamount: '/admin/validateMerchant'
+  Checkallamount: '/admin/validateMerchant',
+
+  // 异常数据统计
+  QUERY_SHARE_DATA_LIST: '/admin/share/no/auth'
 }

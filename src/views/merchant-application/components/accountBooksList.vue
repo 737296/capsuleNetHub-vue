@@ -49,6 +49,7 @@ export default {
   mixins: [commMixin],
   data () {
     return {
+      isExistINTEREST: false,
       balanceAccountType: null,
       legalCode: null,
       companyName: null,
@@ -253,6 +254,7 @@ export default {
               }
               if (data.data[i]['balanceAcctType'] === 'INTEREST') {
                 data.data[i]['balanceAcctType'] = '利息'
+                this.isExistINTEREST = true
               }
             }
             this.tableData.table.data = data.data
@@ -319,36 +321,52 @@ export default {
       //     })
       //   }
       // } else {
-      baseApi
-        .addaccountbooks({
-          'legalCode': this.legalCode,
-          'balanceAccountType': this.balanceAccountType
+      if (this.isExistINTEREST === true) {
+        this.$Notice.success({
+          title: '已经存在利息电子账簿不可添加',
+          duration: 3
         })
-        .then(({ data }) => {
-          if (data.code === 200 || data.code === '200') {
-            // this.$Message.success('添加成功')
-            this.$Notice.success({
-              title: data.msg,
-              duration: 3
-            })
-            this.queryData()
-            console.log('表单返回值' + data)
-          } else {
-            // this.$Message.error('添加失败')
-            this.$Notice.error({
-              title: data.msg.issue ? data.msg.issue : data.msg,
-              duration: 3
-            })
-          }
-        })
-        .catch((err) => {
-          // this.$Message.error('添加异常！')
-          this.$Notice.error({
-            title: '异常',
-            duration: 3
+      } else {
+        this.$Spin.show()
+        baseApi
+          .addaccountbooks({
+            'legalCode': this.legalCode,
+            'balanceAccountType': this.balanceAccountType
           })
-          console.log(err)
-        })
+          .then(({ data }) => {
+            if (data.code === 200 || data.code === '200') {
+              // this.$Spin.hide()
+              // this.$Message.success('添加成功')
+              this.$Notice.success({
+                title: data.msg,
+                duration: 3
+              })
+
+              this.queryData()
+              console.log('表单返回值' + data)
+            } else {
+              // this.$Spin.hide()
+              // this.$Message.error('添加失败')
+              this.$Notice.error({
+                title: data.msg.issue ? data.msg.issue : data.msg,
+                duration: 3
+              })
+            }
+          })
+          .catch((err) => {
+            // this.$Spin.hide()
+            // this.$Message.error('添加异常！')
+            this.$Notice.error({
+              title: '异常',
+              duration: 3
+            })
+            console.log(err)
+          })
+          .finally(() => {
+            this.$Spin.hide()
+          })
+      }
+
       // }
     }
 

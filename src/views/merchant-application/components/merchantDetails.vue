@@ -58,9 +58,9 @@
                     <Upload action="//jsonplaceholder.typicode.com/posts/"
                             :form="['jpg', 'jpeg', 'png', 'gif']"
                             :before-upload="handleUpload">
-                      <Button icon="ios-cloud-upload-outline"
+                      <!-- <Button icon="ios-cloud-upload-outline"
                               @click="filesign(1)">上传图片</Button>
-                      （彩色扫描件或者复印件盖章上传，图片格式：jpg，png，jpeg）
+                      （彩色扫描件或者复印件盖章上传，图片格式：jpg，png，jpeg） -->
                     </Upload>
                     <div v-if="file !== null && this.fileSign==1">
                       待上传文件名: {{ file.name }}
@@ -148,9 +148,9 @@
                     <Upload action="//jsonplaceholder.typicode.com/posts/"
                             :form="['jpg', 'jpeg', 'png', 'gif']"
                             :before-upload="handleUpload">
-                      <Button icon="ios-cloud-upload-outline"
+                      <!-- <Button icon="ios-cloud-upload-outline"
                               @click="filesign(2)">上传图片</Button>
-                      （图片格式：jpg，png，jpeg）
+                      （图片格式：jpg，png，jpeg） -->
                     </Upload>
                     <div v-if="file !== null && fileSign==2">
                       待上传文件名: {{ file.name }}
@@ -228,9 +228,9 @@
                     <Upload action="//jsonplaceholder.typicode.com/posts/"
                             :form="['jpg', 'jpeg', 'png', 'gif']"
                             :before-upload="handleUpload">
-                      <Button icon="ios-cloud-upload-outline"
+                      <!-- <Button icon="ios-cloud-upload-outline"
                               @click="filesign(3)">上传图片</Button>
-                      （图片格式：jpg，png，jpeg）
+                      （图片格式：jpg，png，jpeg） -->
                     </Upload>
                     <div v-if="file !== null && fileSign==3">
                       待上传文件名: {{ file.name }}
@@ -364,9 +364,9 @@
                     <Upload action="//jsonplaceholder.typicode.com/posts/"
                             :form="['jpg', 'jpeg', 'png', 'gif']"
                             :before-upload="handleUpload">
-                      <Button icon="ios-cloud-upload-outline"
+                      <!-- <Button icon="ios-cloud-upload-outline"
                               @click="filesign(4)">上传图片</Button>
-                      （图片格式：jpg，png，jpeg）
+                      （图片格式：jpg，png，jpeg） -->
                     </Upload>
                     <div v-if="file !== null && fileSign==4">
                       待上传文件名: {{ file.name }}
@@ -396,9 +396,9 @@
                     <Upload action="//jsonplaceholder.typicode.com/posts/"
                             :form="['jpg', 'jpeg', 'png', 'gif']"
                             :before-upload="handleUpload">
-                      <Button icon="ios-cloud-upload-outline"
+                      <!-- <Button icon="ios-cloud-upload-outline"
                               @click="filesign(5)">上传图片</Button>
-                      （图片格式：jpg，png，jpeg）
+                      （图片格式：jpg，png，jpeg） -->
                     </Upload>
                     <div v-if="file !== null && fileSign==5">
                       待上传文件名: {{ file.name }}
@@ -493,9 +493,9 @@
                     <Upload action="//jsonplaceholder.typicode.com/posts/"
                             :form="['jpg', 'jpeg', 'png', 'gif']"
                             :before-upload="handleUpload">
-                      <Button icon="ios-cloud-upload-outline"
+                      <!-- <Button icon="ios-cloud-upload-outline"
                               @click="filesign(6)">上传图片</Button>
-                      （图片格式：jpg，png，jpeg）
+                      （图片格式：jpg，png，jpeg） -->
                     </Upload>
                     <div v-if="file !== null && fileSign==6">
                       待上传文件名: {{ file.name }}
@@ -525,9 +525,9 @@
                     <Upload action="//jsonplaceholder.typicode.com/posts/"
                             :form="['jpg', 'jpeg', 'png', 'gif']"
                             :before-upload="handleUpload">
-                      <Button icon="ios-cloud-upload-outline"
+                      <!-- <Button icon="ios-cloud-upload-outline"
                               @click="filesign(7)">上传图片</Button>
-                      （图片格式：jpg，png，jpeg）
+                      （图片格式：jpg，png，jpeg） -->
                     </Upload>
                     <div v-if="file !== null && fileSign==7">
                       待上传文件名: {{ file.name }}
@@ -739,9 +739,9 @@
                     <Upload action="//jsonplaceholder.typicode.com/posts/"
                             :form="['jpg', 'jpeg', 'png', 'gif']"
                             :before-upload="handleUpload">
-                      <Button icon="ios-cloud-upload-outline"
+                      <!-- <Button icon="ios-cloud-upload-outline"
                               @click="filesign(8)">上传图片</Button>
-                      （图片格式：jpg，png，jpeg）
+                      （图片格式：jpg，png，jpeg） -->
                     </Upload>
                     <div v-if="file !== null && fileSign == 8">
                       待上传文件名: {{ file.name }}
@@ -771,9 +771,9 @@
                     <Upload action="//jsonplaceholder.typicode.com/posts/"
                             :form="['jpg', 'jpeg', 'png', 'gif']"
                             :before-upload="handleUpload">
-                      <Button icon="ios-cloud-upload-outline"
+                      <!-- <Button icon="ios-cloud-upload-outline"
                               @click="filesign(9)">上传图片</Button>
-                      （图片格式：jpg，png，jpeg）
+                      （图片格式：jpg，png，jpeg） -->
                     </Upload>
                     <div v-if="file !== null && fileSign== 9">
                       待上传文件名: {{ file.name }}

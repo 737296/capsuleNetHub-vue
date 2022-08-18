@@ -1074,12 +1074,22 @@ export default {
   computed: {},
   created () {
     console.log('跳转页面传值测试 ')
-    this.legalCode = this.$route.params.data
-    this.formAllData.shortName = this.$route.params.data1
+    // 将页面跳转带过来的值存进本地存储
+    if (localStorage.getItem('legalCode') === null && localStorage.getItem('shortName') === null) {
+      localStorage.setItem('legalCode', this.$route.params.data)
+      localStorage.setItem('shortName', this.$route.params.data1)
+      this.legalCode = localStorage.getItem('legalCode')
+      this.formAllData.shortName = localStorage.getItem('shortName')
+    } else {
+      this.legalCode = localStorage.getItem('legalCode')
+      this.formAllData.shortName = localStorage.getItem('shortName')
+    }
     console.log('传来的数据' + this.legalCode)
     this.queryMerchantDetail()
   },
-
+  destroyed () {
+    localStorage.clear()
+  },
   methods: {
     // 日期转换格式工具类
     newdate (date1) {

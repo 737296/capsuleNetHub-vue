@@ -26,7 +26,8 @@
                   </FormItem>
 
                   <FormItem label="商户简称">
-                    <Input v-model="formAllData.shortName" />
+                    <Input v-model="formAllData.shortName"
+                           disabled />
                   </FormItem>
                   <!-- <FormItem label="企业英文名称">
                     <Input v-model="formAllData.englishName" />
@@ -92,15 +93,18 @@
                   <FormItem label="营业执照号">
                     <Input type="text"
                            v-model="formAllData.businessLicenseNumber"
-                           placeholder="15或18位数字" />
+                           placeholder="15或18位数字"
+                           disabled />
                   </FormItem>
                   <FormItem label="营业执照公司名称">
                     <Input type="text"
-                           v-model="formAllData.businessLicenseCompanyName" />
+                           v-model="formAllData.businessLicenseCompanyName"
+                           disabled />
                   </FormItem>
                   <FormItem label="营业执照注册地址">
                     <Input type="text"
-                           v-model="formAllData.businessLicenseCompanyAddress" />
+                           v-model="formAllData.businessLicenseCompanyAddress"
+                           disabled />
                   </FormItem>
                   <FormItem label="营业执照失效日期">
                     <!-- <DatePicker type="date"
@@ -180,7 +184,8 @@
                   <FormItem label="组织机构代码">
                     <Input type="text"
                            v-model="formAllData.organizationCertNumber"
-                           placeholder="仅支持 9-10 位数字、字母、连字符" />
+                           placeholder="仅支持 9-10 位数字、字母、连字符"
+                           disabled />
                   </FormItem>
 
                   <FormItem label="组织机构代码有效期">
@@ -258,7 +263,8 @@
                   </FormItem>
                   <FormItem label="税务登记号">
                     <Input v-model="formAllData.taxRegistrationCertNumber"
-                           placeholder="例：123456789009876" />
+                           placeholder="例：123456789009876"
+                           disabled />
                   </FormItem>
                 </div>
                 <FormItem>
@@ -296,7 +302,8 @@
                         <Input type="text"
                                v-model="formAllData.settleAcctBankCode"
                                style="width:400px"
-                               placeholder="开户银行编码长度必须为 12(请下载文档，对照填写)" />
+                               placeholder="开户银行编码长度必须为 12(请下载文档，对照填写)"
+                               disabled />
                       </div>
                       <!-- <div>
                         <a href="./static/demo.xlsx"
@@ -309,12 +316,14 @@
                   <FormItem label="开户银行联行号">
                     <Input type="text"
                            v-model="formAllData.settleAcctBankBranchCode"
-                           placeholder="开户银行编码长度必须为 12(请下载文档，对照填写)" />
+                           placeholder="开户银行编码长度必须为 12(请下载文档，对照填写)"
+                           disabled />
                   </FormItem>
                   <FormItem label="开户名称">
                     <Input type="text"
                            v-model="formAllData.settleAcctName"
-                           placeholder="开户名称必须与营业执照公司名称一致" />
+                           placeholder="开户名称必须与营业执照公司名称一致"
+                           disabled />
                   </FormItem>
                   <!-- <FormItem label="开户银行省市编码">
                     <Input type="text"
@@ -325,7 +334,8 @@
                   <FormItem label="银行账户">
                     <Input type="text"
                            v-model="formAllData.settleAcctBankAcctNo"
-                           placeholder="银行卡号" />
+                           placeholder="银行卡号"
+                           disabled />
                   </FormItem>
                 </div>
                 <FormItem>
@@ -350,11 +360,13 @@
                 <div class="main">
                   <FormItem label="法人姓名">
                     <Input type="text"
-                           v-model="formAllData.legalPersonIdCardName" />
+                           v-model="formAllData.legalPersonIdCardName"
+                           disabled />
                   </FormItem>
                   <FormItem label="法人证件类型">
                     <Select v-model="formAllData.legalPersonIdCardType"
-                            style="width: 200px">
+                            style="width: 200px"
+                            disabled>
                       <Option v-for="item in legalPersonIdCardTypeList"
                               :value="item.value"
                               :key="item.value">{{ item.label }}</Option>
@@ -426,7 +438,8 @@
                   </FormItem>
                   <FormItem label="法人证件号码">
                     <Input type="text"
-                           v-model="formAllData.legalPersonIdCardNumber" />
+                           v-model="formAllData.legalPersonIdCardNumber"
+                           disabled />
                   </FormItem>
                   <FormItem label="法人证件有效期">
                     <DatePicker type="date"
@@ -479,11 +492,13 @@
                 <div class="main">
                   <FormItem label="联系人姓名">
                     <Input type="text"
-                           v-model="formAllData.contactIdCardName" />
+                           v-model="formAllData.contactIdCardName"
+                           disabled />
                   </FormItem>
                   <FormItem label="联系人证件类型">
                     <Select v-model="formAllData.contactIdCardType"
-                            style="width: 200px">
+                            style="width: 200px"
+                            disabled>
                       <Option v-for="item in contactIdCardTypeList"
                               :value="item.value"
                               :key="item.value">{{ item.label }}</Option>
@@ -555,7 +570,8 @@
                   </FormItem>
                   <FormItem label="联系人证件号码">
                     <Input type="text"
-                           v-model="formAllData.contactIdCardNumber" />
+                           v-model="formAllData.contactIdCardNumber"
+                           disabled />
                   </FormItem>
                   <FormItem label="联系人证件有效期">
                     <DatePicker type="date"
@@ -587,11 +603,13 @@
                   </FormItem> -->
                   <FormItem label="联系人手机号">
                     <Input type="text"
-                           v-model="formAllData.contactMobileNumber" />
+                           v-model="formAllData.contactMobileNumber"
+                           disabled />
                   </FormItem>
                   <FormItem label="联系人邮箱">
                     <Input type="text"
-                           v-model="formAllData.contactEmail" />
+                           v-model="formAllData.contactEmail"
+                           disabled />
                   </FormItem>
                 </div>
                 <FormItem>
@@ -618,7 +636,8 @@
                   <FormItem label="股东类型">
 
                     <Select v-model="formAllData.holdingCompanyType"
-                            style="width: 200px">
+                            style="width: 200px"
+                            disabled>
                       <Option v-for="item in holdingCompanyTypeList"
                               :value="item.value"
                               :key="item.value">{{ item.label }}</Option>
@@ -627,13 +646,15 @@
                   </FormItem>
                   <FormItem label="实际控制企业名称">
                     <Input type="text"
-                           v-model="formAllData.holdingCompanyName" />
+                           v-model="formAllData.holdingCompanyName"
+                           disabled />
                   </FormItem>
 
                   <FormItem label="实际控制企业营业执照号">
                     <Input type="text"
                            v-model="formAllData.holdingCompanyLicenseNumber"
-                           placeholder="仅支持 15 或 18 位数字、字母" />
+                           placeholder="仅支持 15 或 18 位数字、字母"
+                           disabled />
                   </FormItem>
 
                   <FormItem label="实际控制企业营业期限">
@@ -661,7 +682,8 @@
 
                   <FormItem label="实际控股人/企业证件类型">
                     <Select v-model="formAllData.holdingCompanyLicenseType"
-                            style="width: 200px">
+                            style="width: 200px"
+                            disabled>
                       <Option v-for="item in holdingCompanyLicenseTypeList"
                               :value="item.value"
                               :key="item.value">{{ item.label }}</Option>
@@ -692,12 +714,14 @@
 
                   <FormItem label="受益所有人姓名">
                     <Input type="text"
-                           v-model="formAllData.beneficiaryIdCardName" />
+                           v-model="formAllData.beneficiaryIdCardName"
+                           disabled />
                   </FormItem>
 
                   <FormItem label="受益所有人证件类型">
                     <Select v-model="formAllData.beneficiaryIdCardType"
-                            style="width: 200px">
+                            style="width: 200px"
+                            disabled>
                       <Option v-for="item in beneficiaryIdCardTypeList"
                               :value="item.value"
                               :key="item.value">{{ item.label }}</Option>
@@ -705,7 +729,8 @@
                   </FormItem>
                   <FormItem label="受益所有人证件号码">
                     <Input type="text"
-                           v-model="formAllData.beneficiaryIdCardNumber" />
+                           v-model="formAllData.beneficiaryIdCardNumber"
+                           disabled />
                   </FormItem>
                   <FormItem label="受益所有人证件有效期">
                     <DatePicker type="date"
@@ -801,7 +826,8 @@
                   </FormItem>
                   <FormItem label="受益所有人地址">
                     <Input type="text"
-                           v-model="formAllData.beneficiaryAddress" />
+                           v-model="formAllData.beneficiaryAddress"
+                           disabled />
                   </FormItem>
 
                 </div>
@@ -1074,12 +1100,26 @@ export default {
   computed: {},
   created () {
     console.log('跳转页面传值测试 ')
-    this.legalCode = this.$route.params.data
-    this.formAllData.shortName = this.$route.params.data1
+
+    // this.legalCode = this.$route.params.data
+    // this.formAllData.shortName = this.$route.params.data1
+
+    if (localStorage.getItem('legalCode') === null && localStorage.getItem('shortName') === null) {
+      localStorage.setItem('legalCode', this.$route.params.data)
+      localStorage.setItem('shortName', this.$route.params.data1)
+      this.legalCode = localStorage.getItem('legalCode')
+      this.formAllData.shortName = localStorage.getItem('shortName')
+    } else {
+      this.legalCode = localStorage.getItem('legalCode')
+      this.formAllData.shortName = localStorage.getItem('shortName')
+    }
+
     console.log('传来的数据' + this.legalCode)
     this.queryMerchantDetail()
   },
-
+  destroyed () {
+    localStorage.clear()
+  },
   methods: {
     // 日期转换格式工具类
     newdate (date1) {

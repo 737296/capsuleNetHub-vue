@@ -17,7 +17,10 @@
                 shape="circle"
                 size="small"
                 @click="addaccountbooks()">创建账簿</Button>
-
+        <Button class="oper-wrapper-button"
+                shape="circle"
+                size="small"
+                @click="queryData()">刷新</Button>
       </template>
     </page-table>
     <EditPopup ref="EditPopup"></EditPopup>
@@ -135,7 +138,18 @@ export default {
     this.legalCode = this.$route.params.data
     this.companyName = this.$route.params.data1
     this.isFranchisees = this.$route.params.data2
-    console.log('传来的数据' + this.legalCode + this.companyName + this.isFranchisees)
+    if (localStorage.getItem('legalCode') === null && localStorage.getItem('companyName') === null && localStorage.getItem('isFranchisees') === null) {
+      localStorage.setItem('legalCode', this.$route.params.data)
+      localStorage.setItem('companyName', this.$route.params.data1)
+      localStorage.setItem('isFranchisees', this.$route.params.data2)
+      this.legalCode = localStorage.getItem('legalCode')
+      this.companyName = localStorage.getItem('companyName')
+      this.isFranchisees = localStorage.getItem('isFranchisees')
+    } else {
+      this.legalCode = localStorage.getItem('legalCode')
+      this.companyName = localStorage.getItem('companyName')
+      this.isFranchisees = localStorage.getItem('isFranchisees')
+    }
     this.currentOptions = this.$copy(this.formData)
     this.mixin_queryFormStateList()
     this.mixin_queryFromRoleList()
@@ -146,6 +160,9 @@ export default {
     // this.mixin_queryFormAscriptionList();
     this.queryData()
     this.delLx()
+  },
+  destroyed () {
+    localStorage.clear()
   },
   mounted () { },
   beforeDestroy () { },
@@ -335,8 +352,11 @@ export default {
               title: data.msg,
               duration: 3
             })
+            // 后端异步写库，三秒过后再刷新
+            setTimeout(() => {
+              this.queryData()
+            }, 3000)
 
-            this.queryData()
             console.log('表单返回值' + data)
           } else {
             // this.$Spin.hide()
@@ -345,6 +365,10 @@ export default {
               title: data.msg.issue ? data.msg.issue : data.msg,
               duration: 3
             })
+            console.log('电子账簿添加之后刷新')
+            setTimeout(() => {
+              this.queryData()
+            }, 3000)
           }
         })
         .catch((err) => {
@@ -354,6 +378,9 @@ export default {
             title: '异常',
             duration: 3
           })
+          setTimeout(() => {
+            this.queryData()
+          }, 3000)
           console.log(err)
         })
         .finally(() => {

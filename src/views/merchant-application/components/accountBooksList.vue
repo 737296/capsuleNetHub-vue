@@ -135,9 +135,7 @@ export default {
     }
   },
   created () {
-    this.legalCode = this.$route.params.data
-    this.companyName = this.$route.params.data1
-    this.isFranchisees = this.$route.params.data2
+    // 本地存储的是String类型
     if (localStorage.getItem('legalCode') === null && localStorage.getItem('companyName') === null && localStorage.getItem('isFranchisees') === null) {
       localStorage.setItem('legalCode', this.$route.params.data)
       localStorage.setItem('companyName', this.$route.params.data1)
@@ -312,9 +310,15 @@ export default {
     },
     // 删除利息电子账簿下拉标签
     delLx () {
-      console.log('删除利息电子账簿下拉标签')
-      if (this.isFranchisees || this.fuzzyMatch(this.companyName, '食派士')) {
-        console.log('删除利息电子账簿下拉标签')
+      console.log('删除利息电子账簿下拉标签' + this.isFranchisees)
+      console.log(typeof this.isFranchisees)
+      if (this.isFranchisees === 'true') {
+        console.log('删除利息电子账簿下拉标签' + this.isFranchisees)
+        this.balanceAccountTypeList.splice(3, 1)
+        // delete this.balanceAccountTypeList.indexOf['3']
+      }
+      if (this.fuzzyMatch(this.companyName, '食派士')) {
+        console.log('删除利息电子账簿下拉标签' + this.isFranchisees)
         this.balanceAccountTypeList.splice(3, 1)
         // delete this.balanceAccountTypeList.indexOf['3']
       }

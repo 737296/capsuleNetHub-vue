@@ -120,5 +120,8 @@ export const REST_URL = {
   Checkallamount: '/admin/validateMerchant',
 
   // 异常数据统计
-  QUERY_SHARE_DATA_LIST: '/admin/share/no/auth'
+  QUERY_SHARE_DATA_LIST: '/admin/share/no/auth',
+
+  // 退款异常管理
+  GET_BILL_REFUND_LIST: 'admin/queryBillRefundByparams'
 }

@@ -194,6 +194,14 @@ export const MENU_LIST = [
         component: resolve => {
           require(['@/views/exception-data/share/shareDataList.vue'], resolve)
         }
+      },
+      {
+        name: 'billRefundList',
+        title: '退款异常列表',
+        path: '/billRefundList',
+        component: resolve => {
+          require(['@/views/bill-refund/billRefundList.vue'], resolve)
+        }
       }
     ]
   }
@@ -240,6 +248,14 @@ export const OTHER_ROUTER = [
     name: 'accountBooksList',
     component: resolve => {
       require(['@/views/merchant-application/components/accountBooksList.vue'], resolve)
+    }
+  },
+  {
+    path: '/billRefundDetailsList',
+    title: '退款异常详情列表',
+    name: 'billRefundDetailsList',
+    component: resolve => {
+      require(['@/views/bill-refund/billRefundDetailsList.vue'], resolve)
     }
   }
 

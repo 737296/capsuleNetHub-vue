@@ -51,8 +51,8 @@ export default {
               minWidth: 5
             },
             {
-              title: '退款订单编号',
-              key: 'refundOrderId',
+              title: '网支号',
+              key: 'paymentNum',
               align: 'center',
               minWidth: 60
 

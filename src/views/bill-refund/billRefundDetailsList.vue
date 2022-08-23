@@ -204,8 +204,8 @@ export default {
         })
         .then(({ data }) => {
           if (data.code === 200 || data.code === '200') {
-            console.log(data.data.billRefundDTODetailsList)
-            this.tableData.table.data = data.data.billRefundDTODetailsList
+            console.log(data.data.managerBillRefundDTODetailsList)
+            this.tableData.table.data = data.data.managerBillRefundDTODetailsList
           } else {
             return Promise.reject(new Error(data.msg))
           }

@@ -259,7 +259,7 @@ export default {
                 label: data.data.channelList[k]['channel']
               })
             }
-            this.tableData.table.data = data.data.billRefundDTOList
+            this.tableData.table.data = data.data.managerBillRefundDTOList
           } else {
             return Promise.reject(new Error(data.msg))
           }
@@ -302,7 +302,7 @@ export default {
                 label: data.data.channelList[k]['channel']
               })
             }
-            this.tableData.table.data = data.data.billRefundDTOList
+            this.tableData.table.data = data.data.managerBillRefundDTOList
           } else {
             return Promise.reject(new Error(data.msg))
           }

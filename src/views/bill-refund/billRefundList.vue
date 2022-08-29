@@ -9,7 +9,6 @@
                   label="品牌："
                   class="cal-from-item">
           <Select v-model="formData.brandStatus"
-                  style="width: 200px"
                   placeholder="全部">
             <Option :value="item.value"
                     v-for="item in brandList"
@@ -20,7 +19,6 @@
                   label="业务："
                   class="cal-from-item">
           <Select v-model="formData.businessStatus"
-                  style="width: 200px"
                   placeholder="全部">
             <Option :value="item.value"
                     v-for="item in businessList"
@@ -31,13 +29,40 @@
                   label="支付渠道："
                   class="cal-from-item">
           <Select v-model="formData.channelStatus"
-                  style="width: 200px"
                   placeholder="全部">
             <Option :value="item.value"
                     v-for="item in channelList"
                     :key="item.value">{{ item.label }}</Option>
           </Select>
         </FormItem>
+        <FormItem prop="dateList"
+                  label="天数："
+                  class="cal-from-item">
+          <Select v-model="formData.dateList"
+                  placeholder="一天">
+            <Option :value="item.value"
+                    v-for="item in dateList"
+                    :key="item.value">{{ item.label }}</Option>
+          </Select>
+        </FormItem>
+        <!-- <FormItem prop="time"
+                  label="日期："
+                  class="cal-from-item">
+
+          <DatePicker type="datetime"
+                      placeholder="选择开始时间"
+                      format="yyyy-MM-dd HH:mm:ss"
+                      :options="startOption"
+                      v-model="startTime"
+                      style="width: 200px;"></DatePicker>
+          <DatePicker type="datetime"
+                      placeholder="选择结束时间"
+                      format="yyyy-MM-dd HH:mm:ss"
+                      :options="endOption"
+                      v-model="endTime"
+                      style="width: 200px;"></DatePicker>
+        </FormItem> -->
+
         <div class="button-grounp">
           <Button size="large"
                   type="primary"
@@ -84,6 +109,10 @@ export default {
   mixins: [commMixin],
   data () {
     return {
+      startOption: {},
+      endOption: {},
+      startTime: null,
+      endTime: null,
       Checkamount: null,
       tableData: {
         loading: false,
@@ -178,7 +207,8 @@ export default {
         applicationStatus: null,
         brandStatus: null,
         businessStatus: null,
-        channelStatus: null
+        channelStatus: null,
+        daterange: ['', '']
 
       },
 
@@ -199,9 +229,47 @@ export default {
           value: null,
           label: '全部'
         }
+      ],
+      dateList: [
+        {
+          value: -1,
+          label: '一天'
+        },
+        {
+          value: -2,
+          label: '两天'
+        },
+        {
+          value: -3,
+          label: '三天'
+        }
       ]
+
     }
   },
+  watch: {
+    'startTime' () {
+      let self = this
+      this.endOption = {
+        disabledDate (datetime) {
+          if (self.startTime) {
+            return datetime && datetime.valueOf() < self.startTime
+          }
+        }
+      }
+    },
+    'endTime' () {
+      let self = this
+      this.startOption = {
+        disabledDate (datetime) {
+          if (self.endTime) {
+            return datetime && datetime.valueOf() > self.endTime
+          }
+        }
+      }
+    }
+  },
+
   computed: {
     roleMap () {
       return (this.srcRoleList || []).reduce((sum, val) => {
@@ -229,12 +297,38 @@ export default {
   //   EditPopup: (resolve) => require(['./components/user-edit-popup'], resolve)
   // },
   methods: {
+    // 日期转换格式工具类
+    newdate (date1) {
+      if (date1 == null) {
+        return date1
+      } else {
+        // 必须new一个出来，不然后面重复的不行
+        var date = new Date(date1)
+        var year = date.getFullYear()
+        var month = date.getMonth() + 1
+        var strDate = date.getDate()
+        // eslint-disable-next-line no-unused-vars
+        var hour = date.getHours()
+        // eslint-disable-next-line no-unused-vars
+        var minute = date.getMinutes()
+        // eslint-disable-next-line no-unused-vars
+        var second = date.getSeconds()
+        month = month > 9 ? month : '0' + month
+        strDate = strDate > 9 ? strDate : '0' + strDate
+        hour = hour > 9 ? hour : '0' + hour
+        minute = minute > 9 ? minute : '0' + minute
+        second = second > 9 ? second : '0' + second
+        var newdata = year + '-' + month + '-' + strDate + ' ' + hour + ':' + minute + ':' + second
+        return newdata
+      }
+    },
     // 得到退款异常列表
     getBillRefundList () {
       this.tableData.loading = true
       baseApi
         .getBillRefundList({
-
+          startDate: this.startTime,
+          endDate: this.endTime
         })
         .then(({ data }) => {
           if (data.code === 200 || data.code === '200') {
@@ -268,41 +362,54 @@ export default {
           // this.$Message.error(`操作失败！${err.message}`)
           console.log(err)
         })
-      this.tableData.loading = false
+        .finally(() => {
+          this.tableData.loading = false
+        })
     },
     // 查询退款异常列表
     queryBillRefundList () {
+      this.startTime = this.newdate(this.startTime)
+      this.endTime = this.newdate(this.endTime)
       baseApi
         .getBillRefundList({
           brand: this.formData.brandStatus,
           business: this.formData.businessStatus,
-          channel: this.formData.channelStatus
+          channel: this.formData.channelStatus,
+          dateNum: this.formData.dateList
+          // startDate: this.startTime,
+          // endDate: this.endTime
 
         })
         .then(({ data }) => {
           if (data.code === 200 || data.code === '200') {
-            for (var i = 0; i < data.data.brandList.length; i++) {
-              console.log(data.data.brandList[i]['brand'])
-              this.brandList.push({
-                value: data.data.brandList[i]['brand'],
-                label: data.data.brandList[i]['brand']
-              })
-            }
-            for (var j = 0; j < data.data.businessList.length; j++) {
-              console.log(data.data.businessList[j]['business'])
-              this.businessList.push({
-                value: data.data.businessList[j]['business'],
-                label: data.data.businessList[j]['business']
-              })
-            }
-            for (var k = 0; k < data.data.channelList.length; k++) {
-              console.log(data.data.channelList[k]['channel'])
-              this.channelList.push({
-                value: data.data.channelList[k]['channel'],
-                label: data.data.channelList[k]['channel']
-              })
-            }
+            console.log(this.startTime)
+            console.log(this.endTime)
+            // this.getBillRefundList()
+            // this.startTime = null
+            // this.endTime = null
+            // for (var i = 0; i < data.data.brandList.length; i++) {
+            //   console.log(data.data.brandList[i]['brand'])
+            //   this.brandList.push({
+            //     value: data.data.brandList[i]['brand'],
+            //     label: data.data.brandList[i]['brand']
+            //   })
+            // }
+            // for (var j = 0; j < data.data.businessList.length; j++) {
+            //   console.log(data.data.businessList[j]['business'])
+            //   this.businessList.push({
+            //     value: data.data.businessList[j]['business'],
+            //     label: data.data.businessList[j]['business']
+            //   })
+            // }
+            // for (var k = 0; k < data.data.channelList.length; k++) {
+            //   console.log(data.data.channelList[k]['channel'])
+            //   this.channelList.push({
+            //     value: data.data.channelList[k]['channel'],
+            //     label: data.data.channelList[k]['channel']
+            //   })
+            // }
             this.tableData.table.data = data.data.managerBillRefundDTOList
+            console.log(data.data.managerBillRefundDTOList)
           } else {
             return Promise.reject(new Error(data.msg))
           }
@@ -352,21 +459,21 @@ export default {
     },
 
     /**
- * 初始化Form的默认值
- */
+  * 初始化Form的默认值
+  */
     resetForm () {
       this.formData = getDefFormData()
       this.mixin_resetPage()
     },
     /**
- * 改变表格高度
- */
+  * 改变表格高度
+  */
     setTableHeight (height) {
       this.tableData.table.height = height
     },
     /**
- * 查询列表
- */
+  * 查询列表
+  */
     queryData () {
       this.tableData.loading = true
       baseApi

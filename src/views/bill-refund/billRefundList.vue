@@ -179,7 +179,8 @@ export default {
                               data: row['brand'],
                               data1: row['business'],
                               data2: row['channel'],
-                              data3: row['nonRefundReason']
+                              data3: row['nonRefundReason'],
+                              data4: this.formData.dateList == null ? -1 : this.formData.dateList
                             }
                           })
                         }
@@ -327,8 +328,7 @@ export default {
       this.tableData.loading = true
       baseApi
         .getBillRefundList({
-          startDate: this.startTime,
-          endDate: this.endTime
+          dateNum: this.formData.dateList == null ? -1 : this.formData.dateList
         })
         .then(({ data }) => {
           if (data.code === 200 || data.code === '200') {
@@ -375,39 +375,37 @@ export default {
           brand: this.formData.brandStatus,
           business: this.formData.businessStatus,
           channel: this.formData.channelStatus,
-          dateNum: this.formData.dateList
-          // startDate: this.startTime,
-          // endDate: this.endTime
+          dateNum: this.formData.dateList == null ? -1 : this.formData.dateList
 
         })
         .then(({ data }) => {
           if (data.code === 200 || data.code === '200') {
-            console.log(this.startTime)
-            console.log(this.endTime)
-            // this.getBillRefundList()
-            // this.startTime = null
-            // this.endTime = null
-            // for (var i = 0; i < data.data.brandList.length; i++) {
-            //   console.log(data.data.brandList[i]['brand'])
-            //   this.brandList.push({
-            //     value: data.data.brandList[i]['brand'],
-            //     label: data.data.brandList[i]['brand']
-            //   })
-            // }
-            // for (var j = 0; j < data.data.businessList.length; j++) {
-            //   console.log(data.data.businessList[j]['business'])
-            //   this.businessList.push({
-            //     value: data.data.businessList[j]['business'],
-            //     label: data.data.businessList[j]['business']
-            //   })
-            // }
-            // for (var k = 0; k < data.data.channelList.length; k++) {
-            //   console.log(data.data.channelList[k]['channel'])
-            //   this.channelList.push({
-            //     value: data.data.channelList[k]['channel'],
-            //     label: data.data.channelList[k]['channel']
-            //   })
-            // }
+            // 删除全部后面的值
+            this.brandList.splice(1)
+            this.businessList.splice(1)
+            this.channelList.splice(1)
+            for (var i = 0; i < data.data.brandList.length; i++) {
+              console.log(data.data.brandList[i]['brand'])
+              this.brandList.push({
+                value: data.data.brandList[i]['brand'],
+                label: data.data.brandList[i]['brand']
+              })
+            }
+            for (var j = 0; j < data.data.businessList.length; j++) {
+              console.log(data.data.businessList[j]['business'])
+              this.businessList.push({
+                value: data.data.businessList[j]['business'],
+                label: data.data.businessList[j]['business']
+              })
+            }
+            for (var k = 0; k < data.data.channelList.length; k++) {
+              console.log(data.data.channelList[k]['channel'])
+              this.channelList.push({
+                value: data.data.channelList[k]['channel'],
+                label: data.data.channelList[k]['channel']
+              })
+            }
+
             this.tableData.table.data = data.data.managerBillRefundDTOList
             console.log(data.data.managerBillRefundDTOList)
           } else {

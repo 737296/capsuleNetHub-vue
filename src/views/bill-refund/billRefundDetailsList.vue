@@ -37,6 +37,7 @@ export default {
   mixins: [commMixin],
   data () {
     return {
+      dateNum: null,
       Checkamount: null,
       tableData: {
         loading: false,
@@ -169,15 +170,18 @@ export default {
       localStorage.setItem('business', this.$route.params.data1)
       localStorage.setItem('channel', this.$route.params.data2)
       localStorage.setItem('nonRefundReason', this.$route.params.data3)
+      localStorage.setItem('dateNum', this.$route.params.data4)
       this.formData.brandStatus = localStorage.getItem('brand')
       this.formData.businessStatus = localStorage.getItem('business')
       this.formData.channelStatus = localStorage.getItem('channel')
       this.formData.nonRefundReasonStatus = localStorage.getItem('nonRefundReason')
+      this.dateNum = localStorage.getItem('dateNum')
     } else {
       this.formData.brandStatus = localStorage.getItem('brand')
       this.formData.businessStatus = localStorage.getItem('business')
       this.formData.channelStatus = localStorage.getItem('channel')
       this.formData.nonRefundReasonStatus = localStorage.getItem('nonRefundReason')
+      this.dateNum = localStorage.getItem('dateNum')
     }
 
     this.queryBillRefundDetailsList()
@@ -199,7 +203,8 @@ export default {
           brand: this.formData.brandStatus,
           business: this.formData.businessStatus,
           channel: this.formData.channelStatus,
-          nonRefundReason: this.formData.nonRefundReasonStatus
+          nonRefundReason: this.formData.nonRefundReasonStatus,
+          dateNum: this.dateNum
 
         })
         .then(({ data }) => {
@@ -255,21 +260,21 @@ export default {
     },
 
     /**
- * 初始化Form的默认值
- */
+* 初始化Form的默认值
+*/
     resetForm () {
       this.formData = getDefFormData()
       this.mixin_resetPage()
     },
     /**
- * 改变表格高度
- */
+* 改变表格高度
+*/
     setTableHeight (height) {
       this.tableData.table.height = height
     },
     /**
- * 查询列表
- */
+* 查询列表
+*/
     queryData () {
       this.tableData.loading = true
       baseApi

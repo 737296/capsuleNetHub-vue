@@ -311,6 +311,11 @@ const getDefPaymentFieldList = () => [
         value: ''
       },
       {
+        title: '百胜外送费补贴：',
+        key: 'yumDeliveryFeeDiscount',
+        value: ''
+      },
+      {
         title: '第三方补贴：',
         key: 'channelContribute',
         value: ''

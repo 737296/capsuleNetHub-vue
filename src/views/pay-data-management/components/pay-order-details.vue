@@ -142,7 +142,7 @@ const getDefOrderFieldList = () => [
   },
   {
     title: '订单金额：',
-    key: 'orderAmount',
+    key: 'orderAmountStr',
     value: ''
   },
   {

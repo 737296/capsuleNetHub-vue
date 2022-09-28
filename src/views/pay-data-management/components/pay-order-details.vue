@@ -142,7 +142,7 @@ const getDefOrderFieldList = () => [
   },
   {
     title: '订单金额：',
-    key: 'orderAmount',
+    key: 'orderAmountStr',
     value: ''
   },
   {
@@ -308,6 +308,11 @@ const getDefPaymentFieldList = () => [
       {
         title: '百胜折扣：',
         key: 'yumDiscount',
+        value: ''
+      },
+      {
+        title: '百胜外送费补贴：',
+        key: 'yumDeliveryFeeDiscount',
         value: ''
       },
       {
@@ -645,8 +650,18 @@ const getProductList = () => [
       value: ''
     },
     {
-      title: '价格：',
+      title: '原价：',
       key: 'price',
+      value: ''
+    },
+    {
+      title: '优惠价：',
+      key: 'realPrice',
+      value: ''
+    },
+    {
+      title: '最终支付价：',
+      key: 'payPrice',
       value: ''
     },
     {

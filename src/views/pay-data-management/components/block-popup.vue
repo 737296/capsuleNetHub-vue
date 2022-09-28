@@ -1,24 +1,31 @@
 <template>
-  <Pupup v-model="popup.show" :loading="popup.loading" class-name="popup-model" width="none">
+  <Pupup v-model="popup.show"
+         :loading="popup.loading"
+         class-name="popup-model"
+         width="none">
     <template slot="header"> 阻断缓存刷新 </template>
     <template slot="body">
       <div class="scroll-warp">
-        <popup-condition
-          v-model="editData"
-          @on-ref="({ validate }) => (this.formEditValidate = validate)"
-        ></popup-condition>
+        <popup-condition v-model="editData"
+                         @on-ref="({ validate }) => (this.formEditValidate = validate)"></popup-condition>
       </div>
     </template>
-    <div slot="footer" class="ext-footer">
+    <div slot="footer"
+         class="ext-footer">
       <div class="flex center">
         <template v-if="popup.extData">
-          <Button size="large" type="primary" @click="saveExtData">
+          <Button size="large"
+                  type="primary"
+                  @click="saveExtData">
             保存
           </Button>
         </template>
         <template v-else>
-          <Button size="large" @click="popup.show = false">取消</Button>
-          <Button size="large" type="primary" @click="saveExtData">
+          <Button size="large"
+                  @click="popup.show = false">取消</Button>
+          <Button size="large"
+                  type="primary"
+                  @click="saveExtData">
             确定
           </Button>
         </template>
@@ -42,16 +49,16 @@ const getDefEditData = () => [
     },
     {
       span: 1
-    },
-    {
-      span: 10,
-      prop: 'environment',
-      label: '环境：',
-      component: 'Select',
-      value: '',
-      rule: [{ required: true, message: '请选择环境', trigger: 'blur' }],
-      options: []
     }
+    // {
+    //   span: 10,
+    //   prop: 'environment',
+    //   label: '环境：',
+    //   component: 'Select',
+    //   value: '',
+    //   rule: [{ required: true, message: '请选择环境', trigger: 'blur' }],
+    //   options: []
+    // }
   ]
 ]
 

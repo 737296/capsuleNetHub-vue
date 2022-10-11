@@ -1,55 +1,68 @@
 <template>
-  <div id="user-management" class="page-root">
+  <div id="user-management"
+       class="page-root">
     <div class="form-box">
-      <Form ref="formData" :model="formData" :label-width="96">
-        <FormItem prop="account" label="用户名：" class="cal-from-item">
-          <Input
-            type="text"
-            v-model="formData.account"
-            placeholder="输入用户名"
-          />
+      <Form ref="formData"
+            :model="formData"
+            :label-width="96">
+        <FormItem prop="account"
+                  label="账号："
+                  class="cal-from-item">
+          <Input type="text"
+                 v-model="formData.account"
+                 placeholder="输入账号" />
         </FormItem>
-        <FormItem prop="email" label="邮箱：" class="cal-from-item">
-          <Input
-            type="text"
-            v-model="formData.email"
-            placeholder="输入邮箱"
-          />
+        <FormItem prop="accountName"
+                  label="姓名："
+                  class="cal-from-item">
+          <Input type="text"
+                 v-model="formData.accountName"
+                 placeholder="输入姓名" />
         </FormItem>
-        <FormItem prop="enableFlag" label="状态：" class="cal-from-item">
+        <FormItem prop="supervisorName"
+                  label="审批主管名："
+                  class="cal-from-item">
+          <Input type="text"
+                 v-model="formData.supervisorName"
+                 placeholder="输入审批主管名" />
+        </FormItem>
+        <FormItem prop="email"
+                  label="邮箱："
+                  class="cal-from-item">
+          <Input type="text"
+                 v-model="formData.email"
+                 placeholder="输入邮箱" />
+        </FormItem>
+        <FormItem prop="enableFlag"
+                  label="状态："
+                  class="cal-from-item">
           <Select v-model="formData.enableFlag">
-            <Option
-              :value="item.code"
-              v-for="item in stateList"
-              :key="item.code"
-              >{{ item.name }}</Option
-            >
+            <Option :value="item.code"
+                    v-for="item in stateList"
+                    :key="item.code">{{ item.name }}</Option>
           </Select>
         </FormItem>
         <div class="button-grounp">
-          <Button
-            size="large"
-            type="primary"
-            @click="
+          <Button size="large"
+                  type="primary"
+                  @click="
               currentOptions = $copy(formData);
               queryData();
-            "
-            >查询</Button
-          >
-          <Button size="large" @click="resetForm">清空</Button>
+            ">查询</Button>
+          <Button size="large"
+                  @click="resetForm">清空</Button>
         </div>
       </Form>
     </div>
-    <page-table v-model="tableData" @on-table-ref="mixin_getTableRef">
+    <page-table v-model="tableData"
+                @on-table-ref="mixin_getTableRef">
       <template slot="oper">
-        <Icon type="information-circled" class="oper-wrapper-icon" />
-        <Button
-          class="oper-wrapper-button"
-          shape="circle"
-          size="small"
-          @click="showEditPopup({ column: { key: 'add_data' } })"
-          >添加</Button
-        >
+        <Icon type="information-circled"
+              class="oper-wrapper-icon" />
+        <Button class="oper-wrapper-button"
+                shape="circle"
+                size="small"
+                @click="showEditPopup({ column: { key: 'add_data' } })">添加</Button>
       </template>
     </page-table>
     <EditPopup ref="EditPopup"></EditPopup>
@@ -62,6 +75,8 @@ import baseApi from './user-management-api'
 
 const getDefFormData = () => ({
   account: '',
+  accountName: '',
+  supervisorName: '',
   email: '',
   enableFlag: -1
 })
@@ -94,8 +109,22 @@ export default {
 
             },
             {
-              title: '用户名',
+              title: '账号',
               key: 'account',
+              // align: 'center',
+              minWidth: 100
+
+            },
+            {
+              title: '姓名',
+              key: 'accountName',
+              // align: 'center',
+              minWidth: 100
+
+            },
+            {
+              title: '审批主管名',
+              key: 'supervisorName',
               // align: 'center',
               minWidth: 100
 
@@ -223,8 +252,8 @@ export default {
     // this.mixin_queryFormAscriptionList();
     this.queryData()
   },
-  mounted () {},
-  beforeDestroy () {},
+  mounted () { },
+  beforeDestroy () { },
   components: {
     EditPopup: (resolve) => require(['./components/user-edit-popup'], resolve)
   },
@@ -309,7 +338,7 @@ export default {
           pageSize: this.tableData.page.pageSize // 每页条数
         })
         .then(({ data }) => {
-          if (data.code === 200) {
+          if (+data.code === 200) {
             this.tableData.page.total = data.data.totalNum
             this.tableData.table.data = data.data.records
           } else {

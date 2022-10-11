@@ -1,24 +1,31 @@
 <template>
-  <Pupup v-model="popup.show" :loading="popup.loading"  class-name="popup-model" width="none">
+  <Pupup v-model="popup.show"
+         :loading="popup.loading"
+         class-name="popup-model"
+         width="none">
     <template slot="header"> 用户管理 </template>
     <template slot="body">
       <div class="scroll-warp">
-        <popup-condition
-          v-model="editData"
-          @on-ref="({ validate }) => (this.formEditValidate = validate)"
-        ></popup-condition>
+        <popup-condition v-model="editData"
+                         @on-ref="({ validate }) => (this.formEditValidate = validate)"></popup-condition>
       </div>
     </template>
-    <div slot="footer" class="ext-footer">
+    <div slot="footer"
+         class="ext-footer">
       <div class="flex center">
         <template v-if="popup.extData">
-          <Button size="large" type="primary" @click="saveExtData">
+          <Button size="large"
+                  type="primary"
+                  @click="saveExtData">
             保存
           </Button>
         </template>
         <template v-else>
-          <Button size="large" @click="_showPopup({})">清空</Button>
-          <Button size="large" type="primary" @click="saveExtData">
+          <Button size="large"
+                  @click="_showPopup({})">清空</Button>
+          <Button size="large"
+                  type="primary"
+                  @click="saveExtData">
             添加
           </Button>
         </template>
@@ -35,11 +42,11 @@ const getDefEditData = () => {
       {
         span: 11,
         prop: 'account',
-        label: '用户名：',
+        label: '账号：',
         component: 'Input',
-        placeholder: '请输入用户名',
+        placeholder: '请输入账号',
         value: '',
-        rule: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+        rule: [{ required: true, message: '请输入账号', trigger: 'blur' }],
         options: []
       },
       { span: 1 },
@@ -51,6 +58,29 @@ const getDefEditData = () => {
         placeholder: '请输入手机号',
         value: '',
         // rule: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
+        options: []
+      }
+    ],
+    [
+      {
+        span: 11,
+        prop: 'accountName',
+        label: '姓名：',
+        component: 'Input',
+        placeholder: '请输入姓名',
+        value: '',
+        rule: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
+        options: []
+      },
+      { span: 1 },
+      {
+        span: 11,
+        prop: 'supervisorName',
+        label: '审批主管名：',
+        component: 'Input',
+        placeholder: '请输入审批主管名',
+        value: '',
+        rule: [{ required: true, message: '请输入审批主管名', trigger: 'blur' }],
         options: []
       }
     ],
@@ -73,7 +103,8 @@ const getDefEditData = () => {
         component: 'Select',
         multiple: true,
         value: [],
-        rule: [{ required: true,
+        rule: [{
+          required: true,
           message: '请选择分配角色',
           trigger: 'blur',
           validator: (rule, value, callback) => {

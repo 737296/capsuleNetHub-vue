@@ -8,9 +8,9 @@ module.exports = {
   /**
    * 项目后台地址
    */
-  API_BASE_URL: '""',
+  API_BASE_URL: '"./api"',
   /**
    * 开启SSO登录模式
    */
-  SSO_LOGIN: 'true'
+  SSO_LOGIN: 'false'
 }

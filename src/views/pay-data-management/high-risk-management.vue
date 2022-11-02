@@ -1,7 +1,10 @@
 <template>
-  <div id="pay-abnormal-list" class="page-root">
+  <div id="pay-abnormal-list"
+       class="page-root">
     <div class="form-box">
-      <Form ref="originFrom" :model="formData" :label-width="96">
+      <Form ref="originFrom"
+            :model="formData"
+            :label-width="96">
         <!-- <FormItem prop="originFrom" label="异常来源：" class="cal-from-item">
           <Select v-model="formData.originFrom">
             <Option
@@ -12,40 +15,39 @@
             >
           </Select>
         </FormItem> -->
-        <FormItem prop="business" label="业务渠道：" class="cal-from-item">
+        <FormItem prop="business"
+                  label="业务渠道："
+                  class="cal-from-item">
           <Select v-model="formData.business">
-            <Option
-              :value="item.code"
-              v-for="item in businessList"
-              :key="item.code"
-              >{{ item.name }}</Option
-            >
+            <Option :value="item.code"
+                    v-for="item in businessList"
+                    :key="item.code">{{ item.name }}</Option>
           </Select>
         </FormItem>
-        <FormItem prop="transactionNum" label="交易号：" class="cal-from-item">
-          <Input
-            type="text"
-            v-model="formData.transactionNum"
-            placeholder="输入交易号"
-          />
+        <FormItem prop="transactionNum"
+                  label="交易号："
+                  class="cal-from-item">
+          <Input type="text"
+                 v-model="formData.transactionNum"
+                 placeholder="输入交易号" />
         </FormItem>
-        <FormItem prop="orderId" label="订单编号：" class="cal-from-item">
-          <Input
-            type="text"
-            v-model="formData.orderId"
-            placeholder="输入交易号"
-          />
+        <FormItem prop="orderId"
+                  label="订单编号："
+                  class="cal-from-item">
+          <Input type="text"
+                 v-model="formData.orderId"
+                 placeholder="输入交易号" />
         </FormItem>
-        <FormItem prop="business" label="阻断时间：" class="cal-from-item">
-          <DatePicker
-            :value="formData.daterange"
-            @on-change="(daterange) => (formData.daterange = daterange)"
-            format="yyyy-MM-dd HH:mm:ss"
-            type="datetimerange"
-            placement="bottom-end"
-            placeholder="选择时间范围"
-            style="width: 100%"
-          ></DatePicker>
+        <FormItem prop="business"
+                  label="阻断时间："
+                  class="cal-from-item">
+          <DatePicker :value="formData.daterange"
+                      @on-change="(daterange) => (formData.daterange = daterange)"
+                      format="yyyy-MM-dd HH:mm:ss"
+                      type="datetimerange"
+                      placement="bottom-end"
+                      placeholder="选择时间范围"
+                      style="width: 100%"></DatePicker>
         </FormItem>
         <!-- <FormItem prop="paymentNum" label="网支号：" class="cal-from-item">
           <Input
@@ -54,44 +56,39 @@
             placeholder="输入交易号"
           />
         </FormItem> -->
-        <div class="button-grounp" style="margin-top:5px">
-          <Button
-            size="large"
-            type="primary"
-            @click="
+        <div class="button-grounp"
+             style="margin-top:5px">
+          <Button size="large"
+                  type="primary"
+                  @click="
               currentOptions = $copy(formData);
               queryData();
-            "
-            >查询</Button
-          >
-          <Button size="large" @click="resetForm">清空</Button>
+            ">查询</Button>
+          <Button size="large"
+                  @click="resetForm">清空</Button>
         </div>
       </Form>
     </div>
-    <page-table v-model="tableData" @on-table-ref="mixin_getTableRef">
+    <page-table v-model="tableData"
+                @on-table-ref="mixin_getTableRef">
       <template slot="oper">
         <div class="table-oper">
           <div>
-            <Icon type="information-circled" class="oper-wrapper-icon" />
+            <Icon type="information-circled"
+                  class="oper-wrapper-icon" />
             <span v-if="tableData.page.total">
               共查询到 {{ tableData.page.total }} 条数据
             </span>
           </div>
           <div>
-          <Button
-            class="oper-wrapper-button"
-            shape="circle"
-            size="small"
-            @click="showBlockPopup({ column: { key: 'add_data' } })"
-            >阻断缓存刷新</Button
-          >
-          <Button
-            class="oper-wrapper-button"
-            shape="circle"
-            size="small"
-            @click="showIntervenePopup({ column: { key: 'add_data' } })"
-            >退单风控干预</Button
-          >
+            <Button class="oper-wrapper-button"
+                    shape="circle"
+                    size="small"
+                    @click="showBlockPopup({ column: { key: 'add_data' } })">阻断缓存刷新</Button>
+            <Button class="oper-wrapper-button"
+                    shape="circle"
+                    size="small"
+                    @click="showIntervenePopup({ column: { key: 'add_data' } })">退单风控干预</Button>
           </div>
         </div>
       </template>
@@ -305,8 +302,8 @@ export default {
     // this.mixin_queryFormAscriptionList();
     // this.queryData()
   },
-  mounted () {},
-  beforeDestroy () {},
+  mounted () { },
+  beforeDestroy () { },
   components: {
     IntervenePopup: (resolve) => require(['./components/intervene-popup'], resolve),
     BlockPopup: (resolve) => require(['./components/block-popup'], resolve)
@@ -357,7 +354,7 @@ export default {
           id: row.id
         })
         .then(({ data }) => {
-          if (data.code === 200) {
+          if (data.code === 200 || data.code === '200') {
             this.$Message.success(`操作成功`)
             this.queryData()
           } else {
@@ -406,6 +403,7 @@ export default {
       this.tableData.loading = true
       const { transactionNum, orderId, paymentNum, blockStartTime, blockEndTime } = getRealFromData(this.currentOptions)
       const { business } = this.currentOptions
+
       if (business === -1 && (!transactionNum && !orderId && !paymentNum && !blockStartTime && !blockEndTime)) {
         this.tableData.loading = false
         return this.$Message.error(`请至少选择一个查询条件进行查询！`)
@@ -418,7 +416,7 @@ export default {
           pageSize: this.tableData.page.pageSize // 每页条数
         })
         .then(({ data }) => {
-          if (+data.code === 200) {
+          if (data.code === 200 || data.code === '200') {
             this.tableData.page.total = data.data.totalNum
             this.tableData.table.data = data.data.records
           } else {

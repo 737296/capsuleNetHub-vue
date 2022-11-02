@@ -16,6 +16,6 @@ export default {
   },
 
   delData (params) {
-    return api.post(REST_URL.DEL_USER_DATA, params, {confirm: {}})
+    return api.post(REST_URL.DEL_USER_DATA, params, { confirm: {} })
   }
 }

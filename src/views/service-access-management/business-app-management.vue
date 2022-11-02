@@ -1,116 +1,114 @@
 <template>
-  <div id="business-app-management" class="page-root">
+  <div id="business-app-management"
+       class="page-root">
     <div class="form-box">
-      <Form ref="formData" :model="formData" :label-width="96">
-        <FormItem prop="brand" label="品牌：" class="cal-from-item">
-          <Select v-model="formData.brand" @on-change='selectBrand'>
-            <Option
-              :value="item.code"
-              v-for="item in brandList"
-              :key="item.code"
-              >{{ item.name }}</Option
-            >
+      <Form ref="formData"
+            :model="formData"
+            :label-width="96">
+        <FormItem prop="brand"
+                  label="品牌："
+                  class="cal-from-item">
+          <Select v-model="formData.brand"
+                  @on-change='selectBrand'>
+            <Option :value="item.code"
+                    v-for="item in brandList"
+                    :key="item.code">{{ item.name }}</Option>
           </Select>
         </FormItem>
-        <FormItem prop="business" label="业务编码：" class="cal-from-item">
+        <FormItem prop="business"
+                  label="业务编码："
+                  class="cal-from-item">
           <Select v-model="formData.business">
-            <Option
-              :value="item.code"
-              v-for="item in showBusinessList"
-              :key="item.code"
-              >{{ item.name }}</Option
-            >
+            <Option :value="item.code"
+                    v-for="item in showBusinessList"
+                    :key="item.code">{{ item.name }}</Option>
           </Select>
         </FormItem>
-        <FormItem prop="businessApp" label="业务APP：" class="cal-from-item">
-          <Input
-            type="text"
-            v-model="formData.businessApp"
-            placeholder="输入业务APP"
-          />
+        <FormItem prop="businessApp"
+                  label="业务APP："
+                  class="cal-from-item">
+          <Input type="text"
+                 v-model="formData.businessApp"
+                 placeholder="输入业务APP" />
         </FormItem>
         <div class="button-grounp">
-          <Button
-            size="large"
-            type="primary"
-            @click="
+          <Button size="large"
+                  type="primary"
+                  @click="
               currentOptions = $copy(formData);
               queryData();
-            "
-            >查询</Button
-          >
-          <Button size="large" @click="resetForm">清空</Button>
+            ">查询</Button>
+          <Button size="large"
+                  @click="resetForm">清空</Button>
         </div>
       </Form>
     </div>
-    <page-table v-model="tableData" @on-table-ref="mixin_getTableRef">
+    <page-table v-model="tableData"
+                @on-table-ref="mixin_getTableRef">
       <template slot="oper">
-        <Icon type="information-circled" class="oper-wrapper-icon" />
-        <Button
-          class="oper-wrapper-button"
-          shape="circle"
-          size="small"
-          @click="showEditPopup({})"
-          >添加</Button
-        >
+        <Icon type="information-circled"
+              class="oper-wrapper-icon" />
+        <Button class="oper-wrapper-button"
+                shape="circle"
+                size="small"
+                @click="showEditPopup({})">添加</Button>
       </template>
     </page-table>
     <!-- 编辑弹窗 -->
-    <Pupup v-model="editPopup.show" class-name="popup-model" width="none">
+    <Pupup v-model="editPopup.show"
+           class-name="popup-model"
+           width="none">
       <template slot="header"> 业务APP </template>
       <template slot="body">
-        <popup-condition
-          v-model="businessEditData"
-          @on-ref="({ validate }) => (this.formEditValidate = validate)"
-        ></popup-condition>
+        <popup-condition v-model="businessEditData"
+                         @on-ref="({ validate }) => (this.formEditValidate = validate)"></popup-condition>
       </template>
-      <div slot="footer" class="flex center">
+      <div slot="footer"
+           class="flex center">
         <template v-if="editPopup.data">
-          <Button size="large" type="primary" @click="saveData">保存</Button>
+          <Button size="large"
+                  type="primary"
+                  @click="saveData">保存</Button>
         </template>
         <template v-else>
-          <Button size="large" @click="showEditPopup({})">清空</Button>
-          <Button size="large" type="primary" @click="saveData">添加</Button>
+          <Button size="large"
+                  @click="showEditPopup({})">清空</Button>
+          <Button size="large"
+                  type="primary"
+                  @click="saveData">添加</Button>
         </template>
       </div>
     </Pupup>
     <!-- 维护弹窗 -->
-    <Pupup
-      v-model="maintainPopup.show"
-      :loading="maintainPopup.loading"
-       class-name="popup-model" width="none"
-    >
+    <Pupup v-model="maintainPopup.show"
+           :loading="maintainPopup.loading"
+           class-name="popup-model"
+           width="none">
       <template slot="header"> 业务APP与支付产品关系 </template>
       <template slot="body">
         <div class="scroll-warp">
-          <popup-condition
-            v-model="maintainEditData"
-            @on-ref="({ validate }) => (this.formExtEditValidate = validate)"
-          ></popup-condition>
+          <popup-condition v-model="maintainEditData"
+                           @on-ref="({ validate }) => (this.formExtEditValidate = validate)"></popup-condition>
           <div class="ext-wrap">
             <div class="head">
-              <Button size="small" type="primary" @click="addExtInfo">
+              <Button size="small"
+                      type="primary"
+                      @click="addExtInfo">
                 添加扩展信息
               </Button>
             </div>
-            <div
-              class="box"
-              v-for="(extInfoData, idx) in extInfoList"
-              :key="extInfoData.id"
-            >
+            <div class="box"
+                 v-for="(extInfoData, idx) in extInfoList"
+                 :key="extInfoData.id">
               <div class="flex col-center">
                 <div class="flex-auto">
-                  <popup-condition
-                    v-model="extInfoData.data"
-                    @on-ref="({ validate }) => (extInfoData.validate = validate)"
-                  ></popup-condition>
+                  <popup-condition v-model="extInfoData.data"
+                                   @on-ref="({ validate }) => (extInfoData.validate = validate)"></popup-condition>
                 </div>
                 <div class="flex center button">
-                  <Button
-                    size="large"
-                    type="text"
-                    @click="delExtInfo(extInfoData, idx)"
-                  >
+                  <Button size="large"
+                          type="text"
+                          @click="delExtInfo(extInfoData, idx)">
                     删除
                   </Button>
                 </div>
@@ -119,16 +117,22 @@
           </div>
         </div>
       </template>
-      <div slot="footer" class="ext-footer">
+      <div slot="footer"
+           class="ext-footer">
         <div class="flex center">
           <template v-if="maintainPopup.extData">
-            <Button size="large" type="primary" @click="saveExtData">
+            <Button size="large"
+                    type="primary"
+                    @click="saveExtData">
               保存
             </Button>
           </template>
           <template v-else>
-            <Button size="large" @click="showMaintainPopup({})">清空</Button>
-            <Button size="large" type="primary" @click="saveExtData">
+            <Button size="large"
+                    @click="showMaintainPopup({})">清空</Button>
+            <Button size="large"
+                    type="primary"
+                    @click="saveExtData">
               添加
             </Button>
           </template>
@@ -168,7 +172,8 @@ const getDefBusinessEditData = (vm) => {
     component: 'Select',
     value: '',
     oldValue: '',
-    rule: [{ required: true,
+    rule: [{
+      required: true,
       message: '请选择品牌',
       trigger: 'blur',
       validator: (rule, value, callback) => {
@@ -186,7 +191,8 @@ const getDefBusinessEditData = (vm) => {
           businessForm.options = blss
         }
         callback(error)
-      } }],
+      }
+    }],
     options: []
   }
 
@@ -202,7 +208,7 @@ const getDefBusinessEditData = (vm) => {
   }
 
   const resForm = [
-  // 第一行
+    // 第一行
     [
       brandFrom,
       { span: 2 },
@@ -244,9 +250,9 @@ const getDefBusinessEditData = (vm) => {
         type: 'text',
         placeholder: '请输入业务负责人',
         value: ''
-      // rule: [
-      //   { required: true, message: "业务负责人不能为空", trigger: "blur" },
-      // ],
+        // rule: [
+        //   { required: true, message: "业务负责人不能为空", trigger: "blur" },
+        // ],
       },
       { span: 2 },
       {
@@ -283,7 +289,7 @@ const getDefBusinessEditData = (vm) => {
         rows: 1,
         placeholder: '请输入访问ID',
         value: ''
-      // rule: [{ required: true, message: "访问ID不能为空", trigger: "blur" }],
+        // rule: [{ required: true, message: "访问ID不能为空", trigger: "blur" }],
       }
     ],
     // 第五行
@@ -297,7 +303,7 @@ const getDefBusinessEditData = (vm) => {
         rows: 1,
         placeholder: '请输入访问密钥',
         value: ''
-      // rule: [{ required: true, message: '访问密钥不能为空', trigger: 'blur' }]
+        // rule: [{ required: true, message: '访问密钥不能为空', trigger: 'blur' }]
       }
     ]
   ]
@@ -338,7 +344,8 @@ const getDefMaintainEditData = (vm) => {
     placeholder: '选择终端编码',
     value: '',
     oldValue: '',
-    rule: [{ required: true,
+    rule: [{
+      required: true,
       message: '终端编码不能为空',
       trigger: 'blur',
       validator: (rule, value, callback) => {
@@ -349,15 +356,16 @@ const getDefMaintainEditData = (vm) => {
         } else if (portalTypeConfig.oldValue !== portalTypeConfig.value) {
           portalTypeConfig.oldValue = portalTypeConfig.value
           const code = payTypeConfig.value
-          const list = vm.mixin_findPayTypeListByPortalTypeAndPaymentCode({portalType: portalTypeConfig.value, paymentCode: productCodeConfig.value, payTypeList: vm.srcPayTypeList})
+          const list = vm.mixin_findPayTypeListByPortalTypeAndPaymentCode({ portalType: portalTypeConfig.value, paymentCode: productCodeConfig.value, payTypeList: vm.srcPayTypeList })
           if (!list.some(v => v.code === code)) {
-          // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+            // eslint-disable-next-line vue/no-side-effects-in-computed-properties
             payTypeConfig.value = ''
           }
           payTypeConfig.options = list
         }
         callback(error)
-      } }],
+      }
+    }],
     options: []
   }
 
@@ -370,7 +378,8 @@ const getDefMaintainEditData = (vm) => {
     value: '',
     oldValue: '',
     rule: [
-      { required: true,
+      {
+        required: true,
         message: '支付产品编码不能为空',
         trigger: 'blur',
         validator: (rule, value, callback) => {
@@ -380,7 +389,7 @@ const getDefMaintainEditData = (vm) => {
           } else if (productCodeConfig.oldValue !== productCodeConfig.value) {
             productCodeConfig.oldValue = productCodeConfig.value
             const code = payTypeConfig.value
-            const list = vm.mixin_findPayTypeListByPortalTypeAndPaymentCode({portalType: portalTypeConfig.value, paymentCode: productCodeConfig.value, payTypeList: vm.srcPayTypeList})
+            const list = vm.mixin_findPayTypeListByPortalTypeAndPaymentCode({ portalType: portalTypeConfig.value, paymentCode: productCodeConfig.value, payTypeList: vm.srcPayTypeList })
             if (!list.some(v => v.code === code)) {
               // eslint-disable-next-line vue/no-side-effects-in-computed-properties
               payTypeConfig.value = ''
@@ -459,7 +468,7 @@ const getDefMaintainEditData = (vm) => {
         }
       ],
       // 第三行
-      [ portalTypeConfig, { span: 2 }, productCodeConfig ],
+      [portalTypeConfig, { span: 2 }, productCodeConfig],
       // 第四行
       [
         payTypeConfig,
@@ -811,7 +820,7 @@ export default {
   },
   computed: {
     showBusinessList () {
-      const {business} = this.formData
+      const { business } = this.formData
       const blss = this.mixin_findBusinessListByBrandCode(this.formData.brand || {})
       if (!blss.some(bs => bs.code === business)) {
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
@@ -842,8 +851,8 @@ export default {
     this.mixin_queryFromNewPayTypeList()
     this.queryData()
   },
-  mounted () {},
-  beforeDestroy () {},
+  mounted () { },
+  beforeDestroy () { },
   methods: {
     selectBrand (e) { // 根据品牌选择业务编码
       // console.log(e,this.formData.brand)
@@ -895,7 +904,7 @@ export default {
           }
         })
         .catch(err => {
-        //   this.$Message.error(`操作失败！${err.message}`)
+          //   this.$Message.error(`操作失败！${err.message}`)
           console.log(err)
         })
     },
@@ -1118,7 +1127,7 @@ export default {
           pageSize: this.tableData.page.pageSize // 每页条数
         })
         .then(({ data }) => {
-          if (data.code === 200) {
+          if (data.code === 200 || data.code === '200') {
             this.tableData.page.total = data.data.totalNum
             this.tableData.table.data = data.data.records
           } else {

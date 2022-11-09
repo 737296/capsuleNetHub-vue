@@ -1,32 +1,42 @@
 <template>
   <!-- eslint-disable vue/no-parsing-error -->
-  <div class="login" @keydown.enter="handleSubmit">
+  <div class="login"
+       @keydown.enter="handleSubmit">
     <div class="login-con">
       <Card :bordered="true">
-        <p slot="title"><Icon type="log-in"></Icon>欢迎登录PAYHUB支付中心Portal</p>
+        <p slot="title">
+          <Icon type="log-in"></Icon>欢迎登录胶囊网络中心Portal
+        </p>
         <div class="form-con">
-          <Spin fix size="large" v-if="spinShow"></Spin>
-          <Form ref="loginForm" :model="form" :rules="rules">
+          <Spin fix
+                size="large"
+                v-if="spinShow"></Spin>
+          <Form ref="loginForm"
+                :model="form"
+                :rules="rules">
             <FormItem prop="userCode">
-              <Input v-model="form.userCode" placeholder="请输入用户名">
-                <span slot="prepend">
-                  <Icon :size="16" type="person"></Icon>
-                </span>
+              <Input v-model="form.userCode"
+                     placeholder="请输入用户名">
+              <span slot="prepend">
+                <Icon :size="16"
+                      type="person"></Icon>
+              </span>
               </Input>
             </FormItem>
             <FormItem prop="password">
-              <Input
-                type="password"
-                v-model="form.password"
-                placeholder="请输入密码"
-              >
-                <span slot="prepend">
-                  <Icon :size="14" type="locked"></Icon>
-                </span>
+              <Input type="password"
+                     v-model="form.password"
+                     placeholder="请输入密码">
+              <span slot="prepend">
+                <Icon :size="14"
+                      type="locked"></Icon>
+              </span>
               </Input>
             </FormItem>
             <FormItem>
-              <Button @click="handleSubmit" type="primary" long>登录</Button>
+              <Button @click="capsulelogin"
+                      type="primary"
+                      long>登录</Button>
               <!-- <div style="height:10px"></div>
               <Button @click="ssoLogin" type="warning" long>SSO登录</Button>-->
             </FormItem>
@@ -65,8 +75,26 @@ export default {
       spinShow: false // 登录加载中
     }
   },
-  mounted () {},
+  mounted () { },
   methods: {
+    // 胶囊网络登录
+    capsulelogin () {
+      loginApi
+        .capsulelogin({
+          name: this.form.userCode,
+          password: this.form.password
+        })
+        .then((res) => {
+          console.log(res.data)
+          if (res.data.code === 200) {
+            this.$Message.success('登录成功!')
+            this.$router.push({ name: 'home_index' })
+          } else {
+            this.$Message.error('账户密码错误')
+          }
+        })
+    },
+    // 废弃
     handleSubmit () {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
@@ -95,7 +123,9 @@ export default {
         }
       })
     },
+
     ...mapActions(['requestCommonData'])
+
   }
 }
 </script>

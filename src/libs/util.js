@@ -5,7 +5,7 @@ let util = {
 
 }
 util.title = function (title) {
-  title = title || 'PAYHUB 支付中心Portal'
+  title = title || '胶囊网络风机叶片检测中心'
   window.document.title = title
 }
 

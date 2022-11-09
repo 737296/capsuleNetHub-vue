@@ -59,9 +59,9 @@
                     <Upload action="//jsonplaceholder.typicode.com/posts/"
                             :form="['jpg', 'jpeg', 'png', 'gif']"
                             :before-upload="handleUpload">
-                      <!-- <Button icon="ios-cloud-upload-outline"
+                      <Button icon="ios-cloud-upload-outline"
                               @click="filesign(1)">上传图片</Button>
-                      （彩色扫描件或者复印件盖章上传，图片格式：jpg，png，jpeg） -->
+                      （彩色扫描件或者复印件盖章上传，图片格式：jpg，png，jpeg）
                     </Upload>
                     <div v-if="file !== null && this.fileSign==1">
                       待上传文件名: {{ file.name }}
@@ -1575,6 +1575,7 @@ export default {
           // 长期日期不可选中
           this.legalPersonIdCardTimeSwitch = true
           // 赋值
+
           this.legalPersonIdCardStartTime = this.legalPersonDate[0]
           this.legalPersonIdCardEndTime = this.legalPersonDate[1]
         } else {

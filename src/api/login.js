@@ -3,6 +3,13 @@ import { REST_URL } from '@/utils/restUrl.js'
 import { api } from './index.js'
 
 export const loginApi = {
+  // 胶囊网络登录
+  capsulelogin (params) {
+    return api.post(REST_URL.CAPSULE_LOGIN, params).then((res) => {
+      store.commit('setUserInfo', { account: res.data.data.name, accessToken: 'xxxxxxxxxxx' })
+      return res
+    })
+  },
   login (params) { // 登录
     if (process.env.SSO_LOGIN) {
       return api.post(REST_URL.LOGIN, params).then((res) => {
@@ -25,7 +32,7 @@ export const loginApi = {
     } else {
       return Promise.resolve().then(() => {
         store.commit('setUserInfo', { account: '测试账户', accessToken: 'xxxxxxxxxxx' })
-        return Promise.resolve({data: {code: 200}})
+        return Promise.resolve({ data: { code: 200 } })
       })
     }
   },

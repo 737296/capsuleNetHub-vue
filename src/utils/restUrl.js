@@ -1,4 +1,6 @@
 export const REST_URL = {
+  // 胶囊网络
+  CAPSULE_LOGIN: '/api/login',
   // 登录
   LOGIN: '/ssoLogin', // 登录
   SSOLOGIN: '/getAuthorizationUrl',

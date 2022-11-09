@@ -4,7 +4,7 @@ import iview from 'iview'
 const http = axios.create({
   // baseURL: 'http://192.168.116.108:8081',
   // baseURL: 'http://192.168.117.72:8081',
-  baseURL: 'http://localhost:80',
+  baseURL: 'http://localhost:8080',
   // baseURL: 'http://172.25.218.53:80',
   // baseURL: 'http://yapi.tortoisecloud.com:13003/mock/295',
   // baseURL: 'http://172.25.217.222:30666',
